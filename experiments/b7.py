@@ -240,7 +240,7 @@ def label_txt(lab: dict) -> str:
 
 def registry_line(out: dict, date: str) -> str:
     cfg = out["config"]
-    fs = ";".join(f"{r['model']['sharpe']:.3f}" for r in out["folds"])
+    fs = ";".join(f"{float(r['model']['sharpe']):.3f}" for r in out["folds"])  # "nan" (fold à plat) -> nan
     ft = ";".join(str(r["model"]["trades"]) for r in out["folds"])
     m = out["concatenated"]["model"]
     eligible = isinstance(m["sharpe"], float) and m["sharpe"] > out["concatenated"]["baseline"]["sharpe"]
