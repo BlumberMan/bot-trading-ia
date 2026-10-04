@@ -4,6 +4,7 @@
 | P0a-B1 / R1 / V1 | 2026-10-04 | VALIDE | palier-0a |
 | P0b-B1 / R1 / V1 | 2026-10-04 | VALIDE | gonogo-v1 (posé par Iyad) |
 | P1-B1 / R1 / V1 | 2026-10-04 | INVALIDE (1/3) : A1, archive mensuelle 2026-09 absente (404), remplacée par 30 journalières sans décision du brief | — |
+| P1-B2 / R2 / V2 | 2026-10-04 | VALIDE (KO A1 levé) | palier-1 |
 
 ## Récap palier 0a (2026-10-04)
 - État : infra en place, package `bot` 0.0.1 (code dans src/), commit d8f1f11.
@@ -20,6 +21,15 @@
 - Réel : 200 €, coupure −20 %, perte jour 3 %, risque/trade 1 %, levier 1 (spot).
 - Iyad a élargi les permissions (ffee3ee) et autorisé le travail autonome jusqu'au prochain point critique, avec `git push origin main --tags` à chaque palier validé.
 - Prochaine étape : palier 1, données et features.
+
+## Récap palier 1 (2026-10-04)
+- Données : Binance spot BTCUSDT 1h, 92 archives mensuelles (2019-01 → 2026-08), 92/92 checksums ; 67200 lignes, 59 bougies manquantes (20 trous), 0 doublon, 0 violation.
+- Parquet reproductible : SHA256 0f505ec657caf30771662835857ee29a09c439ada8da564ab50a76bcb4fdf336 (local ×2 + clone propre).
+- 16 features à fenêtre finie (LOOKBACK 200), égalité live/batch 2000/2000 bit à bit ; labels H=4 (open t+1 → open t+5).
+- Dev 2019-01 → 2025-09 (9 folds walk-forward, purge 5, embargo 24) ; holdout 2025-10-01 → 2026-08-31 verrouillé (allow_holdout=True).
+- 39 tests verts. 1 INVALIDE (archive 2026-09 absente) corrigé par fin des données au 2026-08-31.
+- Référence d'intégrité : tag gonogo-v1 → commit 61cb863ea30e9271c52fce7ac231967748b50fbd.
+- Prochaine étape : palier 2 (baseline).
 
 ## Consignes d'Iyad en cours
 - 2026-10-04 — STOP obligatoire après la validation du palier 2, avant de lancer le palier 3 (Iyad ajoute des sous-agents).
