@@ -1,0 +1,62 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+features (23) : ['ret_1', 'ret_4', 'ret_24', 'ret_168', 'vol_24', 'vol_168', 'rsi_14', 'sma_dev_24', 'sma_dev_168', 'logvol_z_168', 'range_1', 'range_24', 'hour_sin', 'hour_cos', 'dow_sin', 'dow_cos', 'ret_72', 'sma_dev_72', 'vol_ratio', 'dist_max_168', 'dist_min_168', 'logvol_z_24', 'ret_24_z']
+
+fold 1 : train 2019-01-08 00:00:00+00:00 -> 2020-12-21 14:00:00+00:00 (15238 lignes sans NaN ; test 2021-01-01 00:00:00+00:00 exclu)
+  pearson  : 1 paire(s) |corr| > 0.9 : vol_24 / range_24 = +0.9375
+             max |corr| hors diagonale : vol_24 / range_24 = +0.9375
+  spearman : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9776 ; vol_24 / range_24 = +0.9196
+             max |corr| hors diagonale : ret_24 / ret_24_z = +0.9776
+
+fold 2 : train 2019-01-08 00:00:00+00:00 -> 2021-06-29 22:00:00+00:00 (18922 lignes sans NaN ; test 2021-07-01 00:00:00+00:00 exclu)
+  pearson  : 1 paire(s) |corr| > 0.9 : vol_24 / range_24 = +0.9412
+             max |corr| hors diagonale : vol_24 / range_24 = +0.9412
+  spearman : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9741 ; vol_24 / range_24 = +0.9395
+             max |corr| hors diagonale : ret_24 / ret_24_z = +0.9741
+
+fold 3 : train 2019-01-08 00:00:00+00:00 -> 2021-12-30 22:00:00+00:00 (22996 lignes sans NaN ; test 2022-01-01 00:00:00+00:00 exclu)
+  pearson  : 1 paire(s) |corr| > 0.9 : vol_24 / range_24 = +0.9388
+             max |corr| hors diagonale : vol_24 / range_24 = +0.9388
+  spearman : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9772 ; vol_24 / range_24 = +0.9329
+             max |corr| hors diagonale : ret_24 / ret_24_z = +0.9772
+
+fold 4 : train 2019-01-08 00:00:00+00:00 -> 2022-06-29 22:00:00+00:00 (27340 lignes sans NaN ; test 2022-07-01 00:00:00+00:00 exclu)
+  pearson  : 1 paire(s) |corr| > 0.9 : vol_24 / range_24 = +0.9393
+             max |corr| hors diagonale : vol_24 / range_24 = +0.9393
+  spearman : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9788 ; vol_24 / range_24 = +0.9317
+             max |corr| hors diagonale : ret_24 / ret_24_z = +0.9788
+
+fold 5 : train 2019-01-08 00:00:00+00:00 -> 2022-12-30 22:00:00+00:00 (31756 lignes sans NaN ; test 2023-01-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9016 ; vol_24 / range_24 = +0.9399
+             max |corr| hors diagonale : vol_24 / range_24 = +0.9399
+  spearman : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9794 ; vol_24 / range_24 = +0.9327
+             max |corr| hors diagonale : ret_24 / ret_24_z = +0.9794
+
+fold 6 : train 2019-01-08 00:00:00+00:00 -> 2023-06-29 22:00:00+00:00 (35931 lignes sans NaN ; test 2023-07-01 00:00:00+00:00 exclu)
+  pearson  : 1 paire(s) |corr| > 0.9 : vol_24 / range_24 = +0.9381
+             max |corr| hors diagonale : vol_24 / range_24 = +0.9381
+  spearman : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9791 ; vol_24 / range_24 = +0.9313
+             max |corr| hors diagonale : ret_24 / ret_24_z = +0.9791
+
+fold 7 : train 2019-01-08 00:00:00+00:00 -> 2023-12-30 22:00:00+00:00 (40347 lignes sans NaN ; test 2024-01-01 00:00:00+00:00 exclu)
+  pearson  : 1 paire(s) |corr| > 0.9 : vol_24 / range_24 = +0.9398
+             max |corr| hors diagonale : vol_24 / range_24 = +0.9398
+  spearman : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9790 ; vol_24 / range_24 = +0.9351
+             max |corr| hors diagonale : ret_24 / ret_24_z = +0.9790
+
+fold 8 : train 2019-01-08 00:00:00+00:00 -> 2024-06-29 22:00:00+00:00 (44715 lignes sans NaN ; test 2024-07-01 00:00:00+00:00 exclu)
+  pearson  : 1 paire(s) |corr| > 0.9 : vol_24 / range_24 = +0.9398
+             max |corr| hors diagonale : vol_24 / range_24 = +0.9398
+  spearman : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9801 ; vol_24 / range_24 = +0.9344
+             max |corr| hors diagonale : ret_24 / ret_24_z = +0.9801
+
+fold 9 : train 2019-01-08 00:00:00+00:00 -> 2024-12-30 22:00:00+00:00 (49131 lignes sans NaN ; test 2025-01-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9010 ; vol_24 / range_24 = +0.9394
+             max |corr| hors diagonale : vol_24 / range_24 = +0.9394
+  spearman : 2 paire(s) |corr| > 0.9 : ret_24 / ret_24_z = +0.9810 ; vol_24 / range_24 = +0.9315
+             max |corr| hors diagonale : ret_24 / ret_24_z = +0.9810
+
+=== Synthèse : paires |corr| > 0,9 (nombre de folds sur 9) ===
+  pearson  vol_24 / range_24 : 9/9 folds, min +0.9375 max +0.9412
+  pearson  ret_24 / ret_24_z : 2/9 folds, min +0.9010 max +0.9016
+  spearman ret_24 / ret_24_z : 9/9 folds, min +0.9741 max +0.9810
+  spearman vol_24 / range_24 : 9/9 folds, min +0.9196 max +0.9395
