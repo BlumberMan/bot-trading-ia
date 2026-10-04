@@ -8,6 +8,8 @@
 | P2-B1 / R1 / V1 | 2026-10-04 | VALIDE | palier-2 |
 | P3-B1 / R1 / V1 | 2026-10-04 | VALIDE (env : scikit-learn 1.9.1, lightgbm 4.7.0, 72 tests) | — |
 | P3-B2 / R2 / A1 / V2 | 2026-10-04 | INVALIDE (1/3) : candidat E10 (Sharpe OOS 0,669, 16 essais) ; KO C3-07 labels mélangés +0,36, C3-10 8 failles adversariales, C3-12 DSR 0,0002, C0-08 conception guidée par l'OOS | — |
+| NOUVEAU CYCLE GONOGO (Iyad) | 2026-10-04 | GONOGO v2 commité et tagué par Iyad (68eeb61) : section D « périmètre de calcul », aucun seuil v1 modifié ; intégrité désormais vérifiée contre gonogo-v2 | gonogo-v2 (posé par Iyad) |
+| P3-B3 / R3 | 2026-10-04 | rapport reçu (E17, Sharpe OOS 0,236) ; avocat P3-A2 interrompu par le plantage de session, en reprise ; pas encore de verdict | — |
 
 ## Récap palier 0a (2026-10-04)
 - État : infra en place, package `bot` 0.0.1 (code dans src/), commit d8f1f11.
@@ -47,6 +49,8 @@
 - 2026-10-04 — STOP obligatoire après la validation du palier 2, avant de lancer le palier 3 (Iyad ajoute des sous-agents). LEVÉ : agents chercheur-ml et avocat-du-diable ajoutés (c5dd5e2), garde corrigé ; palier 3 lancé en autonomie jusqu'au prochain point critique.
 - 2026-10-04 — Iyad confirme être l'auteur du commit be40d4a « notifications ntfy » (modifie CLAUDE.md et .claude/), demande du contrôleur en P3-V2.
 - 2026-10-04 — Consigne d'Iyad pour la suite du palier 3 (GONOGO inchangé) : dans les prochains briefs du chercheur, tester (a) un label net de coûts : positif seulement si le rendement sur H dépasse le coût aller-retour (2 × 0,15 % = 0,30 %) ; (b) éventuellement un label triple barrière. Chaque nouveau label = 1 essai du REGISTRE. Faire vérifier les corrélations entre features et signaler les paires |corr| > 0,9. Cette consigne d'Iyad autorise cet ajout au périmètre des briefs correctifs.
+- 2026-10-04 — NOUVEAU CYCLE décidé par Iyad : GONOGO v2 (tag gonogo-v2 → 68eeb61). Raison donnée par Iyad : ambiguïté du périmètre OOS détectée avant tout résultat de modèle. Précision factuelle du superviseur : au moment du tag, 17 essais du palier 3 existaient déjà sur les folds de la période dev (2021-01 → 2025-09) ; aucun résultat n'existait sur la période réservée, et aucune évaluation GONOGO (palier 4) n'avait eu lieu. Contenu de la section D : « période OOS concaténée » = folds walk-forward 2021-01 → 2025-09 + période réservée de 11 mois ; folds positifs et écart baseline sur les folds uniquement ; garde-fou période réservée seule : Sharpe net > 0 et DD < 25 % ; B&H informatif. À partir de maintenant, toutes les vérifications d'intégrité se font contre gonogo-v2 (controleur.md et implementeur.md mis à jour par Iyad dans le même commit, ainsi que le veto absolu sur les tests adversariaux 1, 2 et 7, et la règle d'archivage adversarial dans CLAUDE.md).
+- 2026-10-04 — Plantage de session pendant P3-A2 (avocat sur E17) ; Iyad a fermé les processus Python. Aucun essai à refaire : le registre compte 17 lignes (E01–E17), qui restent dans le budget (17/60).
 - Palier 3 : budget 20 essais par brief, 60 au total (CLAUDE.md). Afficher à titre informatif chaque résultat comparé au buy & hold sur les mêmes folds (pas un critère GONOGO).
 - Rappel : données réservées au palier 4 (holdout) = 2025-10-01 00:00 → 2026-08-31 23:00 UTC (la ligne "Découpage" ci-dessous est corrigée par la ligne "Correction de la décision Période").
 
