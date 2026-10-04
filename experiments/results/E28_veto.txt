@@ -1,0 +1,64 @@
+=== E28 : Sharpe net OOS concaténé +0.319929 ; baseline -0.529674 ; éligible True ; trades 463 ; expo 0.3941 ; commit e0249a3 ===
+
+=== T1 labels mélangés, procédure complète (10 seeds) ===
+  seed  1 : Sharpe concat +0.3187 trades 331 expo 0.596 ; choix E21;E27;E19;E25;E27;E22;E24;E20;E24
+  seed  2 : Sharpe concat -0.1875 trades 485 expo 0.604 ; choix E19;E19;E19;E22;E22;E20;E24;E26;E24
+  seed  3 : Sharpe concat -0.1233 trades 315 expo 0.625 ; choix E25;E25;E20;E26;E27;E23;E27;E20;E26
+  seed  4 : Sharpe concat -0.1554 trades 524 expo 0.629 ; choix E27;E26;E21;E18;E23;E21;E25;E21;E24
+  seed  5 : Sharpe concat +0.3549 trades 428 expo 0.634 ; choix E21;E19;E19;E27;E23;E21;E22;E22;E24
+  seed  6 : Sharpe concat +0.2572 trades 428 expo 0.610 ; choix E20;E27;E21;E22;E20;E25;E26;E27;E26
+  seed  7 : Sharpe concat +0.3577 trades 392 expo 0.681 ; choix E22;E20;E25;E20;E19;E21;E21;E27;E20
+  seed  8 : Sharpe concat +0.0412 trades 393 expo 0.707 ; choix E25;E21;E23;E24;E21;E27;E26;E21;E24
+  seed  9 : Sharpe concat +0.0150 trades 376 expo 0.642 ; choix E20;E22;E21;E21;E20;E26;E25;E27;E21
+  seed 10 : Sharpe concat -0.3934 trades 533 expo 0.619 ; choix E21;E18;E18;E25;E22;E25;E21;E26;E24
+  moyenne +0.0485 écart-type 0.2644 min -0.3934 max +0.3577 p95 +0.3564 ; E28 +0.3199 : z +1.026 ; seeds >= E28 : 2/10 ; S > p95 : False -> FAILLE
+
+=== tests/adversarial/analyse_e10.py appliqué au signal de E28 (sortie brute) ===
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 (59160 lignes)
+[repro] E10 concat : Sharpe 0.319929 trades 463 expo 0.394055 DD 0.6548 rdt 0.2374
+[B&H] Sharpe 0.781489
+[cible] segments 463, barres exposées 16399/41616, opens NaN dans la fenêtre 14, position héritée avant 2021 = 0.0
+
+=== T2 aléatoire (seed 20261004, 1000 tirages, 463 segments, expo 0.3941, coûts 0,0015 x1) ===
+trades tirés min/max 462/463 ; expo min/max 0.3939/0.3942
+Sharpe aléatoire : moyenne -0.3142 écart-type 0.3651 p5 -0.9323 p50 -0.3353 p95 0.2666 max 0.8635
+E10 0.3199 -> percentile 96.4 ; > p95 : True
+
+=== T2b B&H avec la même exposition ===
+B&H fractionnaire constant 0.3941 : Sharpe 0.7919 rdt 1.1141 DD 0.4105
+plan par fold (barres, segments, barres exposées) : [(4344, 156, 3172), (4416, 35, 2033), (4344, 32, 1127), (4416, 14, 384), (4344, 28, 376), (4416, 23, 1866), (4368, 17, 826), (4416, 78, 2534), (6552, 80, 4081)]
+stratifié par fold (seed 20261005, 1000 tirages) : moyenne -0.2082 p50 -0.2007 p95 0.2675 ; E10 percentile 96.5
+
+=== T3/T4 signal E10 figé (modèles et seuils inchangés) ===
+exec_delay=2  : Sharpe 0.0800 trades 463 expo 0.3940 DD 0.7548 rdt -0.2401
+coûts x2      : Sharpe -0.3555 trades 463 expo 0.3941 DD 0.8061 rdt -0.6920
+coûts x3      : Sharpe -1.0312 trades 463 expo 0.3941 DD 0.9445 rdt -0.9235
+
+=== T5a par année (signal continu, position héritée) ===
+2021 : E10 Sharpe +0.8064 rdt +0.3754 trades 191 expo 0.594 | B&H Sharpe +0.9777 rdt +0.5931
+2022 : E10 Sharpe -1.7897 rdt -0.5185 trades 46 expo 0.172 | B&H Sharpe -1.2928 rdt -0.6432
+2023 : E10 Sharpe +2.1115 rdt +0.7015 trades 51 expo 0.256 | B&H Sharpe +2.3425 rdt +1.5485
+2024 : E10 Sharpe +0.9485 rdt +0.3248 trades 95 expo 0.383 | B&H Sharpe +1.7510 rdt +1.2064
+2025 : E10 Sharpe -0.4911 rdt -0.1710 trades 80 expo 0.623 | B&H Sharpe +0.8293 rdt +0.2140
+
+=== T5b par régime (défini a priori : rendement B&H du mois civil, open 1re bougie -> open 1re bougie du mois suivant ; hausse > +5 %, baisse < -5 %, range sinon) ===
+hausse : 27 mois, 823 jours | E10 Sharpe +2.0226 rdt composé +4.6823 | B&H Sharpe +3.6113 rdt composé +79.5458
+baisse : 18 mois, 547 jours | E10 Sharpe -1.5810 rdt composé -0.7438 | B&H Sharpe -2.6954 rdt composé -0.9486
+range  : 12 mois, 364 jours | E10 Sharpe -0.3104 rdt composé -0.1500 | B&H Sharpe +0.1208 rdt composé -0.0519
+
+=== T6b sans le meilleur mois ===
+meilleur mois E10 : 2021-02 rdt +0.3813 ; top 3 : 2021-02 +0.3813, 2024-11 +0.2983, 2023-03 +0.2860
+Sharpe sans les jours du meilleur mois : 0.1540 ; meilleur mois mis à plat : 0.1527 ; sans les 3 meilleurs mois : -0.1209
+
+=== T7 Sharpe déflaté (Bailey & López de Prado 2014), recalcul indépendant ===
+N = 28 lignes de REGISTRE.md ; SR journaliers des essais : [-0.18139, -0.13724, -0.09707, 0.00258, -0.00154, 0.00637, -0.00125, -0.01731, 0.01461, 0.03504, 0.019, 0.0296, 0.03293, 0.03471, 0.02795, 0.0292, 0.01235, 0.01884, 0.02149, 0.02297, 0.01991, 0.00842, 0.02588, 0.04184, 0.003, 0.00591, 0.02196, 0.01675]
+V = 2.714584e-03 ; SR0 journalier = 0.106537 (annualisé 2.0354)
+SR E10 journalier = 0.016746 ; T = 1734 ; skew 0.3180 ; kurtosis 14.4488 ; dénominateur 0.997806
+DSR = 0.000090 ; PSR(0) = 0.757615
+
+T2 aléatoire mêmes trades / même expo : percentile 96.4 -> RÉSISTE ; stratifié par fold : percentile 96.5 -> RÉSISTE
+
+=== T7 Sharpe déflaté (Bailey & López de Prado 2014), SR journaliers de chaque essai du registre ===
+N = 28 lignes de REGISTRE.md (E01..E28) ; V[SR_n] = 2.714584e-03 ; SR0 journalier 0.106537 (annualisé 2.0354)
+SR E28 journalier 0.016746 ; T 1734 ; skew 0.3180 ; kurtosis 14.4488 ; SR - SR0 -0.089792 ; stat -3.7462 ; DSR = 0.000090 ; PSR(0) = 0.757615 -> FAILLE
+(version analyse_e10 : DSR = 0.000090, N = 28)

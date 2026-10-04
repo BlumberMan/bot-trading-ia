@@ -85,3 +85,8 @@ sur les données réelles ; seuls des auto-tests sur données synthétiques ont 
   ensuite une par une par un seul processus (`b4.py --register EXX`).
 - Corrélations (`corr_b4.py`, pas un essai) ; tests du veto (`b4_report.py`, importe
   tests/adversarial/analyse_e10.py sans le modifier).
+Résultat (brief P3-B4, 11 essais E18-E28, registre 28 lignes) : tous au-dessus de la baseline
+(-0,5297). Règle JOURNAL : candidat = E24 (TB H=24 ±1 sigma168·sqrt(24), base, Sharpe net OOS
+concaténé +0,7994, 242 trades, 7/9 folds > 0 ; B&H +0,7815). Tests du veto (`b4_report.py`,
+`results/E*_veto.txt`) : E24 T1 z +4,49 (0/10 seeds >= E24), T2 percentile 98,3 (stratifié 96,3),
+T7 DSR (N = 28) 0,0033 < 0,95. Aucun des 11 essais n'a un DSR >= 0,95.
