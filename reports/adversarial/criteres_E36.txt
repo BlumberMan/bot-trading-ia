@@ -1,0 +1,66 @@
+CRITÈRES FAILLE / RÉSISTE — avocat du diable P3-A4, candidat E36 (bougies 4 h, TB fixe ±0,061901, H=30)
+Fixés et commités AVANT toute exécution adversariale. Ont été lus avant ce commit : le brief P3-A4,
+experiments/results/E36.txt et E36_veto.txt (chiffres du chercheur). Aucune de MES sorties n'existe à ce stade.
+S = Sharpe net OOS concaténé 2021-01-01 -> 2025-09-30 23:00 de E36 tel que JE le reproduis (base, seed 42).
+« Re-tuné » = procédure b5.run complète (8 hp x 36 mappings, folds 1-9), experiments/b5.py importé non modifié,
+via tests/adversarial/run_b5_variant.py. « Figé » = signal 1 h de MA base, modèles et seuils inchangés.
+Données : load_dataset() par défaut, garde index max <= 2025-09-30 23:00 UTC dans chaque script.
+
+T0  Reproduction : FAILLE si |S - 1,175146| > 1e-4 ou trades != 48.
+T1  Labels mélangés re-tunés, seeds 11..15 (miennes) ; pool = 10 seeds du chercheur (1..10) + 5 miennes :
+    FAILLE si S <= p95 empirique du pool (numpy percentile, linéaire) OU z = (S - moy) / sd(ddof=1) < 1,645.
+T2a Aléatoire grille 1 h (segments de longueurs aléatoires, même nb de segments, même expo), 1000 tirages,
+    seed 3636 : FAILLE si percentile de S <= 95.
+T2b Aléatoire grille 4 h : multiset des durées de détention RÉELLES de E36 (en bougies 4 h) permuté et placé
+    uniformément sur les 10404 blocs 4 h OOS alignés sur 00/04/../20 UTC, >= 1 bloc plat entre segments,
+    même nb de trades, même exposition, mêmes coûts ; 1000 tirages seed 3637 : FAILLE si percentile <= 95.
+T2c Idem T2b stratifié par fold (morceaux de détention de chaque fold placés dans leur fold), 1000 tirages
+    seed 3638 : FAILLE si percentile <= 95.
+T2d B&H fractionnaire constant (fraction = exposition de E36) : FAILLE si S <= son Sharpe.
+T3  Retards : figé exécuté 1 bougie 4 h plus tard (exec_delay 5 h) ; re-tunés delay2 et featlag1.
+    Pour chaque mesure X : FAILLE « effondrement » si X <= 0 ou X < 0,5 S ; FAILLE « amélioration » si X > 1,10 S.
+T4  Coûts x2, x3 (figé ET re-tuné) : FAILLE si un Sharpe <= 0.
+T5a Par année 2021..2025 : FAILLE si Sharpe < 0 sur >= 2 années OU Sharpe <= B&H sur >= 4 années sur 5.
+T5b Par régime a priori (mois civil B&H > +5 % hausse, < -5 % baisse, sinon range) :
+    FAILLE si Sharpe range <= 0 OU Sharpe hausse <= 0 OU rendement composé baisse <= -50 %.
+T6a Sans la meilleure feature (argmax de l'importance moyenne de MA base), re-tuné : FAILLE si <= 0 ou < 0,5 S.
+T6b Sans le meilleur mois (jours retirés) : FAILLE si <= 0 ou < 0,5 S.
+T7  DSR (Bailey & López de Prado 2014), recalcul indépendant, N = 39 (lignes de REGISTRE.md), V = variance
+    des SR journaliers des 39 essais : FAILLE si DSR < 0,95.
+T8  Fuite :
+    (a) statique : lecture > 2025-09-30 23:00 ou allow_holdout=True dans src/ et experiments/ hors gardes/tests ;
+    (b) dynamique, folds 1..9 : heures >= test_start(k) remplacées par du bruit (seed 31+k) ; FAILLE si choix
+        (hp, mapping), score de validation, seuils absolus, n_train ou probas du modèle final sur les features
+        propres du test diffèrent du run propre ;
+    (c) labels 4 h : FAILLE si une troncature des heures après la fin de la bougie 4 h t+1+H (20 points, seed 33)
+        change un label <= t, ou si une perturbation des heures >= T+4h change une bougie 4 h ou une feature <= t ;
+    (d) purge : FAILLE si une ligne du train interne a open4[t+1+H] >= val_start, une ligne du train final
+        une bougie t+1+H finissant >= test_start, ou si le backtest de validation lit un open >= test_start.
+T9  Antériorité : FAILLE si E29..E39.json, agg4h.py, b5.py, b4.py, harness.py ou src/ diffèrent entre a0ddea6 et
+    HEAD ; si un résultat E29..E39 existe dans l'arbre de a0ddea6 ou d'un ancêtre ; si a0ddea6 n'est pas ancêtre
+    de 2db2f81 ; si un JSON E29..E39 (base) déclare un commit != a0ddea6 ou code_dirty != false.
+
+TESTS AJOUTÉS
+LT  Faible nombre de trades (trades de MA base) :
+    (a) bootstrap par trade du rendement net moyen par trade (10000 rééchantillonnages, seed 3639) :
+        FAILLE si borne basse IC 95 % <= 0 ;
+    (b) bootstrap par trade du Sharpe journalier annualisé (jours rattachés au trade actif, jours sans activité
+        = 0 ; 10000 rééchantillonnages, seed 3640) : FAILLE si borne basse IC 95 % <= 0 ;
+    (c) sans le meilleur trade (segment mis à plat, rebacktest) : FAILLE si Sharpe < 0,5 S ;
+        sans les 3 meilleurs trades : FAILLE si Sharpe <= 0 ou < 0,5 S.
+    (info) GONOGO palier 4 : trades >= 200, DD < 25 % (affichés, non comptés).
+NA  Features NaN (position figée) : heures dont la bougie 4 h de décision a des probas NaN dans la couverture OOS.
+    FAILLE si la part du P&L (somme des log-rendements nets) réalisée pendant ces heures exposées > 20 %
+    ET > 2 x leur part de l'exposition ; OU si la variante « NaN -> plat » (signal 4 h mis à 0 quand la proba
+    est NaN, reste inchangé) a un Sharpe < 0,5 S.
+BR  Barrières ±20 % (v = 0,049521 et 0,074281), re-tunées : FAILLE si l'une a un Sharpe < 0,7 S (baisse > 30 %,
+    tolérance GONOGO hyperparamètres ±20 %, appliquée ici comme mon critère).
+C1  Circularité / règle sans apprentissage :
+    (a) règles rule_vol_180 et rule_vol_42 (b5.RuleModel, signes ±, mêmes 36 mappings, choix sur la validation
+        interne) : FAILLE si l'une a un Sharpe >= 0,75 S ;
+    (b) lgbm avec [vol_42, vol_180] seules, re-tuné : FAILLE si Sharpe >= 0,75 S ;
+    (c) direction seule (expiration -> NaN), re-tuné : FAILLE si <= 0 ou < 0,5 S ;
+    (d) AUC OOS des probas de MA base : FAILLE si AUC(direction | une barrière touchée) < 0,52 ;
+    (e) seuil 0,027683 : FAILLE si la médiane de vol_168 x sqrt(24) sur les bougies 1 h < 2021-01-01 recalculée
+        diffère de plus de 5e-7, ou si v = 0,027683 x sqrt(5) arrondi à 1e-6 != 0,061901.
+C2  Placebo calendaire : sans objet (f4 ne contient aucune feature calendaire ; rien à remplacer par un placebo).
