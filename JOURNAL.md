@@ -46,6 +46,7 @@
 ## Consignes d'Iyad en cours
 - 2026-10-04 — STOP obligatoire après la validation du palier 2, avant de lancer le palier 3 (Iyad ajoute des sous-agents). LEVÉ : agents chercheur-ml et avocat-du-diable ajoutés (c5dd5e2), garde corrigé ; palier 3 lancé en autonomie jusqu'au prochain point critique.
 - 2026-10-04 — Iyad confirme être l'auteur du commit be40d4a « notifications ntfy » (modifie CLAUDE.md et .claude/), demande du contrôleur en P3-V2.
+- 2026-10-04 — Consigne d'Iyad pour la suite du palier 3 (GONOGO inchangé) : dans les prochains briefs du chercheur, tester (a) un label net de coûts : positif seulement si le rendement sur H dépasse le coût aller-retour (2 × 0,15 % = 0,30 %) ; (b) éventuellement un label triple barrière. Chaque nouveau label = 1 essai du REGISTRE. Faire vérifier les corrélations entre features et signaler les paires |corr| > 0,9. Cette consigne d'Iyad autorise cet ajout au périmètre des briefs correctifs.
 - Palier 3 : budget 20 essais par brief, 60 au total (CLAUDE.md). Afficher à titre informatif chaque résultat comparé au buy & hold sur les mêmes folds (pas un critère GONOGO).
 - Rappel : données réservées au palier 4 (holdout) = 2025-10-01 00:00 → 2026-08-31 23:00 UTC (la ligne "Découpage" ci-dessous est corrigée par la ligne "Correction de la décision Période").
 
