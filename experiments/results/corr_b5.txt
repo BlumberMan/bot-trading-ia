@@ -1,0 +1,60 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+features (18) : ['ret_1', 'ret_6', 'ret_42', 'ret_180', 'vol_6', 'vol_42', 'vol_180', 'rsi_14', 'sma_dev_6', 'sma_dev_42', 'sma_dev_180', 'logvol_z_42', 'range_1', 'range_6', 'hour_sin', 'hour_cos', 'dow_sin', 'dow_cos']
+
+fold 1 : train 2019-01-31 00:00:00+00:00 -> 2020-11-30 00:00:00+00:00 (2523 bougies 4 h sans NaN ; test 2021-01-01 00:00:00+00:00 exclu)
+  pearson  : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8745
+  spearman : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8603
+
+fold 2 : train 2019-01-31 00:00:00+00:00 -> 2021-06-25 16:00:00+00:00 (2909 bougies 4 h sans NaN ; test 2021-07-01 00:00:00+00:00 exclu)
+  pearson  : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8897
+  spearman : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8814
+
+fold 3 : train 2019-01-31 00:00:00+00:00 -> 2021-12-26 16:00:00+00:00 (3649 bougies 4 h sans NaN ; test 2022-01-01 00:00:00+00:00 exclu)
+  pearson  : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8784
+  spearman : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8688
+
+fold 4 : train 2019-01-31 00:00:00+00:00 -> 2022-06-25 16:00:00+00:00 (4735 bougies 4 h sans NaN ; test 2022-07-01 00:00:00+00:00 exclu)
+  pearson  : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : ret_42 / sma_dev_42 = +0.8715
+  spearman : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8606
+
+fold 5 : train 2019-01-31 00:00:00+00:00 -> 2022-12-26 16:00:00+00:00 (5839 bougies 4 h sans NaN ; test 2023-01-01 00:00:00+00:00 exclu)
+  pearson  : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8655
+  spearman : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8664
+
+fold 6 : train 2019-01-31 00:00:00+00:00 -> 2023-06-25 16:00:00+00:00 (6744 bougies 4 h sans NaN ; test 2023-07-01 00:00:00+00:00 exclu)
+  pearson  : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8676
+  spearman : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8702
+
+fold 7 : train 2019-01-31 00:00:00+00:00 -> 2023-12-26 16:00:00+00:00 (7848 bougies 4 h sans NaN ; test 2024-01-01 00:00:00+00:00 exclu)
+  pearson  : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8755
+  spearman : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8816
+
+fold 8 : train 2019-01-31 00:00:00+00:00 -> 2024-06-25 16:00:00+00:00 (8940 bougies 4 h sans NaN ; test 2024-07-01 00:00:00+00:00 exclu)
+  pearson  : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8735
+  spearman : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8771
+
+fold 9 : train 2019-01-31 00:00:00+00:00 -> 2024-12-26 16:00:00+00:00 (10044 bougies 4 h sans NaN ; test 2025-01-01 00:00:00+00:00 exclu)
+  pearson  : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8727
+  spearman : 0 paire(s) |corr| > 0.9
+             max |corr| hors diagonale : vol_6 / range_6 = +0.8742
+
+=== Synthèse : paires |corr| > 0,9 (nombre de folds sur 9) ===
+  pearson  aucune paire
+  spearman aucune paire

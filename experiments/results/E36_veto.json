@@ -1,0 +1,171 @@
+{
+ "id": "E36",
+ "S": 1.1751464874799047,
+ "baseline": -0.5296739773614723,
+ "eligible": true,
+ "T1": {
+  "sharpes": [
+   0.20887848718548047,
+   0.45115587484111236,
+   0.4363794841859031,
+   0.05976372404946851,
+   0.08835140187469198,
+   0.5008542487262706,
+   0.6369510970385549,
+   0.39713066461100005,
+   0.39147719011342685,
+   0.06048123989826953
+  ],
+  "mean": 0.3231423412524178,
+  "std": 0.20438353376660623,
+  "p95": 0.5757075152980268,
+  "z": 4.168653562866883,
+  "n_ge": 0,
+  "faille": false
+ },
+ "analyse_e10": {
+  "repro": {
+   "start": "2021-01-01T00:00:00+00:00",
+   "end": "2025-09-30T23:00:00+00:00",
+   "end_mark_time": "2025-09-30T23:00:00+00:00",
+   "n_bars": 41616,
+   "sharpe": 1.1751464874799047,
+   "max_drawdown": 0.5472244482383501,
+   "trades": 48,
+   "win_rate": 0.6041666666666666,
+   "profit_factor": 3.402543787383734,
+   "exposure": 0.4562668204536717,
+   "total_return": 5.917412667370002,
+   "annualized_return": 0.5024663527102817,
+   "total_cost": 0.14250000000000002,
+   "final_equity": 6.917412667370002
+  },
+  "random": {
+   "seed": 20261004,
+   "draws": 1000,
+   "mean": 0.4375236783465425,
+   "p95": 0.9803905887758024,
+   "percentile": 98.9
+  },
+  "bh_same_expo": {
+   "constant_frac_sharpe": 0.7908433577008709,
+   "stratified_mean": 0.4679958607226727,
+   "stratified_p95": 0.8868633275154368,
+   "stratified_percentile": 99.8
+  },
+  "frozen_exec_delay=2": 1.1926253177332744,
+  "frozen_coûts x2": 1.103963272268269,
+  "frozen_coûts x3": 1.0324732028273917,
+  "no_best_month": 1.0316351490777957,
+  "dsr": {
+   "N": 39,
+   "V": 0.0021628070454498276,
+   "sr0": 0.10135784595753122,
+   "sr": 0.06150997840948432,
+   "T": 1734,
+   "dsr": 0.04556984072705008,
+   "psr0": 0.9954439216369837
+  }
+ },
+ "T2": {
+  "percentile": 98.9,
+  "p95": 0.9803905887758024,
+  "strat_percentile": 99.8,
+  "faille": false,
+  "faille_strat": false
+ },
+ "T7": {
+  "N": 39,
+  "V": 0.0021628070454498276,
+  "sr0": 0.10135784595753122,
+  "sr": 0.06150997840948432,
+  "T": 1734,
+  "skew": 0.7869043587166482,
+  "kurtosis": 14.249171279426552,
+  "stat": -1.6894162896768232,
+  "dsr": 0.04556984072705008,
+  "psr0": 0.9954439216369837,
+  "faille": true,
+  "dsr_analyse_e10": 0.04556984072705008
+ },
+ "veto": {
+  "T1": false,
+  "T2": false,
+  "T7": true
+ },
+ "frozen_delay_4h": {
+  "sharpe": 0.9973243531918031,
+  "faille": false
+ },
+ "frozen_exec_delay=2_flag": false,
+ "frozen_coûts x2_flag": false,
+ "frozen_coûts x3_flag": false,
+ "variants": {
+  "delay2": {
+   "sharpe": 0.5917891718378469,
+   "trades": 45,
+   "faille": false
+  },
+  "featlag1": {
+   "sharpe": 0.7937398555739746,
+   "trades": 61,
+   "faille": false
+  },
+  "cost2": {
+   "sharpe": 1.1207594545406627,
+   "trades": 46,
+   "faille": false
+  },
+  "cost3": {
+   "sharpe": 0.8430204196505272,
+   "trades": 38,
+   "faille": false
+  },
+  "drop_vol_180": {
+   "sharpe": 0.5322552353827962,
+   "trades": 60,
+   "faille": true
+  },
+  "tbdir": {
+   "sharpe": 0.38233438441479123,
+   "trades": 37,
+   "faille": true
+  },
+  "rule_vol_42": {
+   "sharpe": 0.7871531004606411,
+   "trades": 26,
+   "faille": false
+  },
+  "rule_vol_180": {
+   "sharpe": 0.8957157480475917,
+   "trades": 6,
+   "faille": true
+  },
+  "dowplac51": {
+   "sharpe": 0.6267928906673172,
+   "trades": 57,
+   "faille": null
+  },
+  "dowplac52": {
+   "sharpe": 0.6404899299099549,
+   "trades": 36,
+   "faille": null
+  },
+  "dowplac53": {
+   "sharpe": 0.7655475548832172,
+   "trades": 56,
+   "faille": null
+  }
+ },
+ "auc_decomp": {
+  "E36": {
+   "auc_label": 0.5628053612042394,
+   "auc_hit": 0.5500050821383232,
+   "auc_dir_given_hit": 0.5374115074756557,
+   "n": 9004,
+   "hit_rate": 0.42281208351843624,
+   "n_hit": 3807,
+   "spearman_p_minus_vol42": -0.2425276854716489
+  }
+ }
+}

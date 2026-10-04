@@ -114,3 +114,9 @@ seuls des auto-tests sur données synthétiques ont tourné avant (`b5.py --self
   (contrôle : 19 séparateurs par ligne). Budget : registre <= 40 lignes (refus au-delà).
 - Tests du veto et batterie : `b5_report.py` (importe tests/adversarial/analyse_e10.py sans le modifier) ;
   variantes de contrôle `b5.py CONFIG --variant ...` (hors registre) ; corrélations `corr_b5.py` (pas un essai).
+Résultat (brief P3-B5, 11 essais E29-E39, registre 39 lignes) : tous au-dessus de la baseline (-0,5297).
+Règle JOURNAL : candidat = E36 (TB H=30 bougies 4 h à seuils fixes a priori ±0,061901 log, Sharpe net OOS
+concaténé +1,1751, 48 trades, 8/9 folds > 0 ; B&H +0,7815). Tests du veto (`b5_report.py`, `results/E*_veto.txt`) :
+E36 T1 z +4,17 (0/10 seeds >= E36), T2 percentile 98,9 (stratifié 99,8), T7 DSR (N = 39) 0,0456 < 0,95.
+Aucun des 11 essais n'a un DSR >= 0,95. Batterie E36 : `results/E36_veto.txt` (variantes `results/E36_<var>.json`),
+reproductibilité `results/repro/E36_run2.json` (seul le champ commit diffère). Corrélations : `results/corr_b5.txt`.

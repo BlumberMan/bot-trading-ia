@@ -1,0 +1,41 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 (59160 lignes)
+[repro] E10 concat : Sharpe 0.499707 trades 178 expo 0.399846 DD 0.6607 rdt 0.7900
+[B&H] Sharpe 0.781489
+[cible] segments 178, barres exposées 16640/41616, opens NaN dans la fenêtre 14, position héritée avant 2021 = 0.0
+
+=== T2 aléatoire (seed 20261004, 1000 tirages, 178 segments, expo 0.3998, coûts 0,0015 x1) ===
+trades tirés min/max 177/178 ; expo min/max 0.3998/0.3999
+Sharpe aléatoire : moyenne 0.2026 écart-type 0.3704 p5 -0.3827 p50 0.1911 p95 0.8184 max 1.3667
+E10 0.4997 -> percentile 78.6 ; > p95 : False
+
+=== T2b B&H avec la même exposition ===
+B&H fractionnaire constant 0.3998 : Sharpe 0.7918 rdt 1.1331 DD 0.4153
+plan par fold (barres, segments, barres exposées) : [(4344, 15, 3420), (4416, 37, 3544), (4344, 19, 1776), (4416, 22, 2192), (4344, 7, 200), (4416, 20, 1384), (4368, 35, 2536), (4416, 11, 1108), (6552, 15, 480)]
+stratifié par fold (seed 20261005, 1000 tirages) : moyenne 0.1410 p50 0.1421 p95 0.5852 ; E10 percentile 89.7
+
+=== T3/T4 signal E10 figé (modèles et seuils inchangés) ===
+exec_delay=2  : Sharpe 0.4008 trades 178 expo 0.3998 DD 0.7003 rdt 0.4565
+coûts x2      : Sharpe 0.2426 trades 178 expo 0.3998 DD 0.7621 rdt 0.0481
+coûts x3      : Sharpe -0.0153 trades 178 expo 0.3998 DD 0.8342 rdt -0.3868
+
+=== T5a par année (signal continu, position héritée) ===
+2021 : E10 Sharpe +1.4627 rdt +1.1933 trades 51 expo 0.795 | B&H Sharpe +0.9777 rdt +0.5931
+2022 : E10 Sharpe -1.3840 rdt -0.5298 trades 40 expo 0.453 | B&H Sharpe -1.2928 rdt -0.6432
+2023 : E10 Sharpe +0.2728 rdt +0.0331 trades 27 expo 0.181 | B&H Sharpe +2.3425 rdt +1.5485
+2024 : E10 Sharpe +0.7504 rdt +0.2343 trades 46 expo 0.415 | B&H Sharpe +1.7510 rdt +1.2064
+2025 : E10 Sharpe +2.3595 rdt +0.3612 trades 15 expo 0.073 | B&H Sharpe +0.8293 rdt +0.2140
+
+=== T5b par régime (défini a priori : rendement B&H du mois civil, open 1re bougie -> open 1re bougie du mois suivant ; hausse > +5 %, baisse < -5 %, range sinon) ===
+hausse : 27 mois, 823 jours | E10 Sharpe +2.3918 rdt composé +6.0117 | B&H Sharpe +3.6113 rdt composé +79.5458
+baisse : 18 mois, 547 jours | E10 Sharpe -1.1812 rdt composé -0.7091 | B&H Sharpe -2.6954 rdt composé -0.9486
+range  : 12 mois, 364 jours | E10 Sharpe -0.2943 rdt composé -0.1223 | B&H Sharpe +0.1208 rdt composé -0.0519
+
+=== T6b sans le meilleur mois ===
+meilleur mois E10 : 2021-10 rdt +0.4106 ; top 3 : 2021-10 +0.4106, 2021-03 +0.3014, 2021-02 +0.2503
+Sharpe sans les jours du meilleur mois : 0.3355 ; meilleur mois mis à plat : 0.3325 ; sans les 3 meilleurs mois : 0.0763
+
+=== T7 Sharpe déflaté (Bailey & López de Prado 2014), recalcul indépendant ===
+N = 39 lignes de REGISTRE.md ; SR journaliers des essais : [-0.18139, -0.13724, -0.09707, 0.00258, -0.00154, 0.00637, -0.00125, -0.01731, 0.01461, 0.03504, 0.019, 0.0296, 0.03293, 0.03471, 0.02795, 0.0292, 0.01235, 0.01884, 0.02149, 0.02297, 0.01991, 0.00842, 0.02588, 0.04184, 0.003, 0.00591, 0.02196, 0.01675, 0.02616, 0.0193, 0.0529, 0.04073, -0.00277, 0.02093, 0.01938, 0.06151, 0.02974, 0.01434, 0.00488]
+V = 2.162807e-03 ; SR0 journalier = 0.101358 (annualisé 1.9364)
+SR E10 journalier = 0.026156 ; T = 1734 ; skew -0.1443 ; kurtosis 12.4486 ; dénominateur 1.002862
+DSR = 0.000899 ; PSR(0) = 0.861204

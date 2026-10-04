@@ -1,0 +1,99 @@
+commit 2db2f81f549ad5f6bc2a18fc479f0a39d6fc3cd9 ; code modifié non commité (src, experiments/harness.py, experiments/b4.py, experiments/agg4h.py, experiments/b5.py, experiments/configs) : False
+[union] 10 configurations vérifiées (blob local = blob HEAD = déclaré) : E29(net H=6, 8x36), E30(net H=12, 8x36), E31(net H=30, 8x36), E32(tb H=6, 8x36), E33(tb H=12, 8x36), E34(tb H=30, 8x36), E35(tb H=12, 8x36), E36(tb H=30, 8x36), E37(tb H=12, 8x36), E38(tb H=30, 8x36)
+variante : shuf7
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+essai E39 : procédure emboîtée sur E29,E30,E31,E32,E33,E34,E35,E36,E37,E38, seed 42, LABELS MÉLANGÉS seed 7 ; exec_delay 1 h sur la grille 1 h projetée, coût 0.0015 x1.0
+[égalité baseline / B&H vs results/baseline_metrics.json]
+  |écart| baseline.sharpe.concat           = 0.000e+00
+  |écart| baseline.sharpe.folds_max        = 0.000e+00
+  |écart| baseline.final_equity.concat     = 0.000e+00
+  |écart| baseline.final_equity.folds_max  = 0.000e+00
+  |écart| buy_and_hold.sharpe.concat       = 0.000e+00
+  |écart| buy_and_hold.sharpe.folds_max    = 0.000e+00
+  |écart| buy_and_hold.final_equity.concat = 0.000e+00
+  |écart| buy_and_hold.final_equity.folds_max = 0.000e+00
+  baseline concat : Sharpe -0.529673977361 (réf -0.529673977361), equity finale 0.226923661431 (réf 0.226923661431)
+  B&H concat      : Sharpe 0.781489284355 (réf 0.781489284355), equity finale 3.927544197112 (réf 3.927544197112)
+  contrôle d'égalité (<= 1e-9) : OK
+[4 h] 14790 bougies 4 h (2019-01-01 00:00:00+00:00 -> 2025-09-30 20:00:00+00:00), dont 31 missing ; heures missing 59
+  fold 1: validation commune 2020-09-10 04:00:00+00:00 -> 2020-12-26 19:00:00+00:00 (455 lignes propres H=30) ; CHOIX E34 (H=30) hp#6 {'n_estimators': 300, 'learning_rate': 0.02, 'num_leaves': 7, 'min_child_samples': 250, 'subsample': 0.8, 'subsample_freq': 1, 'colsample_bytree': 0.8, 'reg_lambda': 10.0} map {'q_enter': 0.8, 'q_gap': 0.1, 'mh_mult': 2} -> {'enter': 0.3914215890709316, 'exit': 0.37349175360578285, 'min_hold': 60} : Sharpe val 7.2736 (7 trades), AUC val 0.4823 ; train final 2019-01-31 00:00:00+00:00 -> 2020-11-24 20:00:00+00:00 (2275 lignes, taux y=1 0.3442), AUC train 0.7176, Sharpe IS 1.358
+    top 5 (score de validation) : E34 7.2736, E31 7.0735, E37 6.9577, E33 6.8046, E32 6.6455
+  fold 2: validation commune 2020-10-23 08:00:00+00:00 -> 2021-06-25 19:00:00+00:00 (520 lignes propres H=30) ; CHOIX E35 (H=12) hp#6 {'n_estimators': 300, 'learning_rate': 0.02, 'num_leaves': 7, 'min_child_samples': 250, 'subsample': 0.8, 'subsample_freq': 1, 'colsample_bytree': 0.8, 'reg_lambda': 10.0} map {'q_enter': 0.9, 'q_gap': 0.2, 'mh_mult': 2} -> {'enter': 0.33614964693310573, 'exit': 0.29263623462220023, 'min_hold': 24} : Sharpe val 3.4358 (13 trades), AUC val 0.4954 ; train final 2019-01-31 00:00:00+00:00 -> 2021-06-28 16:00:00+00:00 (2797 lignes, taux y=1 0.2685), AUC train 0.7357, Sharpe IS 1.115
+    top 5 (score de validation) : E35 3.4358, E29 3.3780, E33 3.2137, E32 3.1324, E38 3.0000
+  fold 3: validation commune 2021-06-29 12:00:00+00:00 -> 2021-12-26 19:00:00+00:00 (656 lignes propres H=30) ; CHOIX E29 (H=6) hp#2 {'n_estimators': 100, 'learning_rate': 0.02, 'num_leaves': 7, 'min_child_samples': 250, 'subsample': 0.8, 'subsample_freq': 1, 'colsample_bytree': 0.8, 'reg_lambda': 10.0} map {'q_enter': 0.8, 'q_gap': 0.3, 'mh_mult': 2} -> {'enter': 0.5099768925509246, 'exit': 0.47747216390079955, 'min_hold': 12} : Sharpe val 3.4755 (11 trades), AUC val 0.5134 ; train final 2019-01-31 00:00:00+00:00 -> 2021-12-30 16:00:00+00:00 (3589 lignes, taux y=1 0.4776), AUC train 0.6463, Sharpe IS 1.091
+    top 5 (score de validation) : E29 3.4755, E33 3.2205, E32 2.9337, E31 2.7428, E30 2.7058
+  fold 4: validation commune 2022-01-31 08:00:00+00:00 -> 2022-06-25 19:00:00+00:00 (873 lignes propres H=30) ; CHOIX E30 (H=12) hp#5 {'n_estimators': 300, 'learning_rate': 0.02, 'num_leaves': 3, 'min_child_samples': 750, 'subsample': 0.8, 'subsample_freq': 1, 'colsample_bytree': 0.8, 'reg_lambda': 10.0} map {'q_enter': 0.9, 'q_gap': 0.3, 'mh_mult': 2} -> {'enter': 0.5184038740105233, 'exit': 0.4929863940036861, 'min_hold': 24} : Sharpe val 1.1052 (16 trades), AUC val 0.4619 ; train final 2019-01-31 00:00:00+00:00 -> 2022-06-28 16:00:00+00:00 (4597 lignes, taux y=1 0.4873), AUC train 0.5891, Sharpe IS 1.403
+    top 5 (score de validation) : E30 1.1052, E31 1.0675, E29 0.4407, E33 0.4272, E36 0.3981
+  fold 5: validation commune 2022-06-27 12:00:00+00:00 -> 2022-12-26 19:00:00+00:00 (1094 lignes propres H=30) ; CHOIX E35 (H=12) hp#3 {'n_estimators': 100, 'learning_rate': 0.02, 'num_leaves': 7, 'min_child_samples': 750, 'subsample': 0.8, 'subsample_freq': 1, 'colsample_bytree': 0.8, 'reg_lambda': 10.0} map {'q_enter': 0.9, 'q_gap': 0.2, 'mh_mult': 1} -> {'enter': 0.2613741448428777, 'exit': 0.2493958564898964, 'min_hold': 12} : Sharpe val 2.4042 (16 trades), AUC val 0.4486 ; train final 2019-01-31 00:00:00+00:00 -> 2022-12-29 16:00:00+00:00 (5701 lignes, taux y=1 0.2414), AUC train 0.5989, Sharpe IS 0.097
+    top 5 (score de validation) : E35 2.4042, E33 2.0947, E38 1.6156, E37 1.4911, E36 1.4370
+  fold 6: validation commune 2022-10-22 00:00:00+00:00 -> 2023-06-25 19:00:00+00:00 (1269 lignes propres H=30) ; CHOIX E32 (H=6) hp#0 {'n_estimators': 100, 'learning_rate': 0.02, 'num_leaves': 3, 'min_child_samples': 250, 'subsample': 0.8, 'subsample_freq': 1, 'colsample_bytree': 0.8, 'reg_lambda': 10.0} map {'q_enter': 0.8, 'q_gap': 0.1, 'mh_mult': 2} -> {'enter': 0.19828411107109117, 'exit': 0.19569560031771865, 'min_hold': 12} : Sharpe val 3.1557 (27 trades), AUC val 0.4856 ; train final 2019-01-31 00:00:00+00:00 -> 2023-06-29 16:00:00+00:00 (6677 lignes, taux y=1 0.1890), AUC train 0.5996, Sharpe IS 0.226
+    top 5 (score de validation) : E32 3.1557, E33 3.0685, E30 3.0408, E35 2.7640, E36 2.6495
+  fold 7: validation commune 2023-03-18 08:00:00+00:00 -> 2023-12-26 19:00:00+00:00 (1489 lignes propres H=30) ; CHOIX E38 (H=30) hp#1 {'n_estimators': 100, 'learning_rate': 0.02, 'num_leaves': 3, 'min_child_samples': 750, 'subsample': 0.8, 'subsample_freq': 1, 'colsample_bytree': 0.8, 'reg_lambda': 10.0} map {'q_enter': 0.9, 'q_gap': 0.3, 'mh_mult': 1} -> {'enter': 0.5877292259173095, 'exit': 0.5690562883791828, 'min_hold': 30} : Sharpe val 2.8681 (24 trades), AUC val 0.5156 ; train final 2019-02-03 16:00:00+00:00 -> 2023-12-25 20:00:00+00:00 (3563 lignes, taux y=1 0.5619), AUC train 0.5644, Sharpe IS -0.120
+    top 5 (score de validation) : E38 2.8681, E30 2.6103, E31 2.2987, E34 2.2809, E35 2.1437
+  fold 8: validation commune 2023-09-15 04:00:00+00:00 -> 2024-06-25 19:00:00+00:00 (1708 lignes propres H=30) ; CHOIX E36 (H=30) hp#7 {'n_estimators': 300, 'learning_rate': 0.02, 'num_leaves': 7, 'min_child_samples': 750, 'subsample': 0.8, 'subsample_freq': 1, 'colsample_bytree': 0.8, 'reg_lambda': 10.0} map {'q_enter': 0.9, 'q_gap': 0.2, 'mh_mult': 2} -> {'enter': 0.2992791596829555, 'exit': 0.27304755974135264, 'min_hold': 60} : Sharpe val 3.5874 (18 trades), AUC val 0.5082 ; train final 2019-01-31 00:00:00+00:00 -> 2024-06-25 16:00:00+00:00 (8537 lignes, taux y=1 0.2557), AUC train 0.6419, Sharpe IS 0.611
+    top 5 (score de validation) : E36 3.5874, E37 3.4039, E31 3.3398, E38 3.3045, E35 3.2106
+  fold 9: validation commune 2024-02-09 08:00:00+00:00 -> 2024-12-26 19:00:00+00:00 (1929 lignes propres H=30) ; CHOIX E38 (H=30) hp#0 {'n_estimators': 100, 'learning_rate': 0.02, 'num_leaves': 3, 'min_child_samples': 250, 'subsample': 0.8, 'subsample_freq': 1, 'colsample_bytree': 0.8, 'reg_lambda': 10.0} map {'q_enter': 0.8, 'q_gap': 0.1, 'mh_mult': 2} -> {'enter': 0.5782941493365201, 'exit': 0.5696869102758902, 'min_hold': 60} : Sharpe val 3.3267 (15 trades), AUC val 0.5011 ; train final 2019-02-03 16:00:00+00:00 -> 2024-12-19 12:00:00+00:00 (4739 lignes, taux y=1 0.5626), AUC train 0.5757, Sharpe IS 0.594
+    top 5 (score de validation) : E38 3.3267, E37 2.6975, E36 2.6853, E31 2.5030, E33 2.4203
+[contrôle] changements de position 292 ; hors des opens 4 h (00/04/../20 h) : 0 (attendu 0 hors trous de prix)
+
+=== Dates des folds et taux de label = 1 (train propre du fold / test) ===
+fold 1 : train 2019-01-31 00:00:00+00:00 -> 2020-11-24 20:00:00+00:00 (train_end 2020-12-26 19:00:00+00:00) | validation 2020-09-10 04:00:00+00:00 -> 2020-12-26 19:00:00+00:00 | test 2021-01-01 00:00:00+00:00 -> 2021-06-30 23:00:00+00:00 | config E34 H=30 | taux y=1 train 0.3442 test 0.1959
+fold 2 : train 2019-01-31 00:00:00+00:00 -> 2021-06-28 16:00:00+00:00 (train_end 2021-06-28 19:00:00+00:00) | validation 2020-10-23 08:00:00+00:00 -> 2021-06-25 19:00:00+00:00 | test 2021-07-01 00:00:00+00:00 -> 2021-12-31 23:00:00+00:00 | config E35 H=12 | taux y=1 train 0.2685 test 0.2872
+fold 3 : train 2019-01-31 00:00:00+00:00 -> 2021-12-30 16:00:00+00:00 (train_end 2021-12-30 19:00:00+00:00) | validation 2021-06-29 12:00:00+00:00 -> 2021-12-26 19:00:00+00:00 | test 2022-01-01 00:00:00+00:00 -> 2022-06-30 23:00:00+00:00 | config E29 H=6 | taux y=1 train 0.4776 test 0.4208
+fold 4 : train 2019-01-31 00:00:00+00:00 -> 2022-06-28 16:00:00+00:00 (train_end 2022-06-28 19:00:00+00:00) | validation 2022-01-31 08:00:00+00:00 -> 2022-06-25 19:00:00+00:00 | test 2022-07-01 00:00:00+00:00 -> 2022-12-31 23:00:00+00:00 | config E30 H=12 | taux y=1 train 0.4873 test 0.4085
+fold 5 : train 2019-01-31 00:00:00+00:00 -> 2022-12-29 16:00:00+00:00 (train_end 2022-12-29 19:00:00+00:00) | validation 2022-06-27 12:00:00+00:00 -> 2022-12-26 19:00:00+00:00 | test 2023-01-01 00:00:00+00:00 -> 2023-06-30 23:00:00+00:00 | config E35 H=12 | taux y=1 train 0.2414 test 0.1678
+fold 6 : train 2019-01-31 00:00:00+00:00 -> 2023-06-29 16:00:00+00:00 (train_end 2023-06-29 19:00:00+00:00) | validation 2022-10-22 00:00:00+00:00 -> 2023-06-25 19:00:00+00:00 | test 2023-07-01 00:00:00+00:00 -> 2023-12-31 23:00:00+00:00 | config E32 H=6 | taux y=1 train 0.1890 test 0.1893
+fold 7 : train 2019-02-03 16:00:00+00:00 -> 2023-12-25 20:00:00+00:00 (train_end 2023-12-26 19:00:00+00:00) | validation 2023-03-18 08:00:00+00:00 -> 2023-12-26 19:00:00+00:00 | test 2024-01-01 00:00:00+00:00 -> 2024-06-30 23:00:00+00:00 | config E38 H=30 | taux y=1 train 0.5619 test 0.5407
+fold 8 : train 2019-01-31 00:00:00+00:00 -> 2024-06-25 16:00:00+00:00 (train_end 2024-06-25 19:00:00+00:00) | validation 2023-09-15 04:00:00+00:00 -> 2024-06-25 19:00:00+00:00 | test 2024-07-01 00:00:00+00:00 -> 2024-12-31 23:00:00+00:00 | config E36 H=30 | taux y=1 train 0.2557 test 0.2799
+fold 9 : train 2019-02-03 16:00:00+00:00 -> 2024-12-19 12:00:00+00:00 (train_end 2024-12-26 19:00:00+00:00) | validation 2024-02-09 08:00:00+00:00 -> 2024-12-26 19:00:00+00:00 | test 2025-01-01 00:00:00+00:00 -> 2025-09-30 23:00:00+00:00 | config E38 H=30 | taux y=1 train 0.5626 test 0.5287
+
+=== Par fold (test) : modèle / baseline SMA168 / buy & hold, mêmes folds 1 h, mêmes coûts ===
+fold             | stratégie |  Sharpe |  DD max | trades |    win |     PF |   expo |   rdt tot
+1 2021-01-01     | modèle    |   0.469 |  57.80% |      8 |  62.5% |   1.46 |  85.0% |     2.09%
+                 | baseline  |   0.274 |  46.06% |     74 |  10.8% |   1.16 |  52.4% |    -1.38%
+                 | B&H       |   0.871 |  54.72% |      1 | 100.0% |    inf | 100.0% |    20.80%
+2 2021-07-01     | modèle    |   2.629 |  22.74% |     19 |  47.4% |   3.32 |  72.0% |    95.49%
+                 | baseline  |  -0.010 |  33.20% |     65 |  13.8% |   0.99 |  50.2% |    -5.35%
+                 | B&H       |   1.156 |  33.47% |      1 | 100.0% |    inf | 100.0% |    31.48%
+3 2022-01-01     | modèle    |  -2.776 |  55.03% |     34 |  38.2% |   0.43 |  53.0% |   -54.10%
+                 | baseline  |  -3.493 |  53.19% |     81 |   8.6% |   0.32 |  38.9% |   -51.72%
+                 | B&H       |  -2.041 |  62.88% |      1 |   0.0% |   0.00 | 100.0% |   -56.98%
+4 2022-07-01     | modèle    |  -0.653 |  37.17% |     27 |  48.1% |   0.71 |  62.8% |   -15.99%
+                 | baseline  |  -3.171 |  51.94% |     91 |   9.9% |   0.27 |  45.1% |   -44.28%
+                 | B&H       |  -0.391 |  37.20% |      1 |   0.0% |   0.00 | 100.0% |   -17.30%
+5 2023-01-01     | modèle    |  -0.031 |  15.98% |      5 |  60.0% |   0.78 |  22.7% |    -1.23%
+                 | baseline  |   1.354 |  27.42% |     68 |  13.2% |   1.60 |  55.8% |    28.69%
+                 | B&H       |   2.726 |  21.74% |      1 | 100.0% |    inf | 100.0% |    83.66%
+6 2023-07-01     | modèle    |   0.469 |  10.70% |     22 |  54.5% |   1.20 |  24.5% |     3.43%
+                 | baseline  |  -1.050 |  32.17% |     93 |   9.7% |   0.78 |  53.6% |   -17.18%
+                 | B&H       |   1.878 |  20.84% |      1 | 100.0% |    inf | 100.0% |    38.35%
+7 2024-01-01     | modèle    |   0.253 |  17.66% |     14 |  42.9% |   1.16 |  42.1% |     1.49%
+                 | baseline  |   1.209 |  19.54% |     69 |  20.3% |   1.54 |  52.7% |    22.80%
+                 | B&H       |   1.710 |  22.69% |      1 | 100.0% |    inf | 100.0% |    48.01%
+8 2024-07-01     | modèle    |   0.472 |  34.33% |     12 |  58.3% |   1.27 |  65.9% |     5.84%
+                 | baseline  |   0.904 |  18.56% |     66 |  18.2% |   1.36 |  60.0% |    15.04%
+                 | B&H       |   1.780 |  28.65% |      1 | 100.0% |    inf | 100.0% |    48.63%
+9 2025-01-01     | modèle    |  -0.118 |  20.39% |      6 |  33.3% |   0.73 |  23.7% |    -4.53%
+                 | baseline  |  -1.886 |  50.46% |    142 |  12.7% |   0.51 |  54.8% |   -39.98%
+                 | B&H       |   0.829 |  30.94% |      1 | 100.0% |    inf | 100.0% |    21.40%
+concat 2021-25   | modèle    |   0.125 |  79.39% |    146 |  47.9% |   1.11 |  48.8% |   -19.36%
+                 | baseline  |  -0.530 |  87.83% |    747 |  12.4% |   0.86 |  51.7% |   -77.31%
+                 | B&H       |   0.781 |  77.20% |      1 | 100.0% |    inf | 100.0% |   292.75%
+
+=== In-sample vs OOS par fold ===
+fold | config | Sharpe IS (train) | Sharpe val int. | Sharpe OOS | AUC train | AUC val | AUC test
+   1 |    E34 |             1.358 |           7.274 |      0.469 |    0.7176 |  0.4823 |   0.4555
+   2 |    E35 |             1.115 |           3.436 |      2.629 |    0.7357 |  0.4954 |   0.5224
+   3 |    E29 |             1.091 |           3.476 |     -2.776 |    0.6463 |  0.5134 |   0.4972
+   4 |    E30 |             1.403 |           1.105 |     -0.653 |    0.5891 |  0.4619 |   0.4561
+   5 |    E35 |             0.097 |           2.404 |     -0.031 |    0.5989 |  0.4486 |   0.5169
+   6 |    E32 |             0.226 |           3.156 |      0.469 |    0.5996 |  0.4856 |   0.5457
+   7 |    E38 |            -0.120 |           2.868 |      0.253 |    0.5644 |  0.5156 |   0.6126
+   8 |    E36 |             0.611 |           3.587 |      0.472 |    0.6419 |  0.5082 |   0.5852
+   9 |    E38 |             0.594 |           3.327 |     -0.118 |    0.5757 |  0.5011 |   0.4499
+
+Sharpe OOS concaténé modèle 0.1252 ; baseline -0.5297 (écart +0.6548) ; B&H 0.7815 (écart -0.6563) ; trades 146 ; expo 0.4883 ; folds à Sharpe > 0 : 5/9
+rendements journaliers OOS : {'n_days': 1734, 'mean': 0.0001550241972180377, 'std': 0.02366085594818641, 'sr_daily': 0.006551926843116603, 'skew': 0.3411043571835748, 'kurtosis': 12.449608127352954}
+[garde] dernier open lu par les backtests = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : True
+importances (gain normalisé) moyennes : vol_42 0.0935, vol_180 0.0911, sma_dev_180 0.0902, ret_42 0.0884, rsi_14 0.0747, range_1 0.0720, vol_6 0.0692, ret_1 0.0684, logvol_z_42 0.0675, range_6 0.0621, ret_180 0.0604, sma_dev_6 0.0572, sma_dev_42 0.0538, ret_6 0.0516
+feature la plus importante : vol_42
