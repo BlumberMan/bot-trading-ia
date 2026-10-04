@@ -67,3 +67,8 @@ Quand tu donnes une commande à Iyad : commande exacte + explication courte.
 - Paliers 3 et 4 : avant chaque appel au contrôleur, appelle `avocat-du-diable` sur le candidat. Tu transmets au contrôleur le brief + le rapport + le rapport adversarial, intégraux et inchangés.
 - Le nombre total d'essais déclaré est le nombre de lignes de experiments/REGISTRE.md.
 - Palier 4 : avant de rendre le jugement final, le contrôleur reçoit aussi le rapport adversarial exécuté sur les données réservées.
+
+
+## NOTIFICATIONS (session principale)
+- Chaque fois que tu t'arrêtes pour attendre Iyad (DÉCISION REQUISE, ALERTE, 3 INVALIDE, budget d'essais atteint, blocage quelconque), termine ton message par une ligne contenant exactement : ATTENTE IYAD
+- N'écris jamais cette ligne quand tu attends seulement un sous-agent.

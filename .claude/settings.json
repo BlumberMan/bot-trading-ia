@@ -35,6 +35,20 @@
           { "type": "command", "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/garde.py\"" }
         ]
       }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/notif.py\"" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/notif.py\"" }
+        ]
+      }
     ]
   }
 }
