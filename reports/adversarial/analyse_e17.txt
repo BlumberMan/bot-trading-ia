@@ -1,0 +1,72 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 (59160 lignes)
+
+=== T0 reproduction (ma relance complète, seed 42) ===
+Sharpe 0.235865 (JSON 0.235865) trades 315 expo 0.559064 DD 0.7168 rdt total -0.0260 ; déclaré 0.235865 : |écart| 2.64e-07
+choix par fold identiques au chercheur : [True, True, True, True, True, True, True, True, True]
+B&H Sharpe 0.781489 rdt 2.9275
+
+=== T1 labels mélangés, procédure emboîtée complète ===
+  chercheur seed  1 : Sharpe +0.0367 trades 97 expo 0.190
+  chercheur seed  2 : Sharpe -0.1982 trades 53 expo 0.191
+  chercheur seed  3 : Sharpe -0.2174 trades 169 expo 0.309
+  chercheur seed  4 : Sharpe +0.6267 trades 38 expo 0.205
+  chercheur seed  5 : Sharpe +0.2007 trades 191 expo 0.254
+  chercheur seed  6 : Sharpe -0.1059 trades 108 expo 0.259
+  chercheur seed  7 : Sharpe -0.0428 trades 144 expo 0.229
+  chercheur seed  8 : Sharpe +0.4338 trades 200 expo 0.329
+  chercheur seed  9 : Sharpe +0.3043 trades 62 expo 0.231
+  chercheur seed 10 : Sharpe +0.7025 trades 131 expo 0.364
+  avocat    seed 11 : Sharpe +0.6225 trades 108 expo 0.266
+  avocat    seed 12 : Sharpe +0.4207 trades 192 expo 0.487
+  avocat    seed 13 : Sharpe +0.1043 trades 171 expo 0.295
+  avocat    seed 14 : Sharpe -0.0956 trades 92 expo 0.240
+  avocat    seed 15 : Sharpe +0.4384 trades 86 expo 0.183
+mes 5 seeds : moyenne +0.2980 écart-type 0.2883
+pool 15 seeds : moyenne +0.2154 écart-type 0.3150 p95 +0.6494 max +0.7025
+E17 +0.2359 : z +0.065 ; seeds mélangées >= E17 : 7/15 ; S > p95 : False
+
+[cible] segments 315, barres exposées 23266/41616, position héritée avant 2021 = 0.0
+=== T2 aléatoire (seed 777, 1000 tirages, 315 segments, expo 0.5591) ===
+trades tirés min/max 314/315 ; Sharpe moyenne 0.1169 p50 0.1295 p95 0.6048 max 1.1231 ; E17 percentile 64.4
+
+=== T2b B&H même exposition ===
+B&H fractionnaire constant 0.5591 : Sharpe 0.7891 rdt +1.6682 DD 0.5373 | E17 rdt -0.0260 DD 0.7168
+plan par fold (barres, segments, barres exposées) : [(4344, 36, 3856), (4416, 91, 3471), (4344, 19, 1993), (4416, 23, 2518), (4344, 1, 0), (4416, 7, 1820), (4368, 55, 3077), (4416, 73, 2773), (6552, 16, 3758)]
+stratifié par fold (seed 778, 1000 tirages) : moyenne 0.0888 p95 0.5133 ; E17 percentile 73.9
+
+=== T3/T4 signal E17 figé (modèles et seuils inchangés) ===
+exec_delay=2  : Sharpe +0.2800 (119 % de E17) trades 315 DD 0.6717 rdt +0.0816
+coûts x2      : Sharpe -0.1691 (-72 % de E17) trades 315 DD 0.8312 rdt -0.6217
+coûts x3      : Sharpe -0.5755 (-244 % de E17) trades 315 DD 0.9251 rdt -0.8533
+(features retardées d'une bougie avec modèles et seuils figés = signal décalé d'une bougie = exec t+2 ci-dessus)
+
+=== T3/T4/T6a procédure emboîtée re-tunée (mes relances) ===
+delay2          : Sharpe +0.4147 (176 % de E17) trades 162 expo 0.458 DD 0.6171 rdt +0.5018 folds>0 6/9 ; choix E16;E06;E14;E14;E15;E10;E14;E15;E14
+featlag1        : Sharpe -0.0385 (-16 % de E17) trades 198 expo 0.485 DD 0.7284 rdt -0.4239 folds>0 4/9 ; choix E06;E16;E11;E10;E10;E06;E14;E15;E06
+cost2           : Sharpe -0.1237 (-52 % de E17) trades 202 expo 0.497 DD 0.7569 rdt -0.5355 folds>0 4/9 ; choix E16;E09;E14;E11;E15;E10;E14;E15;E14
+cost3           : Sharpe -0.0165 (-7 % de E17) trades 125 expo 0.511 DD 0.7672 rdt -0.4202 folds>0 3/9 ; choix E16;E14;E14;E11;E15;E10;E15;E15;E14
+drop_sma_dev_24 : Sharpe +0.2323 (98 % de E17) trades 245 expo 0.494 DD 0.6370 rdt +0.0166 folds>0 5/9 ; choix E06;E05;E14;E10;E15;E16;E14;E15;E09
+  (chercheur delay2 : +0.4147)
+  (chercheur featlag1 : -0.0385)
+  (chercheur drop_sma_dev_24 : +0.2323)
+feature la plus importante de MA base : sma_dev_24
+
+=== T5a par année (signal continu, position héritée) ===
+2021 : E17 Sharpe +0.5632 rdt +0.1513 trades 126 expo 0.836 | B&H Sharpe +0.9777 rdt +0.5931
+2022 : E17 Sharpe -0.9125 rdt -0.4754 trades 41 expo 0.515 | B&H Sharpe -1.2928 rdt -0.6432
+2023 : E17 Sharpe +0.1789 rdt +0.0156 trades 7 expo 0.208 | B&H Sharpe +2.3425 rdt +1.5485
+2024 : E17 Sharpe +1.3394 rdt +0.6308 trades 127 expo 0.666 | B&H Sharpe +1.7510 rdt +1.2064
+2025 : E17 Sharpe +0.0445 rdt -0.0265 trades 16 expo 0.574 | B&H Sharpe +0.8293 rdt +0.2140
+
+=== T5b par régime a priori (mois civil B&H : hausse > +5 %, baisse < -5 %, range sinon) ===
+hausse : 27 mois, 823 jours | E17 Sharpe +2.3474 rdt composé +7.6073 | B&H Sharpe +3.6113 rdt composé +79.5458
+baisse : 18 mois, 547 jours | E17 Sharpe -2.1374 rdt composé -0.8944 | B&H Sharpe -2.6954 rdt composé -0.9486
+range  : 12 mois, 364 jours | E17 Sharpe +0.3719 rdt composé +0.0720 | B&H Sharpe +0.1208 rdt composé -0.0519
+
+=== T6b sans le meilleur mois ===
+meilleur mois E17 : 2021-02 rdt +0.3816 ; top 3 : 2021-02 +0.3816, 2024-02 +0.3483, 2021-10 +0.3428
+Sharpe sans les jours du meilleur mois : 0.0861 (37 % de E17) ; sans les 3 meilleurs mois : -0.1961
+
+=== T7 Sharpe déflaté (Bailey & López de Prado 2014) ===
+N = 17 lignes (ids E01..E17) ; V = 4.131690e-03 ; SR0 journalier 0.117507 (annualisé 2.2450)
+SR journalier E17 0.012346 ; T 1734 ; skew 0.1007 ; kurtosis 11.4106 ; DSR = 0.000006 ; PSR(0) = 0.696431
