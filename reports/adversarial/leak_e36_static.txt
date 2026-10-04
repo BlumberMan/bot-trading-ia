@@ -1,0 +1,32 @@
+(a) motifs d'accès potentiels au holdout dans src/ et experiments/ (*.py) : 16
+    src\bot\data.py:4: Archives mensuelles uniquement (2019-01 -> 2026-08), chacune vérifiée par son
+    src\bot\data.py:28: END = pd.Timestamp("2026-08-31 23:00", tz="UTC")  # open_time de la dernière bougie
+    src\bot\data.py:323: return pd.read_parquet(path, engine="pyarrow")
+    src\bot\split.py:4: - Holdout : 2025-10-01 00:00 -> 2026-08-31 23:00 UTC, accessible uniquement avec
+    src\bot\split.py:5: `allow_holdout=True` explicite (réservé au palier 4).
+    src\bot\split.py:30: HOLDOUT_START = pd.Timestamp("2025-10-01 00:00", tz="UTC")
+    src\bot\split.py:31: HOLDOUT_END = pd.Timestamp("2026-08-31 23:00", tz="UTC")
+    src\bot\split.py:62: def holdout_period(df: pd.DataFrame, *, allow_holdout: bool = False) -> pd.DataFrame:
+    src\bot\split.py:63: """Lignes du holdout. Exige allow_holdout=True (sinon HoldoutAccessError)."""
+    src\bot\split.py:65: raise HoldoutAccessError("holdout inaccessible sans allow_holdout=True")
+    src\bot\split.py:66: return df.loc[(df.index >= HOLDOUT_START) & (df.index <= HOLDOUT_END)]
+    src\bot\split.py:72: allow_holdout=True renvoie dev + holdout (palier 4 uniquement).
+    src\bot\split.py:74: df = pd.read_parquet(path, engine="pyarrow")
+    src\bot\split.py:76: return df.loc[(df.index >= DEV_START) & (df.index <= HOLDOUT_END)]
+    experiments\b5_report.py:133: sig = pd.read_parquet(adv / "signal_1h.parquet", engine="pyarrow")
+    experiments\b5_report.py:263: pr = pd.read_parquet(RES / f"adv_{tid}" / "proba_4h.parquet", engine="pyarrow")
+[garde] index max lu = 2025-09-30 23:00:00+00:00 (59160 lignes)
+(c1) label TB 4 h E36 : 20 troncatures après la bougie t+1+H (seed 33) -> labels <= t modifiés : 0/20
+(c2) 20 perturbations des heures >= T+4h -> bougies 4 h <= t modifiées : 0/20 ; features <= t modifiées : 0/20
+(c3) label réimplémenté indépendamment : lignes 14139 ; égal à agg4h.make_label_4h : True
+(d) fold 1 : train 2019-01-31 00:00:00+00:00 -> 2020-11-24 20:00:00+00:00 ; val 2020-09-10 04:00:00+00:00 -> 2020-12-26 19:00:00+00:00 ; test_start 2021-01-01 00:00:00+00:00 ; open4[t+1+H] inner - val_start -4 h ; fin bougie t+1+H train - test_start -764 h ; dernier open validation - test_start -124 h
+(d) fold 2 : train 2019-01-31 00:00:00+00:00 -> 2021-06-25 16:00:00+00:00 ; val 2020-10-23 08:00:00+00:00 -> 2021-06-25 19:00:00+00:00 ; test_start 2021-07-01 00:00:00+00:00 ; open4[t+1+H] inner - val_start -4 h ; fin bougie t+1+H train - test_start +0 h ; dernier open validation - test_start -124 h
+(d) fold 3 : train 2019-01-31 00:00:00+00:00 -> 2021-12-26 16:00:00+00:00 ; val 2021-06-29 12:00:00+00:00 -> 2021-12-26 19:00:00+00:00 ; test_start 2022-01-01 00:00:00+00:00 ; open4[t+1+H] inner - val_start -4 h ; fin bougie t+1+H train - test_start +0 h ; dernier open validation - test_start -124 h
+(d) fold 4 : train 2019-01-31 00:00:00+00:00 -> 2022-06-25 16:00:00+00:00 ; val 2022-01-31 08:00:00+00:00 -> 2022-06-25 19:00:00+00:00 ; test_start 2022-07-01 00:00:00+00:00 ; open4[t+1+H] inner - val_start -4 h ; fin bougie t+1+H train - test_start +0 h ; dernier open validation - test_start -124 h
+(d) fold 5 : train 2019-01-31 00:00:00+00:00 -> 2022-12-26 16:00:00+00:00 ; val 2022-06-27 12:00:00+00:00 -> 2022-12-26 19:00:00+00:00 ; test_start 2023-01-01 00:00:00+00:00 ; open4[t+1+H] inner - val_start -4 h ; fin bougie t+1+H train - test_start +0 h ; dernier open validation - test_start -124 h
+(d) fold 6 : train 2019-01-31 00:00:00+00:00 -> 2023-06-25 16:00:00+00:00 ; val 2022-10-22 00:00:00+00:00 -> 2023-06-25 19:00:00+00:00 ; test_start 2023-07-01 00:00:00+00:00 ; open4[t+1+H] inner - val_start -4 h ; fin bougie t+1+H train - test_start +0 h ; dernier open validation - test_start -124 h
+(d) fold 7 : train 2019-01-31 00:00:00+00:00 -> 2023-12-26 16:00:00+00:00 ; val 2023-03-18 08:00:00+00:00 -> 2023-12-26 19:00:00+00:00 ; test_start 2024-01-01 00:00:00+00:00 ; open4[t+1+H] inner - val_start -4 h ; fin bougie t+1+H train - test_start +0 h ; dernier open validation - test_start -124 h
+(d) fold 8 : train 2019-01-31 00:00:00+00:00 -> 2024-06-25 16:00:00+00:00 ; val 2023-09-15 04:00:00+00:00 -> 2024-06-25 19:00:00+00:00 ; test_start 2024-07-01 00:00:00+00:00 ; open4[t+1+H] inner - val_start -4 h ; fin bougie t+1+H train - test_start +0 h ; dernier open validation - test_start -124 h
+(d) fold 9 : train 2019-01-31 00:00:00+00:00 -> 2024-12-26 16:00:00+00:00 ; val 2024-02-09 08:00:00+00:00 -> 2024-12-26 19:00:00+00:00 ; test_start 2025-01-01 00:00:00+00:00 ; open4[t+1+H] inner - val_start -4 h ; fin bougie t+1+H train - test_start +0 h ; dernier open validation - test_start -124 h
+(d) pire cas (heures ; < 0 exigé pour inner/val, <= 0 pour la fin de bougie) : {"inner_label_end_minus_val_start_h": -4.0, "final_label_bar_end_minus_test_start_h": 0.0, "val_open_max_minus_test_start_h": -124.0}
+(d) RÉSULTAT : True

@@ -1,0 +1,36 @@
+HEAD 0f3d75e7e477f8b37e4ba1f1144129bf37e96d45
+pré-enregistrement a0ddea63353a69732e733e9dcfb25e414820cd28 2026-10-04 20:22:50 +0200 P3-exp: pré-enregistrement P3-B5 (bougies 4 h) : configs E29-E39 et code (agg4h, b5, b5_report, corr_b5, pool_b5), avant toute exécution sur données réelles
+résultats 2db2f81f549ad5f6bc2a18fc479f0a39d6fc3cd9 2026-10-04 20:29:45 +0200 P3-exp: résultats P3-B5, essais E29-E39 (bougies 4 h), registre 39 lignes
+a0ddea6 ancêtre de 2db2f81 : True
+experiments/configs/E29.json : blob a0ddea6 9a862c6e8f HEAD 9a862c6e8f ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E30.json : blob a0ddea6 34d1e4e016 HEAD 34d1e4e016 ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E31.json : blob a0ddea6 10fa62e55d HEAD 10fa62e55d ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E32.json : blob a0ddea6 4812bd0c81 HEAD 4812bd0c81 ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E33.json : blob a0ddea6 3f9117ead3 HEAD 3f9117ead3 ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E34.json : blob a0ddea6 5909f8b4fb HEAD 5909f8b4fb ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E35.json : blob a0ddea6 860c69b4f0 HEAD 860c69b4f0 ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E36.json : blob a0ddea6 121996019d HEAD 121996019d ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E37.json : blob a0ddea6 c6a8d07cb8 HEAD c6a8d07cb8 ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E38.json : blob a0ddea6 34cb6a246d HEAD 34cb6a246d ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/configs/E39.json : blob a0ddea6 f33b41621a HEAD f33b41621a ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/agg4h.py : blob a0ddea6 858b815dea HEAD 858b815dea ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/b5.py : blob a0ddea6 3d3d3236bb HEAD 3d3d3236bb ; ajouté en a0ddea6 ; commits après a0ddea6 : [] -> OK
+experiments/b4.py : blob a0ddea6 1e69380b6b HEAD 1e69380b6b ; ajouté en e0249a3 ; commits après a0ddea6 : [] -> OK
+experiments/harness.py : blob a0ddea6 09e0806623 HEAD 09e0806623 ; ajouté en 326f933 ; commits après a0ddea6 : [] -> OK
+diff a0ddea6..HEAD src : aucun
+commits <= a0ddea6 (71 commits) contenant un résultat E29..E39 : []
+date de commit a0ddea6 : 2026-10-04 18:22:50+00:00
+E29.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:23:57.060408+00:00 (info : >= commit pré-enregistrement True) -> OK
+E30.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:23:54.033148+00:00 (info : >= commit pré-enregistrement True) -> OK
+E31.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:23:52.916138+00:00 (info : >= commit pré-enregistrement True) -> OK
+E32.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:23:55.713389+00:00 (info : >= commit pré-enregistrement True) -> OK
+E33.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:23:54.369551+00:00 (info : >= commit pré-enregistrement True) -> OK
+E34.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:23:54.452738+00:00 (info : >= commit pré-enregistrement True) -> OK
+E35.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:23:55.240367+00:00 (info : >= commit pré-enregistrement True) -> OK
+E36.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:23:51.789467+00:00 (info : >= commit pré-enregistrement True) -> OK
+E37.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:24:27.176813+00:00 (info : >= commit pré-enregistrement True) -> OK
+E38.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:24:26.567027+00:00 (info : >= commit pré-enregistrement True) -> OK
+E39.json : commit déclaré a0ddea6 code_dirty False variante base ; ajouté en 2db2f81 ; mtime 2026-10-04 18:28:44.556537+00:00 (info : >= commit pré-enregistrement True) -> OK
+GONOGO.md vs tag gonogo-v2 : identique
+fichiers modifiés a0ddea6..HEAD hors experiments/results, reports/adversarial, tests/adversarial : ['experiments/README.md', 'experiments/REGISTRE.md']
+T9 RÉSULTAT : écarts 0
