@@ -6,11 +6,22 @@
       "Bash(git log:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git tag -l:*)",
+      "Bash(git tag:*)",
+      "Bash(git push:*)",
       "Bash(git check-ignore:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git clone:*)",
+      "Bash(python:*)",
+      "Bash(py:*)",
+      "Bash(pip:*)",
       "Bash(pytest:*)",
-      "Bash(python -m pytest:*)",
-      "Bash(grep:*)"
+      "Bash(.venv/Scripts/python:*)",
+      "Bash(.venv/Scripts/pip:*)",
+      "Bash(.venv/Scripts/pytest:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": [
       "Read(./.env)"
