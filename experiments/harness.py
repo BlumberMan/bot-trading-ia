@@ -530,7 +530,8 @@ def main() -> int:
         line = registry_line(cfg, out, cmd, date)
         with open(REGISTRE, "a", encoding="utf-8", newline="\n") as fh:
             fh.write(line + "\n")
-        log(f"registre : ligne ajoutée ({sum(1 for _ in open(REGISTRE, encoding='utf-8'))} lignes)")
+        n_lines = len(REGISTRE.read_text(encoding="utf-8").splitlines())
+        log(f"registre : ligne ajoutée ({n_lines} lignes)")
     return 0
 
 
