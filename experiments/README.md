@@ -52,3 +52,12 @@ moyen +0,396 (min +0,167, max +0,774), 1 seed sur 5 au-dessus du candidat ; Shar
 (N = 16) = 0,0002. La performance du candidat n'est donc pas distinguable de celle d'une
 procédure à labels aléatoires avec le même mapping (long/flat à faible rotation).
 Aucun essai n'a été choisi sur le test d'un fold ; le registre n'a pas été modifié.
+
+## Brief P3-B3 : E17, procédure emboîtée (`experiments/nested.py`, `experiments/configs/E17.json`)
+Choix, dans chaque fold et sur la seule validation interne au train, parmi l'union exacte des
+16 espaces E01-E16 (fichiers vérifiés par blob git à 970ea49), puis réentraînement de la
+configuration choisie sur tout le train du fold. H multiples : fenêtre de validation commune
+définie avec H=24 (purge du plus grand H) ; règles complètes dans E17.json. Commité avant toute
+exécution sur les données ; évalué une fois sur l'OOS (1 ligne de registre). Auto-test sur
+données synthétiques : `nested.py ... --selftest`. Pièces : `experiments/e17_report.py`
+(importe tests/adversarial/analyse_e10.py sans le modifier).
