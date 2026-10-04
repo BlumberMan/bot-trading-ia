@@ -1,0 +1,25 @@
+HEAD 162ae114bee3eea9033773507b4378f3d4bd091b
+pré-enregistrement e0249a3dc16346550506bd119ead9a3a0f70229e 2026-10-04 17:27:41 +0200 P3-exp: pré-enregistrement P3-B4 (configs E18-E28 + code labels nets / triple barrière, emboîté, corrélations, veto), avant toute exécution sur les données
+résultats 8faaf2aa64494b79d1fab68fd7e09ad0867251c5 2026-10-04 17:45:23 +0200 P3-exp: résultats E18-E28 (registre 28 lignes, JSON, signaux) + corrélations des features
+e0249a3 ancêtre de 8faaf2a : True
+experiments/configs/E18.json : blob e0249a3 1730947fd9 HEAD 1730947fd9 ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E19.json : blob e0249a3 426379871d HEAD 426379871d ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E20.json : blob e0249a3 cc1f2eb5f1 HEAD cc1f2eb5f1 ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E21.json : blob e0249a3 6090c6a48a HEAD 6090c6a48a ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E22.json : blob e0249a3 235ea528aa HEAD 235ea528aa ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E23.json : blob e0249a3 dbee1ed24f HEAD dbee1ed24f ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E24.json : blob e0249a3 9c32a08a73 HEAD 9c32a08a73 ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E25.json : blob e0249a3 e929ac67b9 HEAD e929ac67b9 ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E26.json : blob e0249a3 8812d6e5f2 HEAD 8812d6e5f2 ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E27.json : blob e0249a3 dc9e9da006 HEAD dc9e9da006 ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/configs/E28.json : blob e0249a3 2a9a84628a HEAD 2a9a84628a ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/b4.py : blob e0249a3 1e69380b6b HEAD 1e69380b6b ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+experiments/labels_b4.py : blob e0249a3 c078edca95 HEAD c078edca95 ; ajouté en e0249a3 ; commits après e0249a3 : [] -> OK
+fichiers de résultat E18..E28 présents dans l'arbre de e0249a3 : []
+commits <= e0249a3 contenant un résultat E18..E28 : []
+diff e0249a3..HEAD src : aucun
+diff e0249a3..HEAD experiments/harness.py : aucun
+diff e0249a3..HEAD experiments/extra_features.py : aucun
+GONOGO.md vs tag gonogo-v2 : identique
+fichiers modifiés e0249a3..HEAD hors experiments/results, reports/adversarial, tests/adversarial : ['experiments/README.md', 'experiments/REGISTRE.md']
+T9 RÉSULTAT : écarts 0

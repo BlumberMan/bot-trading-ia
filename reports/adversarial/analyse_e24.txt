@@ -1,0 +1,89 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 (59160 lignes)
+
+=== T0 reproduction (ma relance complète, seed 42) ===
+Sharpe 0.799410 (JSON 0.799410) trades 242 expo 0.403282 DD 0.5841 rdt total 2.0014 ; déclaré 0.79941 : |écart| 2.57e-07
+choix (hp, seuils) par fold identiques au chercheur : [True, True, True, True, True, True, True, True, True]
+B&H Sharpe 0.781489 rdt 2.9275
+importances moyennes (ma base) : vol_168 0.2645, dow_sin 0.2054, sma_dev_168 0.1989, dow_cos 0.0829, ret_168 0.0595, range_24 0.0399, vol_24 0.0382, logvol_z_168 0.0339, ret_24 0.0270, sma_dev_24 0.0178, rsi_14 0.0154, ret_4 0.0060, range_1 0.0054, hour_sin 0.0032, hour_cos 0.0014, ret_1 0.0006
+
+=== T1 labels mélangés, procédure complète ===
+  chercheur seed  1 : Sharpe +0.2529 trades 413 expo 0.701
+  chercheur seed  2 : Sharpe +0.1761 trades 405 expo 0.692
+  chercheur seed  3 : Sharpe +0.1359 trades 470 expo 0.690
+  chercheur seed  4 : Sharpe +0.1806 trades 415 expo 0.720
+  chercheur seed  5 : Sharpe -0.0079 trades 310 expo 0.746
+  chercheur seed  6 : Sharpe +0.1548 trades 415 expo 0.717
+  chercheur seed  7 : Sharpe +0.1780 trades 500 expo 0.685
+  chercheur seed  8 : Sharpe +0.0023 trades 428 expo 0.616
+  chercheur seed  9 : Sharpe +0.0169 trades 509 expo 0.774
+  chercheur seed 10 : Sharpe +0.4769 trades 363 expo 0.759
+  avocat    seed 11 : Sharpe -0.2309 trades 563 expo 0.636
+  avocat    seed 12 : Sharpe -0.2211 trades 391 expo 0.626
+  avocat    seed 13 : Sharpe +0.1063 trades 379 expo 0.674
+  avocat    seed 14 : Sharpe -0.1236 trades 476 expo 0.775
+  avocat    seed 15 : Sharpe +0.2315 trades 447 expo 0.788
+mes 5 seeds : moyenne -0.0476 écart-type 0.2068 max +0.2315
+pool 15 seeds : moyenne +0.0886 écart-type 0.1879 p95 +0.3201 max +0.4769
+E24 +0.7994 : z +3.783 ; seeds >= E24 : 0/15 ; S > p95 : True
+
+[cible] segments 242, barres exposées 16783/41616, position héritée avant 2021 = 0.0
+=== T2 aléatoire (seed 2424, 1000 tirages, 242 segments, expo 0.4033) ===
+trades tirés min/max 241/242 ; Sharpe moyenne 0.0742 p50 0.0709 p95 0.6676 max 1.2153 ; E24 percentile 98.4
+
+=== T2b B&H même exposition ===
+B&H fractionnaire constant 0.4033 : Sharpe 0.7917 rdt +1.1445 DD 0.4182 | E24 Sharpe 0.7994 rdt +2.0014 DD 0.5841
+plan par fold (barres, segments, barres exposées) : [(4344, 10, 349), (4416, 30, 3213), (4344, 44, 1491), (4416, 21, 1129), (4344, 25, 1518), (4416, 23, 1866), (4368, 25, 1843), (4416, 27, 2699), (6552, 39, 2675)]
+stratifié par fold (seed 2425, 1000 tirages) : moyenne 0.1852 p95 0.7060 ; E24 percentile 97.6
+
+=== T3/T4 signal E24 figé (modèles et seuils inchangés) ===
+exec_delay=2  : Sharpe +0.6400 (80 % de S) trades 242 DD 0.6212 rdt +1.2649
+coûts x2      : Sharpe +0.3957 (50 % de S) trades 242 DD 0.6640 rdt +0.4520
+coûts x3      : Sharpe -0.0059 (-1 % de S) trades 242 DD 0.7389 rdt -0.2983
+(features retardées d'une bougie, modèles et seuils figés = signal décalé d'une bougie = exec t+2 ci-dessus)
+
+=== T3/T4/T6a/C1/C2 procédure b4 re-tunée (mes relances) ===
+delay2          : Sharpe +0.8763 (110 % de S) trades 248 expo 0.381 DD 0.5530 rdt +2.4055 folds>0 7/9 ; Sharpe/fold 0.454;1.931;-1.657;-1.613;2.107;1.520;1.101;1.786;1.830 ; top feature vol_168
+featlag1        : Sharpe +0.4987 (62 % de S) trades 271 expo 0.373 DD 0.6510 rdt +0.7457 folds>0 7/9 ; Sharpe/fold 0.716;1.149;-2.575;-0.761;2.494;1.621;0.536;0.733;1.083 ; top feature vol_168
+cost2           : Sharpe +0.3581 (45 % de S) trades 235 expo 0.403 DD 0.6234 rdt +0.3565 folds>0 7/9 ; Sharpe/fold 0.289;1.594;-1.449;-2.285;1.757;0.711;0.322;1.583;0.255 ; top feature vol_168
+cost3           : Sharpe +0.0572 (7 % de S) trades 228 expo 0.421 DD 0.6979 rdt -0.2179 folds>0 6/9 ; Sharpe/fold 0.098;1.320;-2.046;-2.645;1.293;0.607;-0.004;1.209;0.213 ; top feature vol_168
+drop_vol_168    : Sharpe +0.0128 (2 % de S) trades 293 expo 0.542 DD 0.8197 rdt -0.3265 folds>0 6/9 ; Sharpe/fold 1.384;-0.310;-2.883;-2.233;1.829;1.381;0.242;1.459;0.245 ; top feature dow_sin
+only_vol168     : Sharpe -0.0619 (-8 % de S) trades 102 expo 0.435 DD 0.7276 rdt -0.2946 folds>0 4/9 ; Sharpe/fold -0.250;-0.409;-3.532;0.279;2.118;-0.300;-0.396;1.853;1.243 ; top feature vol_168
+rule_vol        : Sharpe +0.5739 (72 % de S) trades 33 expo 0.510 DD 0.5447 rdt +1.1041 folds>0 6/9 ; Sharpe/fold 0.949;-0.703;0.207;-0.377;1.459;2.085;2.348;-0.126;0.327 ; top feature vol_168
+tbdir           : Sharpe +0.3229 (40 % de S) trades 173 expo 0.345 DD 0.6586 rdt +0.2820 folds>0 7/9 ; Sharpe/fold 1.025;0.600;-2.877;-2.335;2.177;0.925;0.196;0.937;0.596 ; top feature sma_dev_168
+tbfixed         : Sharpe +0.5609 (70 % de S) trades 122 expo 0.355 DD 0.6856 rdt +1.0414 folds>0 7/9 ; Sharpe/fold 0.563;2.085;-1.316;-0.680;1.494;0.642;1.293;2.935;0.379 ; top feature range_24
+nodow           : Sharpe +0.2517 (31 % de S) trades 296 expo 0.622 DD 0.7582 rdt +0.0590 folds>0 6/9 ; Sharpe/fold -0.589;1.698;-1.677;-2.315;1.849;1.083;0.874;1.405;0.378 ; top feature vol_168
+dowplac51       : Sharpe +0.6011 (75 % de S) trades 216 expo 0.483 DD 0.5645 rdt +1.1002 folds>0 6/9 ; Sharpe/fold -0.549;0.253;-1.699;-1.389;2.310;1.344;1.771;0.842;1.044 ; top feature vol_168
+dowplac52       : Sharpe +0.1394 (17 % de S) trades 249 expo 0.494 DD 0.7301 rdt -0.1042 folds>0 6/9 ; Sharpe/fold 0.090;0.381;-2.660;-1.751;1.698;0.807;1.311;1.442;-0.510 ; top feature vol_168
+dowplac53       : Sharpe +0.5129 (64 % de S) trades 285 expo 0.609 DD 0.7065 rdt +0.8457 folds>0 6/9 ; Sharpe/fold -0.513;1.792;-2.541;-2.153;2.736;0.890;2.075;0.764;0.374 ; top feature vol_168
+placebo jour de semaine : moyenne +0.4178 (52 % de S)
+  (chercheur delay2 : +0.8763)
+  (chercheur featlag1 : +0.4987)
+  (chercheur cost2 : +0.3581)
+  (chercheur cost3 : +0.0572)
+  (chercheur drop_vol_168 : +0.0128)
+
+=== C1e décomposition de l'AUC OOS des probas E24 (ma base) ===
+OOS 2021-01 -> 2025-09 : AUC(label) 0.6275 (n 40295) ; AUC(hit) 0.6321 (n 40295, taux hit 0.4063) ; AUC(direction | hit) 0.5455 (n 16372, taux haut d'abord 0.5014)
+règle -vol_168 sur les mêmes lignes : AUC(label) 0.5525 ; AUC(hit) 0.5469 ; AUC(direction | hit) 0.5282
+Spearman(proba E24, -vol_168) OOS : 0.4234
+
+=== T5a par année (signal continu, position héritée) ===
+2021 : E24 Sharpe +1.3278 rdt +0.6541 trades 40 expo 0.407 | B&H Sharpe +0.9777 rdt +0.5931
+2022 : E24 Sharpe -1.2054 rdt -0.4180 trades 65 expo 0.299 | B&H Sharpe -1.2928 rdt -0.6432
+2023 : E24 Sharpe +1.6962 rdt +0.6370 trades 48 expo 0.386 | B&H Sharpe +2.3425 rdt +1.5485
+2024 : E24 Sharpe +1.4374 rdt +0.6577 trades 52 expo 0.517 | B&H Sharpe +1.7510 rdt +1.2064
+2025 : E24 Sharpe +0.8190 rdt +0.1489 trades 39 expo 0.408 | B&H Sharpe +0.8293 rdt +0.2140
+
+=== T5b par régime a priori (mois civil B&H : hausse > +5 %, baisse < -5 %, range sinon) ===
+hausse : 27 mois, 823 jours | E24 Sharpe +2.9830 rdt composé +10.1261 | B&H Sharpe +3.6113 rdt composé +79.5458
+baisse : 18 mois, 547 jours | E24 Sharpe -1.6748 rdt composé -0.6930 | B&H Sharpe -2.6954 rdt composé -0.9486
+range  : 12 mois, 364 jours | E24 Sharpe -0.3072 rdt composé -0.1212 | B&H Sharpe +0.1208 rdt composé -0.0519
+
+=== T6b sans le meilleur mois ===
+meilleur mois E24 : 2024-11 rdt +0.4138 ; top 3 : 2024-11 +0.4138, 2024-02 +0.3036, 2021-10 +0.3001
+Sharpe sans les jours du meilleur mois : 0.6170 (77 % de S) ; sans les 3 meilleurs mois : 0.3190
+
+=== T7 Sharpe déflaté (Bailey & López de Prado 2014), recalcul indépendant ===
+N = 28 lignes (ids E01..E28) ; V = 2.714584e-03 ; SR0 journalier 0.106537 (annualisé 2.0354)
+SR journalier E24 0.041843 ; T 1734 ; skew 0.5114 ; kurtosis 13.7737 ; DSR = 0.003317 ; PSR(0) = 0.960441
+(sensibilité) V sur E04-E28 seulement = 1.960987e-04 ; SR0 annualisé 0.5471 ; DSR = 0.710301
