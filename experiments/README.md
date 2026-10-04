@@ -43,4 +43,12 @@ Les tests « labels mélangés » et les relances de reproductibilité ne sont p
 (aucune configuration nouvelle, aucun choix) : fichiers `results/<ID>_shuf<seed>.json`, hors registre.
 
 ## Décision finale
-(à compléter à la fin du brief P3-B2)
+Brief P3-B2 : 16 essais (E01-E16) sur 20 autorisés, arrêt volontaire (plateau 0,53-0,67 sur les
+variantes régularisées H=24).
+Règle appliquée : candidat = E10 (Sharpe net OOS concaténé +0,6695 > baseline -0,5297 sur les
+mêmes folds). Configuration : `experiments/configs/E10.json`, résultat `results/E10.json`.
+Réserves mesurées (`candidate_report.py`) : test labels mélangés, 5 seeds, Sharpe OOS concaténé
+moyen +0,396 (min +0,167, max +0,774), 1 seed sur 5 au-dessus du candidat ; Sharpe déflaté
+(N = 16) = 0,0002. La performance du candidat n'est donc pas distinguable de celle d'une
+procédure à labels aléatoires avec le même mapping (long/flat à faible rotation).
+Aucun essai n'a été choisi sur le test d'un fold ; le registre n'a pas été modifié.
