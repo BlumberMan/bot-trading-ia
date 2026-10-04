@@ -11,6 +11,16 @@
 | NOUVEAU CYCLE GONOGO (Iyad) | 2026-10-04 | GONOGO v2 commité et tagué par Iyad (68eeb61) : section D « périmètre de calcul », aucun seuil v1 modifié ; intégrité désormais vérifiée contre gonogo-v2 | gonogo-v2 (posé par Iyad) |
 | P3-B3 / R3 | 2026-10-04 | rapport reçu (E17, Sharpe OOS 0,236) ; avocat P3-A2 interrompu par le plantage de session, en reprise ; pas encore de verdict | — |
 | P3-B3 / R3 / A2 / V3 | 2026-10-04 | INVALIDE (2/3 d'affilée ; P3-V1 était VALIDE) : candidat E17 ; VETO tests adversariaux 1, 2, 7 ; KO C3-07 (labels mélangés z +0,065 sur 15 seeds), C3-10 (9 failles), C3-12 (DSR 0,000006) ; C0-08 levé sur la procédure. Archive : reports/adversarial/P3-A2_E17_verdict_P3-V3.md | — |
+| P3-B4 / R4 / A3 / V4 | 2026-10-04 | INVALIDE (3/3 d'affilée → STOP, décision d'Iyad requise) : candidat E24 (triple barrière H=24, Sharpe OOS 0,799) ; T1 et T2 résistent ; VETO T7 (DSR 0,0033) ; KO C3-10 (6 failles), C3-08 (vol_168 circulaire, jour de semaine), C3-09 (écart IS/OOS). Archive : reports/adversarial/P3-A3_E24_verdict_P3-V4.md | — |
+
+## Récap palier 3 au STOP (2026-10-04)
+- Registre : 28 essais sur 60 (E01–E28). Aucun candidat validé. Données réservées jamais lues.
+- E10 (Sharpe 0,669, conception guidée par l'OOS) : rejeté (labels mélangés, aléatoire, DSR).
+- E17 (procédure emboîtée sur E01–E16, 0,236) : ne se distingue pas du hasard.
+- E24 (triple barrière vol, 0,799 ; B&H 0,781) : passe labels mélangés (z +3,8) et aléatoire (98,4e pct) mais DSR 0,0033 (SR0 annualisé 2,04 avec N=28) ; avantage surtout sur « barrière touchée » (volatilité), pas sur la direction ; dépend de vol_168 et du jour de semaine.
+- Corrélations > 0,9 : vol_24/range_24, ret_24/ret_24_z (variantes élaguées E22, E26 moins bonnes).
+- Contraintes en vigueur : gonogo-v2, 9 cœurs max, veto absolu T1/T2/T7, archivage adversarial.
+- Prochaine étape : décision d'Iyad sur la suite du palier 3.
 
 ## Récap palier 0a (2026-10-04)
 - État : infra en place, package `bot` 0.0.1 (code dans src/), commit d8f1f11.
