@@ -76,3 +76,58 @@ du holdout n'est lue.
   évaluées ; elles peuvent servir de contexte de calcul des features).
 - Normalisation : `StandardScaler` (numpy), moyenne et écart-type (ddof = 0) ajustés uniquement sur
   le train du fold (`fit`), appliqués tels quels au test (`transform`). Écart-type nul → 1.
+
+## Funding du perpétuel BTCUSDT (palier 3, P3-B6)
+
+Code : `src/bot/funding.py`, `scripts/build_funding.py`, `scripts/check_funding.py`. Le funding ne
+sert que de feature : on trade toujours le spot, long / flat.
+
+- Source : archives mensuelles publiques `data/futures/um/monthly/fundingRate/BTCUSDT/` sur
+  data.binance.vision, SHA256 vérifié par `.CHECKSUM` (logique `bot.data.fetch_archive` réutilisée).
+  Pas de repli journalier : une archive mensuelle absente (404) fait échouer le build.
+- Période : 2020-01 → 2026-08. Le contrat date de 2019-09, mais les archives 2019-09 → 2019-12
+  n'existent pas (404 constaté le 2026-10-05) : première archive = 2020-01.
+- Colonnes des archives : `calc_time` (→ `fundingTime`, UTC, ms ou µs détecté),
+  `last_funding_rate` (→ `fundingRate`, float64), `funding_interval_hours`. Pas de prix de
+  marquage dans ces archives (colonne `markPrice` conservée si elle apparaît).
+- Nettoyage : tri, doublons de `fundingTime` supprimés et comptés, intervalles contrôlés (8 h
+  attendues ; écarts > 1 s listés, gigue de quelques ms comptée à part), valeurs |rate| > 0,01
+  comptées et conservées. Sortie : `data/processed/btcusdt_funding.parquet`.
+- Verrou : `load_funding()` ne renvoie que les règlements avec `fundingTime <= DEV_END`
+  (2025-09-30 23:00 UTC). `load_funding(..., allow_holdout=True)` (strictement `True`) donne
+  aussi la période réservée. `assert_no_holdout(df)` lève `HoldoutAccessError` sinon.
+
+### Règle de disponibilité (alignement 1 h)
+
+La bougie `t` (index `open_time`) clôture à `t + 1 h`. À la clôture de `t`, le taux utilisable est
+celui du **dernier règlement avec `fundingTime <= t + 1 h`** (`funding_on_grid`). Jamais de
+règlement avec `fundingTime > t + 1 h` ; NaN avant le premier règlement. `age_h` = délai en heures
+entre ce règlement et `t + 1 h`.
+Exemples : le règlement de 08:00:00.000 est utilisable à la clôture de la bougie 07:00 ; un
+règlement horodaté 08:00:00.002 (gigue présente dans les archives) ne l'est qu'à la clôture de la
+bougie 08:00. Pas d'arrondi des horodatages.
+
+### Features de funding
+
+Fenêtres comptées en **règlements** (pas en bougies). La valeur à la bougie `t` est celle calculée
+au dernier règlement disponible `i` (règle ci-dessus) sur les règlements `[i-n+1, i]`.
+Décalage = 0 en règlements ; en bougies, la valeur ne change qu'à la bougie dont la clôture suit
+un nouveau règlement. NaN si moins de `n` règlements ou NaN dans la fenêtre.
+
+| feature | formule | fenêtre (règlements) | durée nominale |
+|---|---|---|---|
+| fr_cur | r[i] | 1 | 8 h |
+| fr_mean3 | sum(r[i-2..i]) / 3 | 3 | 1 jour |
+| fr_mean21 | sum(r[i-20..i]) / 21 | 21 | 7 jours |
+| fr_z90 | (r[i] − m) / s, m = sum(r[i-89..i]) / 90, s = écart-type ddof = 1 ; NaN si s ≤ 1e-12 | 90 | 30 jours |
+| fr_sum21 | sum(r[i-20..i]) | 21 | 7 jours |
+| fr_age_h | (t + 1 h − fundingTime[i]) en heures | – | – |
+
+`s ≤ 1e-12` → NaN : les taux sont publiés à 1e-8 près ; une fenêtre constante (ex. 90 × 0,0001)
+donne un écart-type non nul de l'ordre de 1e-20 par arrondi flottant, qui produirait un z-score
+arbitraire.
+
+Cœur unique `funding_features_core(rates)` (lit les `FUNDING_LOOKBACK = 90` derniers taux), appelé
+en lot par `funding_features(funding, index_1h)` (règlement par règlement) et en direct par
+`funding_features_live(recent, t)` (règlements récents ; ceux avec `fundingTime > t + 1 h` sont
+ignorés). Égalité live = lot vérifiée bit à bit (`tests/test_funding.py`, `scripts/check_funding.py`).

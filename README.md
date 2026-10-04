@@ -37,6 +37,8 @@ retéléchargées) :
 .venv\Scripts\python scripts\show_folds.py            # folds walk-forward (dev uniquement)
 ```
 
+Construire le funding BTCUSDT USDⓈ-M (archives mensuelles 2020-01 → 2026-08, `data/processed/btcusdt_funding.parquet`) : `.venv\Scripts\python scripts\build_funding.py` puis `.venv\Scripts\python scripts\check_funding.py`.
+
 Définition des features et labels : `docs/features.md`.
 
 Baseline SMA168 et buy & hold sur les 9 folds dev (règles : `docs/baseline.md`, résultats : `results/baseline_metrics.json`) : `.venv\Scripts\python scripts\run_baseline.py`
