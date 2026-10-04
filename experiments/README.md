@@ -61,3 +61,8 @@ définie avec H=24 (purge du plus grand H) ; règles complètes dans E17.json. C
 exécution sur les données ; évalué une fois sur l'OOS (1 ligne de registre). Auto-test sur
 données synthétiques : `nested.py ... --selftest`. Pièces : `experiments/e17_report.py`
 (importe tests/adversarial/analyse_e10.py sans le modifier).
+Résultat (brief P3-B3, 1 essai E17, aucune correction E18-E21) : Sharpe net OOS concaténé +0,2359
+(baseline -0,5297, B&H +0,7815), 315 trades, 6/9 folds > 0. Règle JOURNAL : E17 est le seul essai
+du brief et dépasse la baseline -> candidat du brief. Réserves mesurées (`e17_report.py`) : labels
+mélangés 10 seeds moyenne +0,174 (z de E17 +0,185) ; aléatoire mêmes trades/expo percentile 66,2 ;
+B&H fractionnaire même expo 0,789 ; DSR (N = 17) 0,000006.
