@@ -42,7 +42,9 @@
 - Prochaine étape : STOP demandé par Iyad avant le palier 3.
 
 ## Consignes d'Iyad en cours
-- 2026-10-04 — STOP obligatoire après la validation du palier 2, avant de lancer le palier 3 (Iyad ajoute des sous-agents).
+- 2026-10-04 — STOP obligatoire après la validation du palier 2, avant de lancer le palier 3 (Iyad ajoute des sous-agents). LEVÉ : agents chercheur-ml et avocat-du-diable ajoutés (c5dd5e2), garde corrigé ; palier 3 lancé en autonomie jusqu'au prochain point critique.
+- Palier 3 : budget 20 essais par brief, 60 au total (CLAUDE.md). Afficher à titre informatif chaque résultat comparé au buy & hold sur les mêmes folds (pas un critère GONOGO).
+- Rappel : données réservées au palier 4 (holdout) = 2025-10-01 00:00 → 2026-08-31 23:00 UTC (la ligne "Découpage" ci-dessous est corrigée par la ligne "Correction de la décision Période").
 
 ## Décisions non critiques (prises en autonomie)
 - 2026-10-04 — Source de données : klines publiques Binance spot BTCUSDT (data.binance.vision). Gratuit, sans clé API, historique long, liquidité maximale ; le broker réel sera choisi au palier 5.
@@ -56,4 +58,7 @@
 - 2026-10-04 — Palier 2, coûts provisoires : 0,10 % de frais (tarif taker standard Binance spot) + 0,05 % de spread/slippage, soit 0,15 % par côté, par unité de position échangée. Hypothèse prudente ; les coûts seront sourcés et affinés au palier 4.
 - 2026-10-04 — Palier 2, baseline : long si close[t] > SMA168(close)[t], sinon flat ; décidé à la clôture de t, exécuté à l'ouverture de t+1. Paramètre 168 fixé a priori (1 semaine), sans aucune optimisation. Benchmark buy & hold sur la même période, avec les mêmes coûts.
 - 2026-10-04 — Palier 2, évaluation : uniquement sur les 9 folds de test de la période dev (concaténés : 2021-01-01 → 2025-09-30). Le holdout n'est pas touché.
+- 2026-10-04 — Palier 3, déroulé : (1) implémenteur ajoute les dépendances ML ; (2) chercheur-ml explore (≤ 20 essais/brief) ; (3) avocat-du-diable sur le candidat ; (4) contrôleur ; (5) si VALIDE, implémenteur intègre le candidat dans src/ avec tests, reproduction à l'identique, nouvel avocat + contrôleur, puis tag palier-3.
+- 2026-10-04 — Palier 3, comparaison à la baseline : positions du modèle concaténées sur les 9 folds puis un seul backtest continu (même moteur, même coût 0,15 %/côté, même traitement des débuts de fenêtre que la baseline), métriques par fold calculées comme dans run_baseline.py. Corrige l'asymétrie AT-1 de P2-V1 : modèle et baseline sont traités de la même façon.
+- 2026-10-04 — Palier 3, définition d'un essai : une configuration (modèle + features + label + procédure de tuning) évaluée sur les 9 folds OOS = 1 ligne de REGISTRE.md. Le tuning interne au train (validation temporelle purgée dans le train) fait partie de la procédure ; la taille de sa grille est notée dans la ligne.
 - 2026-10-04 — Features à fenêtre finie uniquement (pas d'EMA à mémoire infinie) pour que le calcul live sur une fenêtre glissante soit exactement égal au calcul backtest.
