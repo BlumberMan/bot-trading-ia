@@ -20,8 +20,14 @@
 - Iyad a élargi les permissions (ffee3ee) et autorisé le travail autonome jusqu'au prochain point critique, avec `git push origin main --tags` à chaque palier validé.
 - Prochaine étape : palier 1, données et features.
 
+## Consignes d'Iyad en cours
+- 2026-10-04 — STOP obligatoire après la validation du palier 2, avant de lancer le palier 3 (Iyad ajoute des sous-agents).
+
 ## Décisions non critiques (prises en autonomie)
 - 2026-10-04 — Source de données : klines publiques Binance spot BTCUSDT (data.binance.vision). Gratuit, sans clé API, historique long, liquidité maximale ; le broker réel sera choisi au palier 5.
 - 2026-10-04 — Taille de bougie : 1h. Compromis : assez de trades pour viser ≥ 200 trades OOS, coûts par trade moins pénalisants qu'en 1-15 min, latence de calcul non critique.
 - 2026-10-04 — Période : 2019-01-01 → dernier mois complet disponible. Couvre plusieurs régimes (bear 2019/2022, bull 2020-21/2024) ; avant 2019 la microstructure est trop différente.
 - 2026-10-04 — Stockage : fichiers bruts dans data/raw/ (ignoré par git), dataset nettoyé en Parquet (pyarrow ajouté aux dépendances), checksums des fichiers bruts vérifiés.
+- 2026-10-04 — Découpage : période de développement 2019-01-01 → 2025-09-30 (walk-forward, 9 folds de test semestriels à partir de 2021-01-01, fenêtre d'entraînement croissante) ; holdout final 2025-10-01 → 2026-09-30 réservé au palier 4, inaccessible sans flag explicite. Permet de respecter C4-03 (jeu OOS final jamais utilisé avant).
+- 2026-10-04 — Labels : signal à la clôture de t, exécution à l'ouverture de t+1 ; label = 1 si open[t+1+H] > open[t+1], H = 4 bougies. Purge = H+1 bougies, embargo = 24 bougies.
+- 2026-10-04 — Features à fenêtre finie uniquement (pas d'EMA à mémoire infinie) pour que le calcul live sur une fenêtre glissante soit exactement égal au calcul backtest.
