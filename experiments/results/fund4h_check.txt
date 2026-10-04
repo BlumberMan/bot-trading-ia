@@ -1,0 +1,26 @@
+=== 1. Tests sur données SYNTHÉTIQUES (b7.funding_selftest) ===
+[funding 4 h règle] 300 bougies : fr_cur(T) = taux du dernier règlement fundingTime <= T+4h : 300/300
+[funding 4 h bornes] règlement à T+4h -> utilisé à T : True ; à T+4h+1 ms -> non utilisé à T : True
+[funding 4 h anti-fuite] 40 bougies T : règlements fundingTime > T+4h modifiés / supprimés -> features <= T identiques : 40/40 ; sensibilité (dernier règlement <= T+4h +0,001) : 40/40
+[funding 4 h direct = lot] 200 bougies : direct (90 derniers règlements connus à T+4h) bit à bit = lot 200/200 ; direct avec règlements futurs fournis (ignorés) = lot 200/200
+[placebo] permutation par blocs de 30 jours : mêmes taux (multiensemble) True ; part déplacée 1.000 ; horodatages inchangés True
+
+=== 2. Données dev réelles ===
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+[garde funding] fundingTime max lu = 2025-09-30 16:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (6300 règlements, min 2020-01-01 00:00:00+00:00)
+règlements 6300 (2020-01-01 00:00:00+00:00 -> 2025-09-30 16:00:00+00:00) ; horodatés après l'heure pile (gigue, utilisés à la clôture 4 h suivante) : 2722
+fr_age_h aux bougies 4 h (heures entre le règlement utilisé et la clôture) : valeurs arrondies {0.0: np.int64(3578), 4.0: np.int64(6300), 8.0: np.int64(2723)}
+bougies 4 h avec fu défini : 12423/14790 ; première 2020-01-30 12:00:00+00:00
+direct = lot (données dev, 2000 bougies 4 h tirées seed 20261005, 90 derniers règlements connus à T+4h) : 2000/2000 bit à bit
+
+=== 3. Couverture par fold (part des bougies 4 h avec les 4 features fu définies) ===
+fold | train (split_fold horizon 123 h) : bougies 4 h, avec fu, part | test : bougies 4 h, avec fu, part
+   1 |   4355   1988 0.4565 |  1086  1086 1.0000
+   2 |   5441   3074 0.5650 |  1104  1104 1.0000
+   3 |   6545   4178 0.6383 |  1086  1086 1.0000
+   4 |   7631   5264 0.6898 |  1104  1104 1.0000
+   5 |   8735   6368 0.7290 |  1086  1086 1.0000
+   6 |   9821   7454 0.7590 |  1104  1104 1.0000
+   7 |  10925   8558 0.7833 |  1092  1092 1.0000
+   8 |  12017   9650 0.8030 |  1104  1104 1.0000
+   9 |  13121  10754 0.8196 |  1638  1638 1.0000

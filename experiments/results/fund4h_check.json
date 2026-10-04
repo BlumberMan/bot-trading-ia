@@ -1,0 +1,71 @@
+{
+ "n_settlements": 6300,
+ "late_settlements": 2722,
+ "first_fu_bar": "2020-01-30T12:00:00+00:00",
+ "live_eq": 2000,
+ "coverage": [
+  {
+   "fold": 1,
+   "train_bars": 4355,
+   "train_fu": 1988,
+   "test_bars": 1086,
+   "test_fu": 1086
+  },
+  {
+   "fold": 2,
+   "train_bars": 5441,
+   "train_fu": 3074,
+   "test_bars": 1104,
+   "test_fu": 1104
+  },
+  {
+   "fold": 3,
+   "train_bars": 6545,
+   "train_fu": 4178,
+   "test_bars": 1086,
+   "test_fu": 1086
+  },
+  {
+   "fold": 4,
+   "train_bars": 7631,
+   "train_fu": 5264,
+   "test_bars": 1104,
+   "test_fu": 1104
+  },
+  {
+   "fold": 5,
+   "train_bars": 8735,
+   "train_fu": 6368,
+   "test_bars": 1086,
+   "test_fu": 1086
+  },
+  {
+   "fold": 6,
+   "train_bars": 9821,
+   "train_fu": 7454,
+   "test_bars": 1104,
+   "test_fu": 1104
+  },
+  {
+   "fold": 7,
+   "train_bars": 10925,
+   "train_fu": 8558,
+   "test_bars": 1092,
+   "test_fu": 1092
+  },
+  {
+   "fold": 8,
+   "train_bars": 12017,
+   "train_fu": 9650,
+   "test_bars": 1104,
+   "test_fu": 1104
+  },
+  {
+   "fold": 9,
+   "train_bars": 13121,
+   "train_fu": 10754,
+   "test_bars": 1638,
+   "test_fu": 1638
+  }
+ ]
+}

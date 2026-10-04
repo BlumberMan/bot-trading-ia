@@ -1,0 +1,9 @@
+--- 8 tâches, 8 workers
+rc=0    38.0s experiments/configs/E42.json
+rc=0    40.1s experiments/configs/E40.json
+rc=0    40.0s experiments/configs/E41.json
+rc=0    42.0s experiments/configs/E43.json
+rc=0    42.0s experiments/configs/E44.json
+rc=0    42.0s experiments/configs/E45.json
+rc=0    44.0s experiments/configs/E46.json
+rc=0    92.0s experiments/configs/E47.json
