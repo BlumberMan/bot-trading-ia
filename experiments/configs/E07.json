@@ -1,0 +1,1 @@
+{"id": "E07", "seed": 42, "model": "hgb", "features": "base", "horizon": 24, "grid": {"max_iter": [200, 500], "learning_rate": [0.02], "max_leaf_nodes": [7, 31], "min_samples_leaf": [200, 1000], "l2_regularization": [1.0]}, "mapping": {"enter": [0.52, 0.55, 0.58], "exit_gap": [0.0, 0.03, 0.06], "min_hold": [0, 12, 24]}}
