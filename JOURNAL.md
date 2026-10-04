@@ -3,6 +3,7 @@
 |---|---|---|---|
 | P0a-B1 / R1 / V1 | 2026-10-04 | VALIDE | palier-0a |
 | P0b-B1 / R1 / V1 | 2026-10-04 | VALIDE | gonogo-v1 (posé par Iyad) |
+| P1-B1 / R1 / V1 | 2026-10-04 | INVALIDE (1/3) : A1, archive mensuelle 2026-09 absente (404), remplacée par 30 journalières sans décision du brief | — |
 
 ## Récap palier 0a (2026-10-04)
 - État : infra en place, package `bot` 0.0.1 (code dans src/), commit d8f1f11.
@@ -30,4 +31,5 @@
 - 2026-10-04 — Stockage : fichiers bruts dans data/raw/ (ignoré par git), dataset nettoyé en Parquet (pyarrow ajouté aux dépendances), checksums des fichiers bruts vérifiés.
 - 2026-10-04 — Découpage : période de développement 2019-01-01 → 2025-09-30 (walk-forward, 9 folds de test semestriels à partir de 2021-01-01, fenêtre d'entraînement croissante) ; holdout final 2025-10-01 → 2026-09-30 réservé au palier 4, inaccessible sans flag explicite. Permet de respecter C4-03 (jeu OOS final jamais utilisé avant).
 - 2026-10-04 — Labels : signal à la clôture de t, exécution à l'ouverture de t+1 ; label = 1 si open[t+1+H] > open[t+1], H = 4 bougies. Purge = H+1 bougies, embargo = 24 bougies.
+- 2026-10-04 — Correction de la décision "Période" (suite P1-V1) : fin des données ramenée au 2026-08-31 23:00 UTC, dernier mois publié en archive mensuelle sur data.binance.vision (2026-09 en 404 le 2026-10-04). Archives mensuelles uniquement, pas de repli sur les journalières : un clone propre reconstruit le même fichier. Le holdout devient 2025-10-01 → 2026-08-31 (11 mois) ; la période dev et les 9 folds ne changent pas. Le holdout n'a fait l'objet d'aucune statistique de rendement, donc ce changement n'introduit aucun biais.
 - 2026-10-04 — Features à fenêtre finie uniquement (pas d'EMA à mémoire infinie) pour que le calcul live sur une fenêtre glissante soit exactement égal au calcul backtest.
