@@ -12,6 +12,8 @@ dependencies = [
     "numpy",
     "pandas",
     "pyarrow",
+    "scikit-learn",
+    "lightgbm",
 ]
 
 [project.optional-dependencies]
