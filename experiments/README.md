@@ -120,3 +120,31 @@ concaténé +1,1751, 48 trades, 8/9 folds > 0 ; B&H +0,7815). Tests du veto (`b5
 E36 T1 z +4,17 (0/10 seeds >= E36), T2 percentile 98,9 (stratifié 99,8), T7 DSR (N = 39) 0,0456 < 0,95.
 Aucun des 11 essais n'a un DSR >= 0,95. Batterie E36 : `results/E36_veto.txt` (variantes `results/E36_<var>.json`),
 reproductibilité `results/repro/E36_run2.json` (seul le champ commit diffère). Corrélations : `results/corr_b5.txt`.
+
+## Brief P3-B7 : apport du funding (bougies 4 h), E40-E47
+Pré-enregistrement : configurations `experiments/configs/E40.json` … `E47.json` et code (`b7.py`, `b7_report.py`,
+`fund4h_check.py`, `corr_b7.py`, `pool_b7.py`) commités ensemble AVANT toute exécution sur les données réelles ; seul
+l'auto-test sur données synthétiques a tourné avant (`b7.py --selftest`). Aucune configuration ajoutée ou modifiée après
+un résultat. `src/bot/funding.py` est utilisé sans modification (load_funding() par défaut, verrouillé à DEV_END).
+- Funding sur la grille 4 h (docstring de `b7.py`) : valeur à la bougie 4 h T = `funding_features` (grille 1 h) à T+3h,
+  soit le dernier règlement avec fundingTime <= T + 4 h (clôture de T). Tests : `b7.py --selftest` / `fund4h_check.py`
+  (règle, bornes, anti-fuite, direct = lot synthétique et dev réel, couverture par fold).
+- Features de funding au modèle, jeu « fu » fixé a priori : fr_cur, fr_mean3, fr_mean21, fr_z90. Exclues a priori :
+  fr_sum21 (= 21 x fr_mean21) et fr_age_h (fonction de l'heure : feature calendaire, exclue comme dans f4).
+- Lignes : toutes les configurations n'utilisent que les lignes où fu est défini (à partir de ~2020-01-31), y compris
+  les versions « f4 seul » : chaque paire a les mêmes lignes, hp, mapping et période de train.
+- LABELS REPRIS DE P3-B5, CHOISIS AU VU DE L'OOS DE P3-B5 (déclaré ; le DSR utilise N = lignes du registre) :
+  triple barrière fixe H=30 ±0,061901 (label de E36), net de coûts H=30 (E31), triple barrière vol H=6 (E32).
+- E40 / E41 : TB fixe H=30, f4 seul / f4 + fu. E42 / E43 : net H=30, f4 / f4 + fu. E44 / E45 : TB vol H=6, f4 / f4 + fu.
+  E46 : fu seul, label de E36. E47 : procédure emboîtée sur E41, E43, E45 (validation commune H=30, comme E39).
+  Grille hp et mapping de P3-B5 (8 hp x 36 mappings = 288 couples par fold), LightGBM n_jobs=1 deterministic, seed 42.
+- Registre : essais lancés en parallèle par `pool_b7.py` (9 workers max, 1 thread chacun) sans écrire au registre ;
+  lignes ajoutées ensuite une par une (`b7.py --register EXX`), 19 « | » par ligne, budget registre <= 49.
+- Tests du veto pour chaque essai éligible (`b7_report.py --id EXX`) : T1 labels mélangés 10 seeds ; T2 aléatoire
+  mêmes trades / même exposition, 1000 tirages, grille 1 h (analyse_e10) ET grille 4 h non stratifiée et stratifiée par
+  fold (fonctions de tests/adversarial/analyse_e36.py) : FAILLE si l'un des percentiles <= 95 ; T7 DSR, N = lignes du
+  registre. Candidat (`--full`) : batterie de P3-B5 (b5_report --full) + barrières x0,8 / x1,2 (FAILLE si Sharpe <= 0
+  ou < 0,5 S) + placebo de funding fplac1..3 (taux permutés par blocs de 30 jours ; FAILLE si la moyenne >= 0,75 S) +
+  essai apparié sans funding. Corrélations : `corr_b7.py`. Paires et tableaux : `b7_report.py --pairs`.
+- Règle de choix inchangée (JOURNAL.md) : candidat = Sharpe net OOS concaténé le plus élevé parmi E40-E47, s'il dépasse
+  la baseline (-0,530) ; sinon aucun candidat.

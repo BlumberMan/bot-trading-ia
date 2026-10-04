@@ -1,0 +1,34 @@
+{
+ "id": "E47",
+ "brief": "P3-B7",
+ "procedure": "nested",
+ "seed": 42,
+ "bars": "4h",
+ "description": "Procédure emboîtée (brief P3-B7) : dans chaque fold, choix parmi l'UNION des seules configurations f4 + funding de ce brief (E41, E43, E45, pré-enregistrées dans le même commit) sur la seule validation interne au train, puis réentraînement de la configuration choisie sur tout le train du fold et prédiction du test. Labels de l'union repris de P3-B5, choisis au vu de son OOS (déclaré).",
+ "union": [
+  {
+   "id": "E41",
+   "path": "experiments/configs/E41.json",
+   "git_blob": "30dd418714921c438d560aded6508b324847041f"
+  },
+  {
+   "id": "E43",
+   "path": "experiments/configs/E43.json",
+   "git_blob": "a7017585def6da98b8c95cbb29b347da775b96e0"
+  },
+  {
+   "id": "E45",
+   "path": "experiments/configs/E45.json",
+   "git_blob": "277edf58d4630ea84d9f1f10d396f2f39241d548"
+  }
+ ],
+ "common_validation": {
+  "horizon_4h_bars": 30,
+  "horizon_for_split_hours": 123,
+  "rule": "Identique à E39 (b5.run_fold_nested) : train de référence = split_fold(df4, make_folds(horizon=123)[k], horizon=123) ; lignes propres = aucune NaN sur f4 ni sur fwd_ret H=30 bougies 4 h, ce fwd_ret étant mis à NaN là où les features fu ne sont pas définies (b7.build_inputs) ; val_start = ligne propre d'indice floor(0,8 n) ; val_end = train_end (horizon 123 h). Train interne de chaque configuration = ses lignes propres (ses features, row_filter fu, son label) avec t < val_start et purge_mask(val_start, val_end, horizon=123). Score = Sharpe net journalier du backtest 1 h de [val_start, val_end], NaN -> -inf.",
+  "selection": "premier maximum du score dans l'ordre (configuration E41, E43, E45 ; hyperparamètre dans l'ordre de la grille ; mapping dans l'ordre de la grille)"
+ },
+ "final_fit": "comme E39 : configuration choisie réentraînée sur tout son train propre du fold (son H, row_filter fu).",
+ "evaluation": "identique aux essais simples (b5.run).",
+ "shuffle_rule": "comme E39 : numpy default_rng([S, k, c]) avec c = indice 0..2 dans l'union."
+}
