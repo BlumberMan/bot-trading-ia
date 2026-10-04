@@ -23,8 +23,25 @@ py -3.14 -m venv .venv
 .venv\Scripts\python -m pytest -q
 ```
 
+## Construire le dataset
+
+Télécharge les klines publiques Binance spot BTCUSDT 1h (data.binance.vision, sans clé API)
+de 2019-01 à 2026-09 dans `data/raw/`, vérifie chaque SHA256, nettoie et écrit
+`data/processed/btcusdt_1h.parquet` (les archives déjà présentes et valides ne sont pas
+retéléchargées) :
+
+```powershell
+.venv\Scripts\python scripts\build_dataset.py
+.venv\Scripts\python scripts\check_live_equality.py   # features live == backtest
+.venv\Scripts\python scripts\show_folds.py            # folds walk-forward (dev uniquement)
+```
+
+Définition des features et labels : `docs/features.md`.
+
 ## Structure
 
 - `src/bot/` : code du package
 - `tests/` : tests pytest
-- `data/` : données (`data/raw/` ignoré par git)
+- `scripts/` : scripts (dataset, vérifications)
+- `docs/` : documentation (features, labels, split)
+- `data/` : données (`data/raw/` et `data/processed/` ignorés par git)
