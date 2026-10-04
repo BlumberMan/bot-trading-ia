@@ -90,3 +90,27 @@ Résultat (brief P3-B4, 11 essais E18-E28, registre 28 lignes) : tous au-dessus 
 concaténé +0,7994, 242 trades, 7/9 folds > 0 ; B&H +0,7815). Tests du veto (`b4_report.py`,
 `results/E*_veto.txt`) : E24 T1 z +4,49 (0/10 seeds >= E24), T2 percentile 98,3 (stratifié 96,3),
 T7 DSR (N = 28) 0,0033 < 0,95. Aucun des 11 essais n'a un DSR >= 0,95.
+
+## Brief P3-B5 : bougies 4 h (horizon plus long), E29-E39
+Pré-enregistrement : configurations `experiments/configs/E29.json` … `E39.json` et code (`agg4h.py`, `b5.py`,
+`b5_report.py`, `corr_b5.py`, `pool_b5.py`) commités ensemble AVANT toute exécution sur les données réelles ;
+seuls des auto-tests sur données synthétiques ont tourné avant (`b5.py --selftest`, qui appelle
+`agg4h.selftest`). Aucune configuration ajoutée ou modifiée après un résultat.
+- Bougies 4 h, features, labels, projection 1 h : docstring de `agg4h.py`. Décision à la clôture de la bougie 4 h,
+  exécution à l'open de la bougie 4 h suivante (signal projeté sur la grille 1 h à T+3h, bot.backtest inchangé,
+  exec_delay 1 h). Purge = H+1 bougies 4 h (horizon 4H+3 h passé à bot.split).
+- Features « f4 » (14, sans calendrier, déclaré a priori : P3-A3 a montré un artefact jour de semaine).
+- E29-E31 : label net de coûts H = 6 / 12 / 30 bougies 4 h (24 h, 48 h, 5 j).
+- E32-E34 : triple barrière H = 6 / 12 / 30, barrières ±1 x vol_42 (4 h) x sqrt(H).
+- E35-E36 : triple barrière H = 12 / 30 à seuils FIXES a priori v = 0,027683 x sqrt(4H/24) (log), 0,027683 =
+  médiane pré-2021 de vol_168 x sqrt(24) publiée en P3-A3 (C1d).
+- E37-E38 : triple barrière vol H = 12 / 30, « direction seule » (expiration -> NaN).
+- Tous LightGBM (n_jobs=1, deterministic), grille hp de E10 avec min_child_samples / 4 (250, 750 ; 4 fois moins de
+  lignes), 8 points ; mapping par quantiles de P3-B4 (entrée Q 0,6..0,9 ; sortie Q entrée - 0,1..0,3 ; détention min
+  1/2/4 x H bougies 4 h), 36 points ; 288 couples par fold. Seed 42.
+- E39 : procédure emboîtée sur l'union E29-E38 seulement (validation commune H=30, blobs git vérifiés).
+- Registre : essais lancés en parallèle par `pool_b5.py` (9 workers max, 1 thread chacun) sans écrire au registre ;
+  lignes ajoutées ensuite une par une par un seul processus (`b5.py --register EXX`), sans « | » dans les cellules
+  (contrôle : 19 séparateurs par ligne). Budget : registre <= 40 lignes (refus au-delà).
+- Tests du veto et batterie : `b5_report.py` (importe tests/adversarial/analyse_e10.py sans le modifier) ;
+  variantes de contrôle `b5.py CONFIG --variant ...` (hors registre) ; corrélations `corr_b5.py` (pas un essai).

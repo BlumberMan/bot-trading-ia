@@ -1,0 +1,61 @@
+{
+ "id": "E31",
+ "brief": "P3-B5",
+ "procedure": "single",
+ "seed": 42,
+ "model": "lgbm",
+ "bars": "4h",
+ "features": "f4",
+ "description": "label net de coûts H=30 (5 jours) ; features f4 (14, sans calendrier) ; grille hp = grille de E10 avec min_child_samples / 4 (bougies 4 h : 4 fois moins de lignes) ; mapping par quantiles de P3-B4 (détention min en multiples de H bougies 4 h)",
+ "label": {
+  "kind": "net",
+  "H": 30
+ },
+ "grid": {
+  "n_estimators": [
+   100,
+   300
+  ],
+  "learning_rate": [
+   0.02
+  ],
+  "num_leaves": [
+   3,
+   7
+  ],
+  "min_child_samples": [
+   250,
+   750
+  ],
+  "subsample": [
+   0.8
+  ],
+  "subsample_freq": [
+   1
+  ],
+  "colsample_bytree": [
+   0.8
+  ],
+  "reg_lambda": [
+   10.0
+  ]
+ },
+ "mapping": {
+  "enter_quantile": [
+   0.6,
+   0.7,
+   0.8,
+   0.9
+  ],
+  "exit_quantile_gap": [
+   0.1,
+   0.2,
+   0.3
+  ],
+  "min_hold_mult": [
+   1,
+   2,
+   4
+  ]
+ }
+}

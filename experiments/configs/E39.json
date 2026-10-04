@@ -1,0 +1,70 @@
+{
+ "id": "E39",
+ "brief": "P3-B5",
+ "procedure": "nested",
+ "seed": 42,
+ "bars": "4h",
+ "description": "Procédure emboîtée (brief P3-B5) : dans chaque fold, choix parmi l'UNION des seules configurations E29-E38 de ce brief (bougies 4 h, pré-enregistrées dans le même commit) sur la seule validation interne au train, puis réentraînement de la configuration choisie sur tout le train du fold et prédiction du test.",
+ "union": [
+  {
+   "id": "E29",
+   "path": "experiments/configs/E29.json",
+   "git_blob": "9a862c6e8faf13fae2890254aead4ef667678b21"
+  },
+  {
+   "id": "E30",
+   "path": "experiments/configs/E30.json",
+   "git_blob": "34d1e4e016a9e19c348f2534454497a44c95b8a1"
+  },
+  {
+   "id": "E31",
+   "path": "experiments/configs/E31.json",
+   "git_blob": "10fa62e55d164cdbc5654dba11544cf161ba7cd6"
+  },
+  {
+   "id": "E32",
+   "path": "experiments/configs/E32.json",
+   "git_blob": "4812bd0c81412bf50aed125162d12dc364a5cedc"
+  },
+  {
+   "id": "E33",
+   "path": "experiments/configs/E33.json",
+   "git_blob": "3f9117ead3c6dfa23441d470e240bc4a05e9edfd"
+  },
+  {
+   "id": "E34",
+   "path": "experiments/configs/E34.json",
+   "git_blob": "5909f8b4fb793db8f01c150688ffe0ae6dbe3d05"
+  },
+  {
+   "id": "E35",
+   "path": "experiments/configs/E35.json",
+   "git_blob": "860c69b4f08b459d09044e5382ca906445f01b07"
+  },
+  {
+   "id": "E36",
+   "path": "experiments/configs/E36.json",
+   "git_blob": "121996019d160d50338c4222ff298ae98e96b625"
+  },
+  {
+   "id": "E37",
+   "path": "experiments/configs/E37.json",
+   "git_blob": "c6a8d07cb888de67106f1564ba1c8add81aa3421"
+  },
+  {
+   "id": "E38",
+   "path": "experiments/configs/E38.json",
+   "git_blob": "34cb6a246d11917e33024a8b7034ccde63d284e7"
+  }
+ ],
+ "common_validation": {
+  "horizon_4h_bars": 30,
+  "horizon_for_split_hours": 123,
+  "rule": "Fenêtre de validation commune : train de référence = split_fold(df4, make_folds(horizon=123)[k], horizon=123) ; lignes propres = aucune NaN sur f4 ni sur fwd_ret H=30 bougies 4 h (bot.labels sur df4) ; val_start = ligne propre d'indice floor(0,8 n) ; val_end = train_end (horizon 123 h). Train interne de chaque configuration = ses lignes propres (ses features, son label) avec t < val_start et purge_mask(val_start, val_end, horizon=123). Seuils du mapping = quantiles des probas du modèle sur son train interne. Score = Sharpe net journalier du backtest 1 h de [val_start, val_end] (positions 4 h projetées, exec_delay=1 h, 0,0015/côté, x1), NaN -> -inf.",
+  "selection": "premier maximum du score dans l'ordre (configuration E29..E38, hyperparamètre dans l'ordre de la grille, mapping dans l'ordre de la grille)"
+ },
+ "final_fit": "configuration choisie réentraînée sur tout son train : split_fold(df4, make_folds(horizon=4H+3)[k], horizon=4H+3), lignes propres ; seuils = quantiles des probas du modèle final sur ce train ; probas sur les bougies 4 h T in [test_start - 4h, test_end - 7h] (fold 1 depuis test_start - 8h ; fold 9 jusqu'à test_end - 3h).",
+ "evaluation": "identique aux essais simples (b5.run) : probas 4 h concaténées, mapping continu, projection 1 h, UN backtest continu, métriques par fold et concaténées, baseline / B&H comparés à results/baseline_metrics.json (<= 1e-9).",
+ "shuffle_rule": "labels mélangés seed S : pour chaque fold k et chaque configuration c (indice 0..9), les labels des lignes propres du train final de c sont permutés avec numpy default_rng([S, k, c]) ; train interne et validation en sont des sous-ensembles. Même règle pour les essais simples (c = 0).",
+ "importance_rule": "gain LightGBM normalisé (somme 1) du modèle final de chaque fold ; features absentes = 0 ; feature la plus importante = argmax de la moyenne sur les 9 folds."
+}
