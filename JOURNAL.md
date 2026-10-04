@@ -6,6 +6,7 @@
 | P1-B1 / R1 / V1 | 2026-10-04 | INVALIDE (1/3) : A1, archive mensuelle 2026-09 absente (404), remplacée par 30 journalières sans décision du brief | — |
 | P1-B2 / R2 / V2 | 2026-10-04 | VALIDE (KO A1 levé) | palier-1 |
 | P2-B1 / R1 / V1 | 2026-10-04 | VALIDE | palier-2 |
+| P3-B1 / R1 / V1 | 2026-10-04 | VALIDE (env : scikit-learn 1.9.1, lightgbm 4.7.0, 72 tests) | — |
 
 ## Récap palier 0a (2026-10-04)
 - État : infra en place, package `bot` 0.0.1 (code dans src/), commit d8f1f11.
@@ -61,4 +62,6 @@
 - 2026-10-04 — Palier 3, déroulé : (1) implémenteur ajoute les dépendances ML ; (2) chercheur-ml explore (≤ 20 essais/brief) ; (3) avocat-du-diable sur le candidat ; (4) contrôleur ; (5) si VALIDE, implémenteur intègre le candidat dans src/ avec tests, reproduction à l'identique, nouvel avocat + contrôleur, puis tag palier-3.
 - 2026-10-04 — Palier 3, comparaison à la baseline : positions du modèle concaténées sur les 9 folds puis un seul backtest continu (même moteur, même coût 0,15 %/côté, même traitement des débuts de fenêtre que la baseline), métriques par fold calculées comme dans run_baseline.py. Corrige l'asymétrie AT-1 de P2-V1 : modèle et baseline sont traités de la même façon.
 - 2026-10-04 — Palier 3, définition d'un essai : une configuration (modèle + features + label + procédure de tuning) évaluée sur les 9 folds OOS = 1 ligne de REGISTRE.md. Le tuning interne au train (validation temporelle purgée dans le train) fait partie de la procédure ; la taille de sa grille est notée dans la ligne.
+- 2026-10-04 — Palier 3, règle de choix du candidat, fixée avant tout essai : parmi les essais du brief, le candidat est celui qui a le Sharpe net OOS concaténé le plus élevé, à condition qu'il dépasse celui de la baseline sur les mêmes folds (−0,530). Sinon, aucun candidat. Les seuils GONOGO ne sont évalués qu'au palier 4.
+- 2026-10-04 — Palier 3, mapping proba → position : long si proba > seuil, sinon flat ; seuil et hyperparamètres choisis sur une validation interne au train (derniers 20 % du train, purge H+1), objectif = Sharpe net avec coûts ; réentraînement sur tout le train avant de prédire le test.
 - 2026-10-04 — Features à fenêtre finie uniquement (pas d'EMA à mémoire infinie) pour que le calcul live sur une fenêtre glissante soit exactement égal au calcul backtest.
