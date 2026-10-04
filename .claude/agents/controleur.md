@@ -105,3 +105,10 @@ C7 — Réel
 [B] C7-03 Aucun changement de stratégie sans retour au palier 4
 [B] C7-04 Hausse de capital uniquement selon GONOGO
 [B] C7-05 Écart réel vs paper expliqué et dans la tolérance
+
+
+C3 / C4 (compléments)
+[B] C3-10 Rapport adversarial joint ; toute FAILLE TROUVÉE est expliquée par une preuve, sinon KO
+[B] C3-11 Nombre d'essais déclaré = nombre de lignes de experiments/REGISTRE.md ; aucune ligne supprimée (historique Git)
+[B] C3-12 Sharpe déflaté du candidat fourni et positif
+[B] C4-09 Rapport adversarial sur les données réservées joint, mêmes règles que C3-10

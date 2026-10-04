@@ -17,7 +17,15 @@ def tag_exists():
         return True
 
 PROTEGES = ("CLAUDE.md",)
-ECRITURE = r"((^|[^0-9&>-])>|\btee\b|sed\s+-i|\brm\b|\bmv\b|\bcp\b|\btouch\b|git\s+(checkout|restore|reset|rm|mv|stash))"
+ECRITURE = re.compile(r"(>|\btee\b|sed\s+-i|\brm\b|\bmv\b|\bcp\b|\btouch\b|\btruncate\b|git\s+(checkout|restore|reset|rm|mv|stash|apply))")
+INOFFENSIF = re.compile(r"\d?>&\d|\d?>\s*/dev/null")
+
+def segments(cmd):
+    return [s for s in re.split(r"&&|\|\||;|\||\n", cmd) if s.strip()]
+
+def ecriture(seg):
+    m = ECRITURE.search(INOFFENSIF.sub("", seg))
+    return m.group(0) if m else None
 
 if tool in ("Edit", "Write", "MultiEdit", "NotebookEdit"):
     path = (inp.get("file_path") or inp.get("notebook_path") or "").replace("\\", "/")
@@ -33,15 +41,20 @@ if tool in ("Edit", "Write", "MultiEdit", "NotebookEdit"):
 
 if tool == "Bash":
     cmd = inp.get("command", "")
-    if "gonogo-v1" in cmd and re.search(r"git\s+tag", cmd) and not re.search(r"git\s+tag\s+-l", cmd):
-        block("Le tag gonogo-v1 est reserve a Iyad.")
-    if "gonogo-v1" in cmd and re.search(r"git\s+push", cmd) and re.search(r"(--delete|--force|-f\b|:refs)", cmd):
-        block("Le tag gonogo-v1 est reserve a Iyad.")
-    if "GONOGO" in cmd and tag_exists() and re.search(ECRITURE, cmd):
-        block("GONOGO.md est fige.")
-    if (".claude" in cmd or "CLAUDE.md" in cmd) and re.search(ECRITURE, cmd):
-        block("Les fichiers de regles sont proteges.")
-    if re.search(r"(^|[\s/])\.env\b", cmd) and not re.search(r"(check-ignore|--exclude=\.env)", cmd):
-        block("Le fichier .env est reserve a Iyad.")
+    for seg in segments(cmd):
+        if "gonogo-v1" in seg and re.search(r"git\s+tag", seg) and not re.search(r"git\s+tag\s+(-l|--list)", seg):
+            block("Le tag gonogo-v1 est reserve a Iyad.")
+        if "gonogo-v1" in seg and re.search(r"git\s+push", seg) and re.search(r"(--delete|--force|-f\b|:refs)", seg):
+            block("Le tag gonogo-v1 est reserve a Iyad.")
+        if "GONOGO" in seg and tag_exists():
+            op = ecriture(seg)
+            if op:
+                block("GONOGO.md est fige (operation detectee : '" + op + "').")
+        if ".claude" in seg or "CLAUDE.md" in seg:
+            op = ecriture(seg)
+            if op:
+                block("Les fichiers de regles sont proteges (operation detectee : '" + op + "').")
+        if re.search(r"(^|[\s/])\.env\b", seg) and not re.search(r"(check-ignore|--exclude=\.env)", seg):
+            block("Le fichier .env est reserve a Iyad.")
 
 sys.exit(0)

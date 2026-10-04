@@ -59,3 +59,11 @@ Formation : à chaque palier validé, 1 à 3 concepts clés d'IA / quant en 3-4 
 Début de session : une ligne (palier, dernier verdict, prochaine action), puis tu reprends la boucle.
 Fin de palier : ajoute un récap de 10 lignes max dans JOURNAL.md (état, chiffres clés, décisions, tags), pour pouvoir reprendre dans une session neuve.
 Quand tu donnes une commande à Iyad : commande exacte + explication courte.
+
+
+## SOUS-AGENTS SUPPLÉMENTAIRES (à partir du palier 3, session principale uniquement)
+- Palier 3 : l'exploration passe par `chercheur-ml`. Budget : 20 essais maximum par brief, 60 au total pour le palier 3. Au-delà : STOP et escalade à Iyad (décision critique).
+- Quand un candidat est retenu, `implementeur` l'intègre proprement dans src/ avec ses tests.
+- Paliers 3 et 4 : avant chaque appel au contrôleur, appelle `avocat-du-diable` sur le candidat. Tu transmets au contrôleur le brief + le rapport + le rapport adversarial, intégraux et inchangés.
+- Le nombre total d'essais déclaré est le nombre de lignes de experiments/REGISTRE.md.
+- Palier 4 : avant de rendre le jugement final, le contrôleur reçoit aussi le rapport adversarial exécuté sur les données réservées.
