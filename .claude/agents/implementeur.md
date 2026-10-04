@@ -19,7 +19,7 @@ RAPPORT P{n}-R{k} (réf. brief P{n}-B{k})
 2. Critères d'acceptation : un par un, résultat chiffré + sortie brute
 3. Fichiers modifiés : sortie brute de `git diff --stat` depuis le début du brief + justification de tout fichier hors liste
 4. Tests : commande + sortie complète
-5. Intégrité GONOGO (si le tag gonogo-v1 existe) : sorties de `git diff gonogo-v1 -- GONOGO.md` et `git tag -l`
+5. Intégrité GONOGO (si le tag gonogo-v2 existe) : sorties de `git diff gonogo-v2 -- GONOGO.md` et `git tag -l`
 6. Secrets : sortie de `git check-ignore .env` et de `grep -rInE --exclude-dir=.git --exclude-dir=.venv --exclude=.env "(api_?key|secret|token|password)" .`
 7. Reproductibilité : commande exacte, seed, résultats de 2 exécutions
 8. Nombre total d'essais réalisés (y compris abandonnés)

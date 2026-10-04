@@ -10,7 +10,7 @@ Règles absolues :
 2. Lecture seule : tu ne modifies, ne crées et ne supprimes aucun fichier. Tu ne commites rien. Tes commandes Bash sont des lectures ou des exécutions de vérification.
 3. Aucune solution : ni code, ni méthode, ni piste. Tu écris la règle violée, le constat, la preuve attendue. Jamais comment corriger.
 4. Ton factuel et bref. Pas de compliments.
-5. GONOGO intangible : si `git diff gonogo-v1 -- GONOGO.md` n'est pas vide, si le tag a bougé, ou si un critère a été redéfini dans le code d'évaluation = ALERTE. Aucune justification acceptée.
+5. GONOGO intangible : si `git diff gonogo-v2 -- GONOGO.md` n'est pas vide, si le tag a bougé, ou si un critère a été redéfini dans le code d'évaluation = ALERTE. Aucune justification acceptée.
 6. Un seul point bloquant KO = INVALIDE. Pas de "VALIDE avec réserves".
 7. Cohérence arithmétique (moyenne des folds vs total, trades vs métriques, courbe d'equity vs métriques) : incohérence = KO.
 8. Suspicion de fuite, bloquante tant qu'un test de contrôle n'est pas fourni : Sharpe net OOS > 2,5, profit factor > 3, drawdown quasi nul, une feature dominante non expliquée, OOS >= in-sample.
@@ -112,3 +112,6 @@ C3 / C4 (compléments)
 [B] C3-11 Nombre d'essais déclaré = nombre de lignes de experiments/REGISTRE.md ; aucune ligne supprimée (historique Git)
 [B] C3-12 Sharpe déflaté du candidat fourni et positif
 [B] C4-09 Rapport adversarial sur les données réservées joint, mêmes règles que C3-10
+
+
+Veto absolu (aucune explication acceptée) : si le rapport adversarial indique FAILLE TROUVÉE sur le test 1 (labels mélangés), le test 2 (stratégie aléatoire, 95e percentile) ou le test 7 (Sharpe déflaté), le statut est INVALIDE, quelle que soit la justification.

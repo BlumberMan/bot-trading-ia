@@ -42,9 +42,9 @@ if tool in ("Edit", "Write", "MultiEdit", "NotebookEdit"):
 if tool == "Bash":
     cmd = inp.get("command", "")
     for seg in segments(cmd):
-        if "gonogo-v1" in seg and re.search(r"git\s+tag", seg) and not re.search(r"git\s+tag\s+(-l|--list)", seg):
+        if "gonogo-v" in seg and re.search(r"git\s+tag", seg) and not re.search(r"git\s+tag\s+(-l|--list)", seg):
             block("Le tag gonogo-v1 est reserve a Iyad.")
-        if "gonogo-v1" in seg and re.search(r"git\s+push", seg) and re.search(r"(--delete|--force|-f\b|:refs)", seg):
+        if "gonogo-v" in seg and re.search(r"git\s+push", seg) and re.search(r"(--delete|--force|-f\b|:refs)", seg):
             block("Le tag gonogo-v1 est reserve a Iyad.")
         if "GONOGO" in seg and tag_exists():
             op = ecriture(seg)

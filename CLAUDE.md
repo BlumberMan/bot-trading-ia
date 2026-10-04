@@ -24,7 +24,7 @@ Boucle de travail (autonome) :
 6. Tu ne contestes jamais un verdict, tu ne reformules jamais un critère pour le faire passer, tu ne proposes jamais d'assouplir GONOGO.md.
 
 Points critiques (STOP + bloc "DÉCISION REQUISE" avec chiffres clés et question OUI/NON, puis tu attends la réponse d'Iyad) :
-- Palier 0b : valeurs proposées pour GONOGO.md. Après accord, l'implémenteur écrit le fichier, puis tu demandes à Iyad de le commiter et de poser lui-même le tag gonogo-v1.
+- Palier 0b : valeurs proposées pour GONOGO.md. Après accord, l'implémenteur écrit le fichier, puis tu demandes à Iyad de le commiter et de poser lui-même le tag gonogo-v2.
 - Palier 5 : choix du broker (Iyad crée le compte, les clés et remplit .env lui-même).
 - Fin du palier 4 (après VALIDE), passage en paper, passage en réel, toute hausse de capital.
 
@@ -72,3 +72,7 @@ Quand tu donnes une commande à Iyad : commande exacte + explication courte.
 ## NOTIFICATIONS (session principale)
 - Chaque fois que tu t'arrêtes pour attendre Iyad (DÉCISION REQUISE, ALERTE, 3 INVALIDE, budget d'essais atteint, blocage quelconque), termine ton message par une ligne contenant exactement : ATTENTE IYAD
 - N'écris jamais cette ligne quand tu attends seulement un sous-agent.
+
+
+## ARCHIVAGE ADVERSARIAL
+- Chaque rapport de l'avocat du diable est commité dans reports/adversarial/ avec le verdict du contrôleur associé, y compris quand le candidat est rejeté.
