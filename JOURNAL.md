@@ -5,6 +5,7 @@
 | P0b-B1 / R1 / V1 | 2026-10-04 | VALIDE | gonogo-v1 (posé par Iyad) |
 | P1-B1 / R1 / V1 | 2026-10-04 | INVALIDE (1/3) : A1, archive mensuelle 2026-09 absente (404), remplacée par 30 journalières sans décision du brief | — |
 | P1-B2 / R2 / V2 | 2026-10-04 | VALIDE (KO A1 levé) | palier-1 |
+| P2-B1 / R1 / V1 | 2026-10-04 | VALIDE | palier-2 |
 
 ## Récap palier 0a (2026-10-04)
 - État : infra en place, package `bot` 0.0.1 (code dans src/), commit d8f1f11.
@@ -30,6 +31,15 @@
 - 39 tests verts. 1 INVALIDE (archive 2026-09 absente) corrigé par fin des données au 2026-08-31.
 - Référence d'intégrité : tag gonogo-v1 → commit 61cb863ea30e9271c52fce7ac231967748b50fbd.
 - Prochaine étape : palier 2 (baseline).
+
+## Récap palier 2 (2026-10-04)
+- Moteur de backtest (exec_delay, cost_per_side, cost_multiplier, gestion des trous) + métriques (Sharpe GONOGO) dans src/bot/ ; 68 tests verts.
+- Règles baseline figées en 696f8b1 avant les résultats (29597b7) : long si close > SMA168, sinon flat ; t+1 ; 0,15 %/côté.
+- OOS concaténé 2021-01 → 2025-09 : baseline Sharpe −0,530, DD 87,83 %, 747 trades, −77,31 %, 4/9 folds à Sharpe > 0.
+- Buy & hold même période : Sharpe 0,781, DD 77,20 %, +292,75 %.
+- À reprendre au palier 3 : la baseline hérite sa position sans coût en début de fenêtre, le B&H paie entrée et sortie par fold (écart ≤ ~0,15 %/côté/fenêtre).
+- Garde : toute commande Bash contenant « GONOGO.md » est bloquée, même en lecture ; le contrôleur vérifie l'intégrité directement.
+- Prochaine étape : STOP demandé par Iyad avant le palier 3.
 
 ## Consignes d'Iyad en cours
 - 2026-10-04 — STOP obligatoire après la validation du palier 2, avant de lancer le palier 3 (Iyad ajoute des sous-agents).
