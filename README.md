@@ -26,7 +26,8 @@ py -3.14 -m venv .venv
 ## Construire le dataset
 
 Télécharge les klines publiques Binance spot BTCUSDT 1h (data.binance.vision, sans clé API)
-de 2019-01 à 2026-09 dans `data/raw/`, vérifie chaque SHA256, nettoie et écrit
+de 2019-01 à 2026-08 dans `data/raw/` (archives mensuelles uniquement ; une archive
+manquante ou un checksum faux fait échouer le build), vérifie chaque SHA256, nettoie et écrit
 `data/processed/btcusdt_1h.parquet` (les archives déjà présentes et valides ne sont pas
 retéléchargées) :
 

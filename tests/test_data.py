@@ -1,5 +1,6 @@
 import hashlib
 import io
+import urllib.error
 import zipfile
 
 import numpy as np
@@ -149,4 +150,42 @@ def test_bad_checksum_on_download(tmp_path, monkeypatch):
 
 def test_months_range():
     m = data.months()
-    assert len(m) == 93 and m[0] == "2019-01" and m[-1] == "2026-09"
+    assert len(m) == 92 and m[0] == "2019-01" and m[-1] == "2026-08"
+    assert data.END == pd.Timestamp("2026-08-31 23:00", tz="UTC")
+
+
+def _http_404(url, **k):
+    raise urllib.error.HTTPError(url, 404, "Not Found", None, None)
+
+
+def test_missing_monthly_archive_fails_without_fallback(tmp_path, monkeypatch):
+    """404 sur la mensuelle -> MissingArchiveError, aucune journalière lue/téléchargée."""
+    calls = []
+
+    def fake_get(url, **k):
+        calls.append(url)
+        return _http_404(url)
+
+    monkeypatch.setattr(data, "_http_get", fake_get)
+    month = "2026-09"
+    # journalières complètes et valides présentes en local : elles doivent être ignorées
+    (tmp_path / "daily").mkdir()
+    for d in range(1, 31):
+        _make_archive(tmp_path / "daily", f"BTCUSDT-1h-{month}-{d:02d}.zip")
+    with pytest.raises(data.MissingArchiveError):
+        data.fetch_month(month, tmp_path)
+    assert calls and all("/monthly/" in u for u in calls)
+    assert not any("/daily/" in u for u in calls)
+    assert not (tmp_path / "monthly" / f"BTCUSDT-1h-{month}.zip").exists()
+
+
+def test_build_fails_when_a_monthly_archive_is_missing(tmp_path, monkeypatch):
+    """build() échoue explicitement dès qu'un mois manque, sans écrire de parquet."""
+    (tmp_path / "monthly").mkdir()
+    _make_archive(tmp_path / "monthly", "BTCUSDT-1h-2019-01.zip")
+    monkeypatch.setattr(data, "months", lambda: ["2019-01", "2019-02"])
+    monkeypatch.setattr(data, "_http_get", _http_404)
+    out = tmp_path / "out.parquet"
+    with pytest.raises(data.MissingArchiveError, match="2019-02"):
+        data.build(tmp_path, out, log=lambda *a: None)
+    assert not out.exists()

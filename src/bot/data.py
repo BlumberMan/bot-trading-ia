@@ -1,14 +1,13 @@
 """Données : téléchargement des klines Binance spot BTCUSDT 1h et nettoyage.
 
 Source : https://data.binance.vision (archives publiques, sans clé API).
-Archives mensuelles en priorité ; si l'archive mensuelle d'un mois n'est pas
-(encore) publiée (HTTP 404), repli sur les archives journalières du même mois,
-chacune vérifiée par son propre fichier .CHECKSUM.
+Archives mensuelles uniquement (2019-01 -> 2026-08), chacune vérifiée par son
+fichier .CHECKSUM. Aucun repli sur les archives journalières : si une archive
+mensuelle manque (HTTP 404) ou si un checksum échoue, le build échoue.
 """
 
 from __future__ import annotations
 
-import calendar
 import csv
 import hashlib
 import io
@@ -26,7 +25,7 @@ SYMBOL = "BTCUSDT"
 INTERVAL = "1h"
 BASE_URL = "https://data.binance.vision/data/spot"
 START = pd.Timestamp("2019-01-01 00:00", tz="UTC")
-END = pd.Timestamp("2026-09-30 23:00", tz="UTC")  # open_time de la dernière bougie
+END = pd.Timestamp("2026-08-31 23:00", tz="UTC")  # open_time de la dernière bougie
 FREQ = pd.Timedelta(hours=1)
 PRICE_COLS = ["open", "high", "low", "close"]
 OHLCV_COLS = PRICE_COLS + ["volume"]
@@ -40,6 +39,10 @@ class ChecksumError(RuntimeError):
     """Le SHA256 d'une archive ne correspond pas à son fichier .CHECKSUM."""
 
 
+class MissingArchiveError(RuntimeError):
+    """Archive mensuelle absente sur data.binance.vision (HTTP 404) : pas de repli."""
+
+
 @dataclass
 class Archive:
     name: str  # ex. BTCUSDT-1h-2019-01.zip
@@ -51,7 +54,7 @@ class Archive:
 @dataclass
 class MonthSource:
     month: str  # YYYY-MM
-    kind: str  # "monthly" | "daily"
+    kind: str  # toujours "monthly" (aucun repli journalier)
     archives: list[Archive] = field(default_factory=list)
 
 
@@ -158,37 +161,22 @@ def _monthly_archive(month: str, raw_dir: Path) -> Archive:
     return Archive(name, url, raw_dir / "monthly" / name)
 
 
-def _daily_archives(month: str, raw_dir: Path) -> list[Archive]:
-    y, m = map(int, month.split("-"))
-    out = []
-    for d in range(1, calendar.monthrange(y, m)[1] + 1):
-        name = f"{SYMBOL}-{INTERVAL}-{month}-{d:02d}.zip"
-        url = f"{BASE_URL}/daily/klines/{SYMBOL}/{INTERVAL}/{name}"
-        out.append(Archive(name, url, raw_dir / "daily" / name))
-    return out
-
-
 def fetch_month(month: str, raw_dir: Path) -> MonthSource:
-    """Archive mensuelle si disponible ; sinon repli sur les journalières.
+    """Archive mensuelle uniquement : locale valide, sinon téléchargée.
 
-    Ordre : mensuelle locale valide > journalières locales complètes et
-    valides > téléchargement mensuelle > (404) téléchargement journalières.
+    Aucun repli sur les archives journalières (les fichiers de data/raw/daily
+    ne sont jamais lus). Lève MissingArchiveError si l'archive mensuelle
+    n'existe pas (HTTP 404) et ChecksumError si le SHA256 ne concorde pas.
     """
     monthly = _monthly_archive(month, raw_dir)
-    if _archive_valid(monthly):
-        monthly.status = "present"
-        return MonthSource(month, "monthly", [monthly])
-    daily = _daily_archives(month, raw_dir)
-    if all(_archive_valid(a) for a in daily):
-        for a in daily:
-            a.status = "present"
-        return MonthSource(month, "daily", daily)
     try:
-        return MonthSource(month, "monthly", [fetch_archive(monthly)])
+        fetch_archive(monthly)
     except urllib.error.HTTPError as e:
-        if e.code != 404:
-            raise
-    return MonthSource(month, "daily", [fetch_archive(a) for a in daily])
+        if e.code == 404:
+            raise MissingArchiveError(
+                f"archive mensuelle absente (404) : {monthly.url} ; aucun repli") from e
+        raise
+    return MonthSource(month, "monthly", [monthly])
 
 
 # ---------------------------------------------------------------- lecture

@@ -1,7 +1,7 @@
 """Découpage dev / holdout, walk-forward expanding avec purge, normalisation.
 
 - Dev     : 2019-01-01 00:00 -> 2025-09-30 23:00 UTC (seule période accessible par défaut).
-- Holdout : 2025-10-01 00:00 -> 2026-09-30 23:00 UTC, accessible uniquement avec
+- Holdout : 2025-10-01 00:00 -> 2026-08-31 23:00 UTC, accessible uniquement avec
   `allow_holdout=True` explicite (réservé au palier 4).
 - Walk-forward expanding : 9 folds de test, train depuis 2019-01-01.
 - Purge : retrait du train de toute ligne t dont la fenêtre de label
@@ -28,7 +28,7 @@ H1 = pd.Timedelta(hours=1)
 DEV_START = pd.Timestamp("2019-01-01 00:00", tz="UTC")
 DEV_END = pd.Timestamp("2025-09-30 23:00", tz="UTC")
 HOLDOUT_START = pd.Timestamp("2025-10-01 00:00", tz="UTC")
-HOLDOUT_END = pd.Timestamp("2026-09-30 23:00", tz="UTC")
+HOLDOUT_END = pd.Timestamp("2026-08-31 23:00", tz="UTC")
 PURGE = HORIZON + 1  # bougies retirées avant chaque début de test
 EMBARGO = 24  # bougies
 HOLDOUT_EVAL_START = HOLDOUT_START + EMBARGO * H1

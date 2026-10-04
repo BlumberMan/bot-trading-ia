@@ -61,7 +61,7 @@ du holdout n'est lue.
 
 ## Découpage et normalisation
 
-- Dev : 2019-01-01 00:00 → 2025-09-30 23:00 UTC. Holdout : 2025-10-01 00:00 → 2026-09-30 23:00 UTC.
+- Dev : 2019-01-01 00:00 → 2025-09-30 23:00 UTC. Holdout : 2025-10-01 00:00 → 2026-08-31 23:00 UTC.
   `load_dataset()` renvoie la période dev ; le holdout n'est accessible qu'avec
   `allow_holdout=True` (`load_dataset(..., allow_holdout=True)`, `holdout_period(df, allow_holdout=True)`).
 - Walk-forward expanding : train depuis 2019-01-01, 9 folds de test semestriels (2021H1 … 2024H2,

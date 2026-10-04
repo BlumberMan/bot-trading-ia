@@ -25,6 +25,7 @@ def full_frame():
 def test_constants():
     assert DEV_END == pd.Timestamp("2025-09-30 23:00", tz="UTC")
     assert HOLDOUT_START == DEV_END + H1
+    assert HOLDOUT_END == pd.Timestamp("2026-08-31 23:00", tz="UTC")
     assert PURGE == HORIZON + 1 and EMBARGO == 24
 
 
