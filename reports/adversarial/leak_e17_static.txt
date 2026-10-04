@@ -1,0 +1,15 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00
+(c) features extra : 20 troncatures (seed 7), troncatures en écart : 0
+(c') bougies > 2021-01-24 08:00:00+00:00 multipliées par 1,37 : features extra <= t identiques : True
+(d) fold 1 : val 2020-08-10 00:00:00+00:00 -> 2020-12-30 22:00:00+00:00 ; test_start 2021-01-01 00:00:00+00:00 ; dernier open du backtest de validation 2020-12-30 23:00:00+00:00
+(d) fold 2 : val 2020-12-16 09:00:00+00:00 -> 2021-06-29 22:00:00+00:00 ; test_start 2021-07-01 00:00:00+00:00 ; dernier open du backtest de validation 2021-06-29 23:00:00+00:00
+(d) fold 3 : val 2021-06-09 12:00:00+00:00 -> 2021-12-30 22:00:00+00:00 ; test_start 2022-01-01 00:00:00+00:00 ; dernier open du backtest de validation 2021-12-30 23:00:00+00:00
+(d) fold 4 : val 2021-11-17 16:00:00+00:00 -> 2022-06-29 22:00:00+00:00 ; test_start 2022-07-01 00:00:00+00:00 ; dernier open du backtest de validation 2022-06-29 23:00:00+00:00
+(d) fold 5 : val 2022-04-13 20:00:00+00:00 -> 2022-12-30 22:00:00+00:00 ; test_start 2023-01-01 00:00:00+00:00 ; dernier open du backtest de validation 2022-12-30 23:00:00+00:00
+(d) fold 6 : val 2022-08-30 04:00:00+00:00 -> 2023-06-29 22:00:00+00:00 ; test_start 2023-07-01 00:00:00+00:00 ; dernier open du backtest de validation 2023-06-29 23:00:00+00:00
+(d) fold 7 : val 2023-01-24 09:00:00+00:00 -> 2023-12-30 22:00:00+00:00 ; test_start 2024-01-01 00:00:00+00:00 ; dernier open du backtest de validation 2023-12-30 23:00:00+00:00
+(d) fold 8 : val 2023-06-27 02:00:00+00:00 -> 2024-06-29 22:00:00+00:00 ; test_start 2024-07-01 00:00:00+00:00 ; dernier open du backtest de validation 2024-06-29 23:00:00+00:00
+(d) fold 9 : val 2023-11-21 06:00:00+00:00 -> 2024-12-30 22:00:00+00:00 ; test_start 2025-01-01 00:00:00+00:00 ; dernier open du backtest de validation 2024-12-30 23:00:00+00:00
+(d) pire cas sur 9 folds x 16 configurations (heures ; doit être < 0) : {"inner_label_end_minus_val_start_h": -1.0, "val_label_end_minus_test_start_h": -1.0, "final_label_end_minus_test_start_h": -1.0, "val_open_max_minus_test_start_h": -25.0}
+(d) aucune information du test ni de la validation dans le train interne : True
+exit 0

@@ -1,0 +1,22 @@
+## grep allow_holdout / holdout / read_parquet / dates > 2025-09-30 dans experiments/ src/ tests/adversarial/ (*.py)
+src/bot/data.py:4:Archives mensuelles uniquement (2019-01 -> 2026-08), chacune vérifiée par son
+src/bot/data.py:28:END = pd.Timestamp("2026-08-31 23:00", tz="UTC")  # open_time de la dernière bougie
+src/bot/data.py:323:    return pd.read_parquet(path, engine="pyarrow")
+src/bot/split.py:4:- Holdout : 2025-10-01 00:00 -> 2026-08-31 23:00 UTC, accessible uniquement avec
+src/bot/split.py:5:  `allow_holdout=True` explicite (réservé au palier 4).
+src/bot/split.py:14:  (évaluation à partir de HOLDOUT_EVAL_START).
+src/bot/split.py:30:HOLDOUT_START = pd.Timestamp("2025-10-01 00:00", tz="UTC")
+src/bot/split.py:31:HOLDOUT_END = pd.Timestamp("2026-08-31 23:00", tz="UTC")
+src/bot/split.py:34:HOLDOUT_EVAL_START = HOLDOUT_START + EMBARGO * H1
+src/bot/split.py:62:def holdout_period(df: pd.DataFrame, *, allow_holdout: bool = False) -> pd.DataFrame:
+src/bot/split.py:63:    """Lignes du holdout. Exige allow_holdout=True (sinon HoldoutAccessError)."""
+src/bot/split.py:64:    if allow_holdout is not True:
+src/bot/split.py:65:        raise HoldoutAccessError("holdout inaccessible sans allow_holdout=True")
+src/bot/split.py:66:    return df.loc[(df.index >= HOLDOUT_START) & (df.index <= HOLDOUT_END)]
+src/bot/split.py:69:def load_dataset(path: Path | str = DEFAULT_DATASET, *, allow_holdout: bool = False) -> pd.DataFrame:
+src/bot/split.py:72:    allow_holdout=True renvoie dev + holdout (palier 4 uniquement).
+src/bot/split.py:74:    df = pd.read_parquet(path, engine="pyarrow")
+src/bot/split.py:75:    if allow_holdout is True:
+src/bot/split.py:76:        return df.loc[(df.index >= DEV_START) & (df.index <= HOLDOUT_END)]
+## shift négatif / bfill / center=True dans experiments/ src/
+## fin grep (HEAD a4d80c5)

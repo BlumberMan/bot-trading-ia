@@ -1,0 +1,55 @@
+## HEAD a4d80c5 ; tag gonogo-v2 -> 68eeb61
+## blobs à 26f81e3 vs HEAD vs gonogo-v2 vs disque
+experiments/configs/E17.json 26f81e3=2a305382283f00ae326a46c47d8c87f4e752d17a HEAD=2a305382283f00ae326a46c47d8c87f4e752d17a gonogo-v2=2a305382283f00ae326a46c47d8c87f4e752d17a local=2a305382283f00ae326a46c47d8c87f4e752d17a
+experiments/nested.py 26f81e3=80a1b5bacdfdc38b9ef5babcb7225441d412f03a HEAD=80a1b5bacdfdc38b9ef5babcb7225441d412f03a gonogo-v2=80a1b5bacdfdc38b9ef5babcb7225441d412f03a local=80a1b5bacdfdc38b9ef5babcb7225441d412f03a
+experiments/harness.py 26f81e3=09e080662315696b55e345e42f3cba5fb1776e16 HEAD=09e080662315696b55e345e42f3cba5fb1776e16 gonogo-v2=09e080662315696b55e345e42f3cba5fb1776e16 local=09e080662315696b55e345e42f3cba5fb1776e16
+experiments/extra_features.py 26f81e3=4e88b192bad9ca6442d4f9fc3ad1781e3de56730 HEAD=4e88b192bad9ca6442d4f9fc3ad1781e3de56730 gonogo-v2=4e88b192bad9ca6442d4f9fc3ad1781e3de56730 local=4e88b192bad9ca6442d4f9fc3ad1781e3de56730
+## diff src/ harness extra_features configs nested 26f81e3..HEAD (vide = inchangé)
+## diff src/ experiments/ gonogo-v2..HEAD (vide = inchangé)
+## fichiers E17 dans l'arbre de 26f81e3
+experiments/configs/E17.json
+experiments/e17_report.py
+## commits ajoutant un fichier de résultat E17 (le plus ancien en dernier)
+048133d 2026-10-04 14:57:49 +0200 P3-exp: pièces E17 (labels mélangés 10 seeds, variantes re-tunées, batterie analyse_e10 importée, DSR, reproductibilité)
+a283d69 2026-10-04 14:31:54 +0200 P3-exp: résultat E17 (registre + JSON + signal)
+## 26f81e3 ancêtre de a283d69 ?
+OUI
+## dates : 26f81e3 2026-10-04 13:51:06 +0200 ; a283d69 2026-10-04 14:31:54 +0200
+## commit / code_dirty / variante enregistrés dans les JSON E17 du chercheur
+experiments/results/E17.json 26f81e3 False base
+experiments/results/E17_delay2.json 26f81e3 False delay2
+experiments/results/E17_drop_sma_dev_24.json a283d69 False drop_sma_dev_24
+experiments/results/E17_featlag1.json 26f81e3 False featlag1
+experiments/results/E17_report.json  None None
+experiments/results/E17_shuf1.json 26f81e3 False shuf1
+experiments/results/E17_shuf10.json 26f81e3 False shuf10
+experiments/results/E17_shuf2.json 26f81e3 False shuf2
+experiments/results/E17_shuf3.json 26f81e3 False shuf3
+experiments/results/E17_shuf4.json 26f81e3 False shuf4
+experiments/results/E17_shuf5.json 26f81e3 False shuf5
+experiments/results/E17_shuf6.json 26f81e3 False shuf6
+experiments/results/E17_shuf7.json 26f81e3 False shuf7
+experiments/results/E17_shuf8.json 26f81e3 False shuf8
+experiments/results/E17_shuf9.json 26f81e3 False shuf9
+experiments/results/repro/E17_run2.json 26f81e3 False base
+## union : blob déclaré vs 970ea49, HEAD, commit du résultat E0x
+E01 decl 08429702bc 970ea49 08429702bc HEAD 08429702bc au_resultat 9771189 08429702bc commits_touchant 1 OK
+E02 decl 04cdcc5ba1 970ea49 04cdcc5ba1 HEAD 04cdcc5ba1 au_resultat b52558c 04cdcc5ba1 commits_touchant 1 OK
+E03 decl 74b8d12df1 970ea49 74b8d12df1 HEAD 74b8d12df1 au_resultat d876e8f 74b8d12df1 commits_touchant 1 OK
+E04 decl cffd960274 970ea49 cffd960274 HEAD cffd960274 au_resultat 96c431d cffd960274 commits_touchant 1 OK
+E05 decl 7ed7d0936c 970ea49 7ed7d0936c HEAD 7ed7d0936c au_resultat cdfe22a 7ed7d0936c commits_touchant 1 OK
+E06 decl c9c8f01fb3 970ea49 c9c8f01fb3 HEAD c9c8f01fb3 au_resultat 1e76d8d c9c8f01fb3 commits_touchant 1 OK
+E07 decl 6bd6156679 970ea49 6bd6156679 HEAD 6bd6156679 au_resultat 0680d79 6bd6156679 commits_touchant 1 OK
+E08 decl 85b37c305d 970ea49 85b37c305d HEAD 85b37c305d au_resultat 684d2f6 85b37c305d commits_touchant 1 OK
+E09 decl e2e1ce2af0 970ea49 e2e1ce2af0 HEAD e2e1ce2af0 au_resultat 874284a e2e1ce2af0 commits_touchant 1 OK
+E10 decl a8acb82555 970ea49 a8acb82555 HEAD a8acb82555 au_resultat 59065fa a8acb82555 commits_touchant 1 OK
+E11 decl 784e568887 970ea49 784e568887 HEAD 784e568887 au_resultat 02c6d32 784e568887 commits_touchant 1 OK
+E12 decl f8cbc5c8f9 970ea49 f8cbc5c8f9 HEAD f8cbc5c8f9 au_resultat 97c1bf0 f8cbc5c8f9 commits_touchant 1 OK
+E13 decl 2f9fa1cfc8 970ea49 2f9fa1cfc8 HEAD 2f9fa1cfc8 au_resultat d7b77cb 2f9fa1cfc8 commits_touchant 1 OK
+E14 decl 50807479c8 970ea49 50807479c8 HEAD 50807479c8 au_resultat 9b04dc7 50807479c8 commits_touchant 1 OK
+E15 decl 3bda3a19b0 970ea49 3bda3a19b0 HEAD 3bda3a19b0 au_resultat f6bd87a 3bda3a19b0 commits_touchant 1 OK
+E16 decl 702e8825aa 970ea49 702e8825aa HEAD 702e8825aa au_resultat 4d3623f 702e8825aa commits_touchant 1 OK
+nb configs 16
+## registre : 17 lignes ; ids/commits :
+ E01 | f7e3eb4   E02 | 9771189   E03 | b52558c   E04 | d876e8f   E05 | e57bcd0   E06 | cdfe22a   E07 | 1e76d8d   E08 | 0680d79   E09 | 3eb9f55   E10 | 874284a   E11 | 59065fa   E12 | 02c6d32   E13 | e086ae0   E14 | d7b77cb   E15 | 9b04dc7   E16 | f6bd87a   E17 | 26f81e3  
+## fin
