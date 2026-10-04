@@ -1,0 +1,10 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00
+(a) features : 20 troncatures aléatoires, valeurs <= t identiques bit à bit : True
+(a) labels : open > t+1+H modifiés, label[<=T] identiques : True
+(a) folds : pour chaque fold, dernier open utilisé par un label de train < test_start : True
+(b) fold 1 : choix identiques True, 288 scores identiques True, probas du modèle sur X propre (test fold 5) identiques True
+(b) fold 2 : choix identiques True, 288 scores identiques True, probas du modèle sur X propre (test fold 5) identiques True
+(b) fold 3 : choix identiques True, 288 scores identiques True, probas du modèle sur X propre (test fold 5) identiques True
+(b) fold 4 : choix identiques True, 288 scores identiques True, probas du modèle sur X propre (test fold 5) identiques True
+(b) fold 5 : choix identiques True, 288 scores identiques True, probas du modèle sur X propre (test fold 5) identiques True
+(b) futur empoisonné à partir de 2023-01-01 00:00:00+00:00 : aucune influence sur les folds 1..5 : True
