@@ -7,6 +7,7 @@
 | P1-B2 / R2 / V2 | 2026-10-04 | VALIDE (KO A1 levé) | palier-1 |
 | P2-B1 / R1 / V1 | 2026-10-04 | VALIDE | palier-2 |
 | P3-B1 / R1 / V1 | 2026-10-04 | VALIDE (env : scikit-learn 1.9.1, lightgbm 4.7.0, 72 tests) | — |
+| P3-B2 / R2 / A1 / V2 | 2026-10-04 | INVALIDE (1/3) : candidat E10 (Sharpe OOS 0,669, 16 essais) ; KO C3-07 labels mélangés +0,36, C3-10 8 failles adversariales, C3-12 DSR 0,0002, C0-08 conception guidée par l'OOS | — |
 
 ## Récap palier 0a (2026-10-04)
 - État : infra en place, package `bot` 0.0.1 (code dans src/), commit d8f1f11.
@@ -64,4 +65,5 @@
 - 2026-10-04 — Palier 3, définition d'un essai : une configuration (modèle + features + label + procédure de tuning) évaluée sur les 9 folds OOS = 1 ligne de REGISTRE.md. Le tuning interne au train (validation temporelle purgée dans le train) fait partie de la procédure ; la taille de sa grille est notée dans la ligne.
 - 2026-10-04 — Palier 3, règle de choix du candidat, fixée avant tout essai : parmi les essais du brief, le candidat est celui qui a le Sharpe net OOS concaténé le plus élevé, à condition qu'il dépasse celui de la baseline sur les mêmes folds (−0,530). Sinon, aucun candidat. Les seuils GONOGO ne sont évalués qu'au palier 4.
 - 2026-10-04 — Palier 3, mapping proba → position : long si proba > seuil, sinon flat ; seuil et hyperparamètres choisis sur une validation interne au train (derniers 20 % du train, purge H+1), objectif = Sharpe net avec coûts ; réentraînement sur tout le train avant de prédire le test.
+- 2026-10-04 — Palier 3, correctif P3-B3 (suite P3-V2, KO C0-08) : la sélection entre configurations ne se fait plus en comparant les résultats OOS. Une procédure « emboîtée » choisit, dans chaque fold et sur la seule validation interne au train, parmi l'union des 16 espaces de configuration E01–E16 déclarés avant (y compris les mauvais). Elle est commitée avant toute exécution et évaluée une seule fois sur l'OOS (= 1 ligne de registre). Aucune nouvelle conception après avoir vu son résultat.
 - 2026-10-04 — Features à fenêtre finie uniquement (pas d'EMA à mémoire infinie) pour que le calcul live sur une fenêtre glissante soit exactement égal au calcul backtest.
