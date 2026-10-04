@@ -1,0 +1,60 @@
+CRITÈRES FAILLE / RÉSISTE — avocat du diable P3-A3, candidat E24
+Fixés et commités AVANT toute exécution adversariale (les chiffres déclarés par le chercheur
+figurent dans le brief et ont été lus, ainsi que E24.txt / adv_E24/analyse.txt ; aucune de MES sorties
+n'existe à ce stade).
+S = Sharpe net OOS concaténé 2021-01-01 -> 2025-09-30 de E24 tel que JE le reproduis (base, seed 42).
+Toutes les relances "re-tunées" = procédure b4.run complète (8 hp x 36 mappings, folds 1-9), b4.py importé non modifié.
+
+T0  Reproduction : FAILLE si |S - 0,799410| > 1e-4 ou trades != 242.
+T1  Labels mélangés (procédure complète, seeds 11..15 ; pool = 10 seeds du chercheur (1..10) + 5 miennes) :
+    FAILLE si S <= p95 empirique du pool (numpy percentile, interpolation linéaire)
+    OU z = (S - moyenne pool) / écart-type pool (ddof=1) < 1,645.
+T2  Aléatoire même nb de segments / même exposition, 1000 tirages, seed 2424 : FAILLE si percentile de S <= 95.
+T2b B&H même exposition : FAILLE si S <= Sharpe du B&H fractionnaire constant (fraction = exposition de E24)
+    OU percentile de S <= 95 parmi 1000 tirages stratifiés par fold (seed 2425).
+T3  Retards (exec t+2 ; features retardées d'une bougie supplémentaire), signal figé (delay2) et procédure
+    re-tunée (delay2, featlag1). Pour chaque mesure X :
+    FAILLE "effondrement" si X <= 0 ou X < 0,5 S ; FAILLE "amélioration" si X > 1,10 S.
+T4  Coûts x2, x3 (signal figé ET procédure re-tunée) : FAILLE si un Sharpe x2 ou x3 <= 0.
+T5a Par année 2021..2025 : FAILLE si Sharpe < 0 sur >= 2 années OU Sharpe <= B&H sur >= 4 années sur 5.
+T5b Par régime a priori (mois civil B&H > +5 % hausse, < -5 % baisse, sinon range) :
+    FAILLE si Sharpe range <= 0 OU Sharpe hausse <= 0 OU rendement composé baisse <= -50 %.
+T6a Sans la meilleure feature (argmax importance moyenne de MA base, procédure re-tunée) :
+    FAILLE si Sharpe <= 0 ou < 0,5 S.
+T6b Sans le meilleur mois (jours du meilleur mois retirés) : FAILLE si Sharpe <= 0 ou < 0,5 S.
+T7  Sharpe déflaté, recalcul indépendant, N = nombre de lignes de experiments/REGISTRE.md (28) :
+    FAILLE si DSR < 0,95.
+T8  Fuite :
+    (a) statique : lecture de données > 2025-09-30 23:00 ou allow_holdout=True dans experiments/ et src/
+        hors fonctions de garde/test -> FAILLE ;
+    (b) dynamique : pour chaque fold k = 1..9, prix/volumes >= test_start(k) remplacés par du bruit (seed 31+k) ;
+        FAILLE si le choix (hp, mapping), le score de validation, les seuils absolus ou les probas du modèle
+        final sur les features propres du test diffèrent du run propre ;
+    (c) label TB : FAILLE si une troncature des données à t+1+H (20 points, seed 33) change un label <= t,
+        ou si vol_168 (sigma du label) en t change quand les données > t sont modifiées ;
+    (d) purge : FAILLE si une ligne du train interne a t+1+H >= val_start ou une ligne du train final
+        t+1+H >= test_start, ou si le backtest de validation lit un open >= test_start.
+T9  Antériorité : FAILLE si E18..E28.json, b4.py ou labels_b4.py ont des blobs différents entre e0249a3 et HEAD,
+    si un fichier de résultat E18..E28 existe dans l'arbre de e0249a3 ou d'un commit antérieur,
+    si e0249a3 n'est pas ancêtre du commit de résultats 8faaf2a, ou si src/, harness.py, extra_features.py
+    ont changé entre e0249a3 et HEAD.
+
+TESTS CIBLÉS
+C1  Circularité vol_168 (label dont les barrières valent 1 x vol_168 x sqrt(24)) :
+    (a) modèle "vol_168 seule" : même procédure, features = [vol_168] uniquement.
+        FAILLE si Sharpe >= 0,75 S.
+    (b) règle "vol_168 seule" sans apprentissage : score = -vol_168 et score = +vol_168 (deux "hp"), même
+        grille de 36 mappings par quantiles, choix sur la même validation interne, mêmes folds.
+        FAILLE si Sharpe >= 0,75 S.
+    (c) label "direction seule" : mêmes barrières, expiration (aucune barrière touchée avant H) -> NaN
+        (exclue du train) au lieu de 0 ; même procédure. FAILLE si Sharpe <= 0 ou < 0,5 S.
+    (d) label triple barrière à seuils FIXES, même procédure : r = médiane de vol_168 x sqrt(24) sur
+        les bougies < 2021-01-01 (avant le premier test), haut = max(r, C), bas = r.
+        FAILLE si Sharpe <= 0 ou < 0,5 S.
+    (e) décomposition de l'AUC OOS des probas E24 (ma base) : hit = une barrière touchée avant H ;
+        dir = haut touché en premier, parmi les hits. FAILLE si AUC(dir | hit) < 0,52 (le pouvoir
+        discriminant ne vient pas de la direction).
+C2  Jour de la semaine :
+    (a) sans dow_sin ET dow_cos (procédure re-tunée) : FAILLE si Sharpe <= 0 ou < 0,5 S ;
+    (b) placebo : jour de semaine aléatoire par jour civil (uniforme 0..6, mêmes sin/cos), seeds 51, 52, 53,
+        train et test : FAILLE si la moyenne des 3 Sharpe placebo < 0,5 S.
