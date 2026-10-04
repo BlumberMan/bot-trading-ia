@@ -66,3 +66,22 @@ Résultat (brief P3-B3, 1 essai E17, aucune correction E18-E21) : Sharpe net OOS
 du brief et dépasse la baseline -> candidat du brief. Réserves mesurées (`e17_report.py`) : labels
 mélangés 10 seeds moyenne +0,174 (z de E17 +0,185) ; aléatoire mêmes trades/expo percentile 66,2 ;
 B&H fractionnaire même expo 0,789 ; DSR (N = 17) 0,000006.
+
+## Brief P3-B4 : labels nets de coûts et triple barrière (consigne d'Iyad), E18-E28
+Pré-enregistrement : configurations `experiments/configs/E18.json` … `E28.json` et code
+(`labels_b4.py`, `b4.py`, `corr_b4.py`, `b4_report.py`) commités ensemble AVANT toute exécution
+sur les données réelles ; seuls des auto-tests sur données synthétiques ont tourné avant
+(`b4.py --selftest`). Aucune configuration ajoutée ou modifiée après un résultat.
+- Labels (`labels_b4.py`, docstring) : net de coûts y=1 si log(open[t+1+H]/open[t+1]) > log(1,003) ;
+  triple barrière aux ouvertures, haute = max(barrière, log(1,003)), basse, temporelle H ; purge H+1.
+- E18-E20 : net H=4/12/24, base ; E21 : net H=24 base+extra ; E22 : idem avec élagage Spearman
+  |rho| > 0,9 calculé sur le train du fold ; E23 : TB H=12 ±1 sigma168·sqrt(H) ; E24 : TB H=24
+  ±1 sigma·sqrt(H) base ; E25 : idem base+extra ; E26 : idem élagué ; E27 : TB H=24 fixe ±2 %.
+- Tous LightGBM, grille hp de E10 (8 points, choisie d'après l'historique P3-B2, déclaré), mapping
+  par quantiles des probas du modèle sur ses lignes d'ajustement (entrée Q 0,6/0,7/0,8/0,9 ; sortie
+  Q entrée - 0,1/0,2/0,3 ; détention min 1/2/4 x H), soit 8 x 36 = 288 couples par fold.
+- E28 : procédure emboîtée sur l'union E18-E27 seulement (validation commune H=24, comme E17).
+- Registre : les essais tournent en parallèle sans écrire au registre ; les lignes sont ajoutées
+  ensuite une par une par un seul processus (`b4.py --register EXX`).
+- Corrélations (`corr_b4.py`, pas un essai) ; tests du veto (`b4_report.py`, importe
+  tests/adversarial/analyse_e10.py sans le modifier).
