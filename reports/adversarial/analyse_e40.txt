@@ -1,0 +1,157 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 (59160 lignes)
+[garde funding] fundingTime max lu = 2025-09-30 16:00:00+00:00 <= 2025-09-30 23:00:00+00:00 (6300 règlements)
+
+=== T0 reproduction (ma relance complète, seed 42) ===
+Sharpe 1.113918 (JSON 1.113918) trades 58 expo 0.427528 DD 0.4677 rdt total 3.9827 ; déclaré 1.113918 : |écart| 1.14e-07
+choix (hp, seuils) par fold identiques au chercheur : [True, True, True, True, True, True, True, True, True]
+B&H Sharpe 0.781489 rdt 2.9275
+importances moyennes (ma base) : vol_180 0.2940, ret_180 0.2230, vol_42 0.2154, sma_dev_180 0.1228, range_6 0.0580, sma_dev_42 0.0334, ret_42 0.0171, sma_dev_6 0.0114, ret_6 0.0092, rsi_14 0.0066, vol_6 0.0060, range_1 0.0024, logvol_z_42 0.0004, ret_1 0.0004
+par fold : trades [0, 10, 10, 2, 2, 7, 8, 9, 10] ; trades de validation ayant servi au choix [4, 1, 5, 6, 1, 4, 12, 7, 9] ; Sharpe val [6.428, 2.554, 2.496, -0.03, 0.548, 3.335, 3.848, 3.046, 2.884]
+
+=== T1 labels mélangés, procédure complète re-tunée ===
+  chercheur seed  1 : Sharpe +0.6216 trades 128 expo 0.644
+  chercheur seed  2 : Sharpe +0.8276 trades 92 expo 0.743
+  chercheur seed  3 : Sharpe -0.0380 trades 120 expo 0.650
+  chercheur seed  4 : Sharpe +0.5118 trades 101 expo 0.647
+  chercheur seed  5 : Sharpe -0.0832 trades 119 expo 0.739
+  chercheur seed  6 : Sharpe +0.8019 trades 105 expo 0.740
+  chercheur seed  7 : Sharpe +0.9058 trades 104 expo 0.624
+  chercheur seed  8 : Sharpe +0.5248 trades 131 expo 0.804
+  chercheur seed  9 : Sharpe +0.6075 trades 114 expo 0.650
+  chercheur seed 10 : Sharpe +0.6520 trades 113 expo 0.776
+  avocat    seed 21 : Sharpe +0.6504 trades 107 expo 0.757
+  avocat    seed 22 : Sharpe +0.3347 trades 175 expo 0.749
+  avocat    seed 23 : Sharpe +0.4702 trades 98 expo 0.543
+  avocat    seed 24 : Sharpe +0.6098 trades 115 expo 0.698
+  avocat    seed 25 : Sharpe +0.1537 trades 103 expo 0.487
+mes 5 seeds : moyenne +0.4438 écart-type 0.2043 max +0.6504 ; z sur mes seeds seules +3.280
+pool 15 seeds : moyenne +0.5034 écart-type 0.2959 p95 +0.8511 max +0.9058
+E40 +1.1139 : z +2.064 ; seeds >= E40 : 0/15 ; S > p95 : True ; seeds >= B&H 0.7815 : 3/15 ; seeds >= 0,85 S : 0/15
+(info, hors critère) seeds 26..35 : [0.2557, 0.663, 0.4492, 0.7978, 0.3039, 0.6988, 0.6307, 0.3902, 0.4767, 0.7045] ; pool 25 seeds : moyenne +0.5168 sd 0.2538 p95 +0.8224 max +0.9058 ; z +2.353 ; seeds >= S : 0/25
+
+[cible] segments 58, heures exposées 17792/41616, position héritée avant 2021 = 0.0
+=== T2a aléatoire grille 1 h (seed 4040, 1000 tirages, 58 segments, expo 0.4275) ===
+trades tirés min/max 58/58 ; Sharpe moyenne 0.3765 p50 0.3706 p95 0.9553 max 1.6278 ; E40 percentile 98.0
+
+=== T2b aléatoire grille 4 h (seed 4041, 1000 tirages) ===
+blocs 4 h OOS 10404 ; blocs à position non constante (trous de prix) 0 ; segments 4 h 58 ; blocs exposés 4448 (expo 0.4275) ; durées (blocs 4 h) triées [29, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 32, 32, 32, 33, 33, 36, 39, 41, 50, 55, 56, 59, 59, 60, 60, 60, 60, 70, 73, 74, 87, 92, 101, 103, 119, 127, 131, 133, 141, 166, 168, 181, 207, 213, 246, 288, 302]
+contrôle : position 4 h reconstruite rebacktestée -> Sharpe 1.1139 trades 58 (S 1.1139)
+trades tirés min/max 58/58 ; expo min/max 0.4275/0.4276
+Sharpe aléatoire 4 h : moyenne 0.4030 sd 0.3506 p5 -0.1538 p50 0.4140 p95 0.9769 max 1.5044 ; E40 percentile 97.5 ; tirages >= B&H : 140/1000
+
+=== T2c aléatoire grille 4 h stratifié par fold (seed 4042, 1000 tirages) ===
+plan par fold (blocs, durées des morceaux) : 1086:[] | 1104:[30, 30, 302, 30, 213, 30, 30, 33, 32, 30] | 1086:[56, 30, 30, 87, 30, 59, 36, 30, 55, 92] | 1104:[50, 141] | 1086:[30, 207] | 1104:[101, 30, 70, 168, 288, 166, 32] | 1092:[30, 32, 30, 181, 30, 30, 30, 59] | 1104:[30, 74, 39, 41, 103, 127, 30, 33, 30] | 1638:[60, 131, 60, 60, 246, 119, 133, 60, 73, 29]
+trades tirés min/max 57/58 ; Sharpe moyenne 0.4408 p50 0.4444 p95 0.9363 max 1.5491 ; E40 percentile 97.9
+
+=== T2d B&H même exposition ===
+B&H fractionnaire constant 0.4275 : Sharpe 0.7913 rdt +1.2248 DD 0.4382 | E40 Sharpe 1.1139
+
+=== T3/T4 signal E40 figé (modèles et seuils inchangés) ===
+exec +1 bougie 4 h (delay 5 h) : Sharpe +1.0820 (97 % de S) trades 58 DD 0.4772 rdt +3.7196
+exec +1 h (delay 2 h)          : Sharpe +1.1337 (102 % de S) trades 58 DD 0.4704 rdt +4.1709
+coûts x2                       : Sharpe +1.0127 (91 % de S) trades 58 DD 0.4803 rdt +3.1916
+coûts x3                       : Sharpe +0.9113 (82 % de S) trades 58 DD 0.4976 rdt +2.5252
+(features retardées d'une bougie 4 h avec modèles et seuils figés ~ signal décalé d'une bougie 4 h = ligne delay 5 h)
+
+=== Variantes re-tunées (procédure b5.run complète, mes relances) ===
+delay2        : Sharpe +1.0256 (92 % de S) trades 53 expo 0.432 DD 0.5207 rdt +3.3105 folds>0 7/9 ; Sharpe/fold nan;2.360;-1.510;0.533;0.876;3.489;1.893;1.794;0.116 ; top feature vol_180
+featlag1      : Sharpe +0.7504 (67 % de S) trades 43 expo 0.509 DD 0.6381 rdt +2.0616 folds>0 8/9 ; Sharpe/fold 0.508;0.724;-1.379;0.447;0.876;2.714;2.264;2.081;0.131 ; top feature vol_180
+cost2         : Sharpe +1.0127 (91 % de S) trades 58 expo 0.428 DD 0.4803 rdt +3.1916 folds>0 7/9 ; Sharpe/fold nan;2.555;-1.037;0.852;0.316;3.136;2.431;1.140;0.036 ; top feature vol_180
+cost3         : Sharpe +0.8715 (78 % de S) trades 52 expo 0.417 DD 0.4976 rdt +2.3069 folds>0 6/9 ; Sharpe/fold nan;2.441;-1.148;0.795;0.268;3.013;1.879;0.987;-0.078 ; top feature vol_180
+drop_vol_180  : Sharpe +0.7825 (70 % de S) trades 71 expo 0.563 DD 0.6482 rdt +2.4632 folds>0 7/9 ; Sharpe/fold 0.519;2.092;-2.422;-0.589;1.957;0.803;1.872;3.206;0.772 ; top feature vol_42
+tbscale0.8    : Sharpe +0.7841 (70 % de S) trades 45 expo 0.467 DD 0.6428 rdt +2.0714 folds>0 6/9 ; Sharpe/fold 2.005;0.880;-1.814;-0.669;1.027;2.543;1.386;3.099;-0.565 ; top feature vol_180
+tbscale1.2    : Sharpe +0.4877 (44 % de S) trades 42 expo 0.445 DD 0.6737 rdt +0.7460 folds>0 6/9 ; Sharpe/fold 0.582;1.075;-1.468;1.256;nan;2.146;1.071;2.189;-0.531 ; top feature vol_180
+rule_vol_180  : Sharpe +0.8358 (75 % de S) trades 9 expo 0.527 DD 0.6833 rdt +2.5020 folds>0 7/9 ; Sharpe/fold 0.576;-1.408;-1.512;1.721;2.094;1.894;1.699;1.977;0.713 ; top feature ret_1
+rule_vol_42   : Sharpe +0.5033 (45 % de S) trades 28 expo 0.305 DD 0.6885 rdt +0.7859 folds>0 5/9 ; Sharpe/fold 1.016;-2.019;-0.433;0.146;1.680;1.763;3.216;-0.182;-0.000 ; top feature ret_1
+onlyvols      : Sharpe +0.7166 (64 % de S) trades 33 expo 0.499 DD 0.5783 rdt +1.9074 folds>0 7/9 ; Sharpe/fold 0.519;1.162;-0.705;-1.505;0.779;2.156;2.727;0.726;0.838 ; top feature vol_180
+tbdir         : Sharpe +0.1744 (16 % de S) trades 30 expo 0.302 DD 0.6390 rdt +0.0346 folds>0 5/9 ; Sharpe/fold nan;0.646;-2.026;0.884;-0.951;0.499;1.242;2.663;-0.060 ; top feature ret_180
+  (chercheur delay2 : +1.0256)
+  (chercheur featlag1 : +0.7504)
+  (chercheur cost2 : +1.0127)
+  (chercheur cost3 : +0.8715)
+  (chercheur drop_vol_180 : +0.7825)
+  (chercheur rule_vol_180 : +0.8358)
+  (chercheur rule_vol_42 : +0.5033)
+  (chercheur tbdir : +0.1744)
+  (chercheur tbscale0.8 : +0.7841)
+  (chercheur tbscale1.2 : +0.4877)
+
+=== LT faible nombre de trades ===
+trades 58 ; rendement net/trade : moyenne +0.0345 médiane +0.0162 sd 0.1213 ; gagnants 34 ; top 5 [0.4946, 0.3852, 0.3647, 0.2551, 0.1691] ; pire 5 [-0.2606, -0.1357, -0.1116, -0.107, -0.1] ; somme log top 3 / somme log totale 0.647
+(a) bootstrap par trade (seed 4043, 10000) : moyenne/trade IC95 [+0.0055, +0.0673] ; Sharpe par trade 0.2846 IC95 [+0.0547, +0.5002] ; P(moyenne <= 0) 0.0102
+(b) jours 1734 ; jours rattachés à un trade 790 ; jours sans activité 944 (|rdt| max 0.00e+00)
+    bootstrap par trade du Sharpe journalier annualisé (seed 4044, 10000) : médiane 1.1055 IC95 [+0.1696, +2.0223] ; P(Sharpe <= 0) 0.0094 ; P(Sharpe <= B&H 0.7815) 0.2493 ; P(Sharpe <= 1,0) 0.4131
+(c) sans les 1 meilleur(s) trade(s) [('2021-09-24', 0.4946)] : Sharpe +0.9012 (81 % de S) trades 57 rdt +2.3338
+(c) sans les 3 meilleur(s) trade(s) [('2021-09-24', 0.4946), ('2023-09-29', 0.3852), ('2021-07-24', 0.3647)] : Sharpe +0.5322 (48 % de S) trades 55 rdt +0.7636
+(c) sans les 5 meilleur(s) trade(s) [('2021-09-24', 0.4946), ('2023-09-29', 0.3852), ('2021-07-24', 0.3647), ('2024-11-06', 0.2551), ('2023-11-23', 0.1691)] : Sharpe +0.2796 (25 % de S) trades 53 rdt +0.2019
+(info GONOGO palier 4) trades OOS 58 (seuil >= 200) ; DD max 46.77 % (seuil < 25 %)
+
+=== NA features NaN (position figée) ===
+bougies 4 h de décision OOS 10404 ; features NaN 1215 (11.68 %) ; proba NaN 1215 ; proba NaN <=> features NaN : True
+NaN par feature (décisions OOS) : ret_1 16, ret_6 51, ret_42 293, ret_180 1215, vol_6 51, vol_42 293, vol_180 1215, rsi_14 107, sma_dev_6 44, sma_dev_42 286, sma_dev_180 1209, logvol_z_42 286, range_1 9, range_6 44
+heures exposées 17792 ; dont figées (bougie de décision à proba NaN) 2180 (part de l'exposition 12.25 %) ; log-P&L figé +0.4024 / total +1.6060 (part du P&L 25.06 %) ; Sharpe des seules heures non figées (heures figées mises à 0) 0.9259
+variante NaN -> plat : Sharpe +0.9310 (84 % de S) trades 59 expo 0.3752 DD 0.4677 rdt +2.3595
+
+=== C1d décomposition de l'AUC OOS des probas E40 (ma base) ===
+OOS : AUC(label) 0.5695 (n 9004) ; AUC(hit) 0.5615 (n 9004, taux hit 0.4545) ; AUC(direction | hit) 0.5376 (n 3807, taux haut d'abord 0.5313)
+  règle -vol_42 : AUC(label) 0.4155 AUC(hit) 0.3374 AUC(dir | hit) 0.5438
+  règle +vol_42 : AUC(label) 0.5845 AUC(hit) 0.6626 AUC(dir | hit) 0.4562
+  règle -vol_180 : AUC(label) 0.4174 AUC(hit) 0.3299 AUC(dir | hit) 0.5619
+  règle +vol_180 : AUC(label) 0.5826 AUC(hit) 0.6701 AUC(dir | hit) 0.4381
+Spearman(proba, vol_180) OOS +0.2357 ; Spearman(proba, ret_180) +0.2617
+
+=== T5a par année (signal continu, position héritée) ===
+2021 : E40 Sharpe +1.8877 rdt +0.9236 trades 10 expo 0.347 DD 0.2485 | B&H Sharpe +0.9777 rdt +0.5931
+2022 : E40 Sharpe -0.3452 rdt -0.2018 trades 12 expo 0.318 DD 0.4677 | B&H Sharpe -1.2928 rdt -0.6432
+2023 : E40 Sharpe +1.9832 rdt +0.7029 trades 9 expo 0.499 DD 0.1757 | B&H Sharpe +2.3425 rdt +1.5485
+2024 : E40 Sharpe +1.9211 rdt +0.9134 trades 17 expo 0.423 DD 0.2370 | B&H Sharpe +1.7510 rdt +1.2064
+2025 : E40 Sharpe +0.1502 rdt -0.0040 trades 10 expo 0.593 DD 0.1768 | B&H Sharpe +0.8293 rdt +0.2140
+années Sharpe < 0 : 1 ; années Sharpe <= B&H : 2
+
+=== T5b par régime a priori (mois civil B&H : hausse > +5 %, baisse < -5 %, range sinon) ===
+hausse : 27 mois, 823 jours | E40 Sharpe +2.6040 rdt composé +7.6239 | B&H Sharpe +3.6113 rdt composé +79.5458
+baisse : 18 mois, 547 jours | E40 Sharpe -0.3214 rdt composé -0.2378 | B&H Sharpe -2.6954 rdt composé -0.9486
+range  : 12 mois, 364 jours | E40 Sharpe -0.9129 rdt composé -0.2420 | B&H Sharpe +0.1208 rdt composé -0.0519
+
+=== T6b sans le meilleur mois ===
+meilleur mois E40 : 2021-10 rdt +0.4077 ; top 3 : 2021-10 +0.4077, 2024-03 +0.2894, 2023-10 +0.2847
+Sharpe sans les jours du meilleur mois : 0.9432 (85 % de S) ; sans les 3 meilleurs mois : 0.6663
+
+=== T7 Sharpe déflaté (Bailey & López de Prado 2014), recalcul indépendant ===
+N = 47 lignes (ids E01..E47) ; V = 1.931504e-03 ; SR0 journalier 0.098995 (annualisé 1.8913)
+SR journalier E40 0.058305 (annualisé 1.1139) ; T 1734 ; skew 0.4712 ; kurtosis 14.8231 ; DSR = 0.043878 ; PSR(0) = 0.992788
+SR journaliers lus : [-0.18139, -0.13724, -0.09707, 0.00258, -0.00154, 0.00637, -0.00125, -0.01731, 0.01461, 0.03504, 0.019, 0.0296, 0.03293, 0.03471, 0.02795, 0.0292, 0.01235, 0.01884, 0.02149, 0.02297, 0.01991, 0.00842, 0.02588, 0.04184, 0.003, 0.00591, 0.02196, 0.01675, 0.02616, 0.0193, 0.0529, 0.04073, -0.00277, 0.02093, 0.01938, 0.06151, 0.02974, 0.01434, 0.00488, 0.05831, 0.04601, 0.02768, 0.04451, 0.00649, 0.0227, 0.0114, 0.04682]
+SR - SR0 = -0.040689
+(sensibilité) V sur E04-E47 = 2.928688e-04 -> SR0 annualisé 0.7365 DSR 0.796456 ; V sur E29-E47 (bougies 4 h) = 3.553338e-04 -> DSR 0.746931 ; V sur E40-E47 (P3-B7) = 3.481589e-04 -> DSR 0.752679
+(info) variantes de stratégie évaluées sur le même OOS hors registre (fichiers JSON, hors labels mélangés) : 109 ; N_eff = 156 -> DSR 0.006179
+
+=== ST point de départ du train (config E40, row_filter retiré, lignes >= départ ; re-tuné) ===
+  start2019-01-01 : Sharpe +1.1751 (105 % de S) trades 48 train_start fold 1 2019-01-31T00:00:00+00:00 n_train fold 1 2275 ; Sharpe/fold 0.514;1.363;-0.443;1.206;1.429;1.458;1.614;3.440;1.889
+  start2019-07-01 : Sharpe +0.4524 (41 % de S) trades 63 train_start fold 1 2019-07-01T00:00:00+00:00 n_train fold 1 1797 ; Sharpe/fold 0.601;0.524;-2.485;-1.075;-0.062;2.907;2.353;1.662;0.845
+  start2019-10-01 : Sharpe +0.9048 (81 % de S) trades 53 train_start fold 1 2019-10-01T00:00:00+00:00 n_train fold 1 1459 ; Sharpe/fold 0.677;1.670;-1.593;0.816;0.604;2.901;2.250;1.852;0.554
+  start2020-01-30 : Sharpe +1.3161 (118 % de S) trades 56 train_start fold 1 2020-01-30T00:00:00+00:00 n_train fold 1 1017 ; Sharpe/fold 1.226;2.507;-1.043;0.909;1.895;2.988;2.056;2.786;-0.036
+  start2020-04-01 : Sharpe +0.7734 (69 % de S) trades 56 train_start fold 1 2020-04-03T12:00:00+00:00 n_train fold 1 988 ; Sharpe/fold 0.472;0.833;-1.176;0.982;1.734;3.292;1.897;1.376;-0.069
+  start2020-07-01 : Sharpe +0.9714 (87 % de S) trades 62 train_start fold 1 2020-07-28T08:00:00+00:00 n_train fold 1 718 ; Sharpe/fold 1.264;1.138;-0.837;1.173;1.564;2.626;2.313;1.388;0.088
+  critère (2019-07, 2019-10, 2020-04, 2020-07) : min +0.4524 ; seuil 0,7 S 0.7797 -> FAILLE
+  (info, hors critère, ajouté après lecture de start2020-01-30) départ décalé de quelques bougies 4 h :
+    start2020-01-30T0000 : Sharpe +1.3161 (118 % de S) trades 56 train_start 2020-01-30T00:00:00+00:00 n_train fold 1 1017 ; trades fold 1 1
+    start2020-01-30T0400 : Sharpe +0.8739 (78 % de S) trades 59 train_start 2020-01-30T04:00:00+00:00 n_train fold 1 1016 ; trades fold 1 4
+    start2020-01-30T0800 : Sharpe +0.8537 (77 % de S) trades 56 train_start 2020-01-30T08:00:00+00:00 n_train fold 1 1015 ; trades fold 1 3
+    start2020-01-30T1200 : Sharpe +1.1139 (100 % de S) trades 58 train_start 2020-01-30T12:00:00+00:00 n_train fold 1 1014 ; trades fold 1 0
+    start2020-01-30T1600 : Sharpe +0.6949 (62 % de S) trades 52 train_start 2020-01-30T16:00:00+00:00 n_train fold 1 1013 ; trades fold 1 3
+    start2020-01-30T2000 : Sharpe +0.8793 (79 % de S) trades 61 train_start 2020-01-30T20:00:00+00:00 n_train fold 1 1012 ; trades fold 1 3
+    start2020-01-31T0000 : Sharpe +0.6878 (62 % de S) trades 53 train_start 2020-01-31T00:00:00+00:00 n_train fold 1 1011 ; trades fold 1 3
+    start2020-02-01T0000 : Sharpe +0.5941 (53 % de S) trades 61 train_start 2020-02-01T00:00:00+00:00 n_train fold 1 1005 ; trades fold 1 3
+    start2020-03-01T0000 : Sharpe +0.7734 (69 % de S) trades 56 train_start 2020-04-03T12:00:00+00:00 n_train fold 1 988 ; trades fold 1 3
+    8 départs 2020-01-30 00:00 -> 2020-02-01 (lignes de train fold 1 : 1017 -> 1005) : moyenne +0.8767 médiane +0.8638 sd 0.2386 min +0.5941 max +1.3161 ; rang de S (1 = meilleur) 2/8
+
+=== SD bruit de seed LightGBM (config identique, seed 42..47) ===
+  E40 seeds 42..47 : [1.1139, 0.9914, 1.0254, 0.8888, 0.7468, 0.7395] ; moyenne 43..47 +0.8784 (79 % de S) ; min +0.7395 ; moyenne 42..47 +0.9177 sd 0.1532
+  E36 seeds 42..47 : [1.1751, 0.8829, 0.8877, 0.7034, 0.7674, 0.889] ; moyenne +0.8842 sd 0.1619 (seed 42 = E36 du registre : 1.175146)
+  critère SD : RÉSISTE (seuil moyenne 0,7 S = 0.7797)
+  écart E40 - E36 (seed 42) d = -0.0612 ; 1,96 x sqrt(sd40² + sd36²) = 0.4368 -> dans le bruit : True ; écart des moyennes 6 seeds +0.0334 ; |d| / sd du pool de labels mélangés (0.2538) = 0.241 ; rang de seed 42 parmi les 6 seeds : E40 1/6, E36 1/6
+
+=== F1 fold 1 à plat ===
+  fold 1 E40 : trades 0 expo 0.0000 rdt +0.0000 ; B&H fold 1 Sharpe +0.8706 rdt +0.2080
+  à partir du fold 2 (2021-07-01 -> fin) : E40 Sharpe +1.1772 trades 58 DD 0.4677 ; B&H +0.7828 ; E36 +1.4937 (E36 concat complet +1.1751) -> critère F1 RÉSISTE
+  (info) Sharpe concat avec les jours du fold 1 retirés : +1.1772 ; part des jours OOS dans le fold 1 : 0.1044

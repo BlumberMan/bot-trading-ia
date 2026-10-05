@@ -1,0 +1,36 @@
+HEAD 9d5be1bc787a7b01f0aa958b1388738fb9d697dd
+db7f4d5878783ddbe6cd92c7e23faaa6008cc846 2026-10-05 01:42:41 +0200 P3-exp: pré-enregistrement P3-B7 (funding, bougies 4 h) : configs E40-E47 et code (b7, b7_rep
+56200992d6f3bc71ef86d5aa1330f21b0e2c8e56 2026-10-05 01:44:56 +0200 P3-exp: b7.py, formatage de la ligne de registre quand un Sharpe de fold est NaN (fold sans p
+a32fb1957212654c52c14868a90e8a2d4d66f3a1 2026-10-05 01:45:03 +0200 P3-exp: résultat E40 (registre + JSON + signal)
+db7f4d5 ancêtre de 5620099 : True
+5620099 ancêtre de a32fb19 : True
+db7f4d5 ancêtre de a32fb19 : True
+parent de 5620099 : db7f4d5 ; parent de a32fb19 : 5620099
+experiments/configs/E40.json : blob db7f4d5 69c81506da HEAD 69c81506da ; commits après db7f4d5 : [] -> OK
+experiments/configs/E41.json : blob db7f4d5 30dd418714 HEAD 30dd418714 ; commits après db7f4d5 : [] -> OK
+experiments/configs/E42.json : blob db7f4d5 24a770501d HEAD 24a770501d ; commits après db7f4d5 : [] -> OK
+experiments/configs/E43.json : blob db7f4d5 a7017585de HEAD a7017585de ; commits après db7f4d5 : [] -> OK
+experiments/configs/E44.json : blob db7f4d5 71d9b02957 HEAD 71d9b02957 ; commits après db7f4d5 : [] -> OK
+experiments/configs/E45.json : blob db7f4d5 277edf58d4 HEAD 277edf58d4 ; commits après db7f4d5 : [] -> OK
+experiments/configs/E46.json : blob db7f4d5 b195777111 HEAD b195777111 ; commits après db7f4d5 : [] -> OK
+experiments/configs/E47.json : blob db7f4d5 7d6bbb6e67 HEAD 7d6bbb6e67 ; commits après db7f4d5 : [] -> OK
+experiments/agg4h.py : blob db7f4d5 858b815dea HEAD 858b815dea ; commits après db7f4d5 : [] -> OK
+experiments/b5.py : blob db7f4d5 3d3d3236bb HEAD 3d3d3236bb ; commits après db7f4d5 : [] -> OK
+experiments/b4.py : blob db7f4d5 1e69380b6b HEAD 1e69380b6b ; commits après db7f4d5 : [] -> OK
+experiments/harness.py : blob db7f4d5 09e0806623 HEAD 09e0806623 ; commits après db7f4d5 : [] -> OK
+diff db7f4d5..HEAD src : aucun
+commits touchant b7.py après db7f4d5 : ['5620099']
+5620099 numstat : 1	1	experiments/b7.py
+5620099 hunks : ['@@ -243 +243 @@ def registry_line(out: dict, date: str) -> str:']
+-    fs = ";".join(f"{r['model']['sharpe']:.3f}" for r in out["folds"])
++    fs = ";".join(f"{float(r['model']['sharpe']):.3f}" for r in out["folds"])  # "nan" (fold à plat) -> nan
+ligne modifiée 243 dans la fonction : registry_line
+appels de registry_line dans b7.py : ['register']
+autres fichiers appelant b7.registry_line : []
+commits <= db7f4d5 (82) contenant un résultat E40..E47 : []
+E40.json : commit db7f4d5878783ddbe6cd92c7e23faaa6008cc846 code_dirty False variante base -> OK
+E40.json ajouté en : a32fb19 2026-10-05 01:45:03 +0200
+b7.py@db7f4d5 (hors arbre, commit déclaré 9d5be1b, code_dirty False) : Sharpe 1.113918114 trades 58 ; b7.py@HEAD (ma base) : Sharpe 1.113918114 trades 58 ; E40.json : 1.113918114 ; |écart| 0.0e+00 ; choix par fold identiques : True
+GONOGO.md vs tag gonogo-v2 : identique
+REGISTRE.md : 47 lignes ; ids E01..E47
+T9 RÉSULTAT : écarts 0
