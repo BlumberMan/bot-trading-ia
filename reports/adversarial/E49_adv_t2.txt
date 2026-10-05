@@ -1,0 +1,6 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+=== T2 E49 : S +0.606844 ; segments 242 ; barres exposées 21579/41616 (expo 0.5185) ; contrôle bt_from_h(h0) Sharpe +0.606012 ===
+T2a grille 1 h (seed 4901, 1000) : trades 242..242 ; expo 0.5184..0.5187 ; moyenne +0.1626 sd 0.3160 p50 +0.1647 p95 +0.6864 max +1.1161 ; S percentile 92.9 -> FAILLE TROUVÉE
+plan par fold (barres, segments, barres exposées) : [(4344, 29, 2442), (4416, 28, 2672), (4344, 5, 503), (4416, 7, 600), (4344, 31, 2991), (4416, 34, 2968), (4368, 36, 3359), (4416, 27, 2187), (6552, 46, 3857)]
+T2b stratifié par fold (seed 4902, 1000) : moyenne +0.5467 sd 0.2911 p50 +0.5562 p95 +1.0422 ; S percentile 58.5 -> FAILLE TROUVÉE
+T2c B&H fractionnaire constant 0.5185 : Sharpe +0.7898 rdt +1.5310 ; S +0.6068 -> FAILLE TROUVÉE

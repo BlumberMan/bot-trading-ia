@@ -1,0 +1,44 @@
+=== T9 antériorité E49 ===
+HEAD 5db0b8ca3cb08e7eaea3bacb959215e81e2ffe8b ; ba68dde ancêtre de HEAD : True
+ba68dde : ba68ddea9edc82d1bafc71539d0d258fc8c01072 2026-10-05 12:33:54 +0200 P3-exp: pré-enregistrement P3-B9, 8 règles E48-E55 (moteur, familles, veto, batterie), avant toute exécution sur données réelles
+60e7a4a : 60e7a4a6965038010a21f8af3e901c016079660c 2026-10-05 12:34:57 +0200 P3-exp: correction de bug P3-B9 (registry_line : Sharpe de fold NaN), mise en forme du registre seulement, définition inchangée
+f021b4b : f021b4b7f923bb17af29e7aed863c48a1e959382 2026-10-05 12:41:07 +0200 P3-exp: résultats P3-B9 (E48-E55 au registre, 55 lignes), veto T1-règles / T2 / T7, synthèse, batterie et reproductibilité de E49
+résultats E48..E55 dans l'arbre de ba68dde : aucun ; dans l'historique jusqu'à ba68dde : aucun
+E49.json : commit ba68ddea9edc82d1bafc71539d0d258fc8c01072 ; code_dirty False
+diff ba68dde..HEAD sur src, harness, rules_report, configs E48..E55 : vide
+diff ba68dde..HEAD sur experiments/rules.py :
+    diff --git a/experiments/rules.py b/experiments/rules.py
+    index c512b84..85772d8 100644
+    --- a/experiments/rules.py
+    +++ b/experiments/rules.py
+    @@ -460,7 +460,11 @@ def run_trial(cfg: dict, log) -> tuple[dict, pd.DataFrame, pd.DataFrame]:
+     
+     def registry_line(out: dict, date: str) -> str:
+         cfg = out["config"]
+    -    fs = ";".join(f"{fo['model']['sharpe']:.3f}" for fo in out["folds"])
+    +    def f3(x):  # Sharpe NaN (fold sans variance) stocké "nan" dans le JSON
+    +        x = float(x) if not isinstance(x, str) else float("nan")
+    +        return f"{x:.3f}" if math.isfinite(x) else "nan"
+    +
+    +    fs = ";".join(f3(fo["model"]["sharpe"]) for fo in out["folds"])
+         ft = ";".join(str(fo["model"]["trades"]) for fo in out["folds"])
+         m = out["concatenated"]["model"]
+         eligible = isinstance(m["sharpe"], float) and m["sharpe"] > out["concatenated"]["baseline"]["sharpe"]
+hunk -U0 @@ -463 +463,5 @@ def registry_line(out: dict, date: str) -> str: ; registry_line ba68dde lignes (461, 487) ; HEAD lignes (461, 491)
+hunks : 1 ; seul registry_line touché : True ; occurrences de registry_line( : ['def registry_line(out: dict, date: str) -> str:', '    line = registry_line(out, date)'] ; git grep : experiments/b4.py:410:def registry_line(out: dict, date: str) -> str:
+experiments/b4.py:453:    line = registry_line(out, pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d"))
+experiments/b5.py:501:def registry_line(out: dict, date: str) -> str:
+experiments/b5.py:549:    line, _ = registry_line(out, pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d"))
+experiments/b7.py:241:def registry_line(out: dict, date: str) -> str:
+experiments/b7.py:283:    line = registry_line(out, pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d"))
+experiments/harness.py:463:def registry_line(cfg: dict, out: dict, cmd: str, date: str) -> str:
+experiments/harness.py:530:        line = registry_line(cfg, out, cmd, date)
+experiments/nested.py:311:def registry_line(out: dict, cmd: str, date: str) -> str:
+experiments/nested.py:425:        line = registry_line(out, cmd, pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d"))
+experiments/rules.py:461:def registry_line(out: dict, date: str) -> str:
+experiments/rules.py:511:    line = registry_line(out, date)
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+rules.py ba68dde (hors arbre, C:\Users\2\AppData\Local\Temp\claude\C--Users-2-bot-trading-ia\0e5c63ce-3a82-459c-9a67-ad5c8561c7e8\scratchpad\rules_ba68dde.py) vs HEAD : cibles identiques True ; trades identiques True (341) ; Sharpe +0.606843930915 vs +0.606843930915 ; trades 242 vs 242
+ligne 49 de REGISTRE.md == registry_line(E49.json) : True
+[info] register() exécuté à HEAD refuserait E49 (diff ba68dde..HEAD sur CODE_PATHS) : experiments/rules.py
+-> RÉSISTE

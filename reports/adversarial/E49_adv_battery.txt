@@ -1,0 +1,72 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+=== Batterie adversariale E49 : S reproduit +0.606844 ; trades 242 ; DD 0.6635 ===
+[contrôle] ma réimplémentation de la famille A == rules.family_signal : True
+
+--- T3 retards ---
+  T3a t+2 moteur re-simulé                            : Sharpe +0.2110 (   35 % de S) trades 233 rdt +0.0398 -> FAILLE TROUVÉE
+  T3b t+2 cibles figées (exec_delay=2)                : Sharpe +0.6067 (  100 % de S) trades 242 -> RÉSISTE
+  T3c features retardées d'1 jour (moteur t+1)        : Sharpe +0.1781 (   29 % de S) trades 246 rdt -0.0288 -> FAILLE TROUVÉE
+
+--- T4 coûts (cibles figées) ---
+  T4 coûts x2                                         : Sharpe +0.2024 (   33 % de S) rdt +0.0266 DD 0.7282 -> FAILLE TROUVÉE
+  T4 coûts x3                                         : Sharpe -0.2023 (  -33 % de S) rdt -0.5031 DD 0.8274 -> FAILLE TROUVÉE
+
+--- T5a années ---
+  2021 : Sharpe +1.6793 rdt +1.2326 trades 57 expo 0.584 | B&H +0.9777
+  2022 : Sharpe -2.0233 rdt -0.3293 trades 12 expo 0.126 | B&H -1.2928
+  2023 : Sharpe +0.9212 rdt +0.2656 trades 64 expo 0.680 | B&H +2.3425
+  2024 : Sharpe +0.7762 rdt +0.2584 trades 63 expo 0.631 | B&H +1.7510
+  2025 : Sharpe -0.4485 rdt -0.1115 trades 46 expo 0.589 | B&H +0.8293
+  années Sharpe < 0 : 2 ; années Sharpe <= B&H : 4/5 -> FAILLE TROUVÉE
+
+--- T5b régimes ---
+  hausse : 27 mois 823 j | Sharpe +3.0176 composé +13.5593 | B&H Sharpe +3.6113 composé +79.5458
+  baisse : 18 mois 547 j | Sharpe -2.5564 composé -0.7343 | B&H Sharpe -2.6954 composé -0.9486
+  range  : 12 mois 364 j | Sharpe -1.7392 composé -0.4522 | B&H Sharpe +0.1208 composé -0.0519
+  -> FAILLE TROUVÉE
+
+--- T6a sans un horizon (vote 2 sur 2 ; info 1 sur 2 et horizon seul) ---
+  sans L=20  (60, 120) vote >= 2 : Sharpe +0.7950 trades 199 expo 0.421 rdt +1.8011
+  sans L=20  (60, 120) vote >= 1 : Sharpe +0.2090 trades 294 expo 0.604 rdt -0.0171
+  sans L=60  (20, 120) vote >= 2 : Sharpe +0.4722 trades 167 expo 0.357 rdt +0.5887
+  sans L=60  (20, 120) vote >= 1 : Sharpe +0.0606 trades 327 expo 0.687 rdt -0.3157
+  sans L=120 (20, 60) vote >= 2 : Sharpe +0.4135 trades 178 expo 0.374 rdt +0.4757
+  sans L=120 (20, 60) vote >= 1 : Sharpe +0.3710 trades 302 expo 0.643 rdt +0.3795
+  [info] horizon seul L=20  : Sharpe +0.0210 trades 242
+  [info] horizon seul L=60  : Sharpe +0.6315 trades 241
+  [info] horizon seul L=120 : Sharpe +0.2560 trades 255
+  T6a sans l'horizon dominant (L=120, vote 2/2)       : Sharpe +0.4135 (   68 % de S) -> RÉSISTE
+
+--- T6b sans le meilleur mois ---
+  meilleurs mois : 2021-01 +0.5403, 2021-03 +0.4648, 2024-02 +0.3038
+  T6b sans le meilleur mois (2021-01)                 : Sharpe +0.3693 (   61 % de S) ; [info] sans 3 meilleurs -0.0288 -> RÉSISTE
+
+--- T7 DSR (N = lignes de REGISTRE.md) ---
+  (i) sr_daily : N 55 ; V 1.740711e-03 ; E[max] 2.312597 ; SR0 journalier 0.096486 (ann. 1.8434) ; SR 0.031764 (ann. 0.6068) ; T 1734 ; skew 0.4472 ; kurt 9.2599 ; DSR 0.003356 ; PSR(0) 0.908305
+  (ii) Sharpe/sqrt(365) : N 55 ; V 1.740711e-03 ; E[max] 2.312597 ; SR0 journalier 0.096486 (ann. 1.8434) ; SR 0.031764 (ann. 0.6068) ; T 1734 ; skew 0.4472 ; kurt 9.2599 ; DSR 0.003356 ; PSR(0) 0.908305
+  -> FAILLE TROUVÉE
+
+--- BR barrières ±20 % (re-simulées) ---
+  BR b x0,8                                           : Sharpe -0.0394 (   -7 % de S) trades 283 -> FAILLE TROUVÉE
+  BR b x1,2                                           : Sharpe +0.4721 (   78 % de S) trades 216 -> RÉSISTE
+  BR temps 96 h                                       : Sharpe +0.1201 (   20 % de S) trades 269 -> FAILLE TROUVÉE
+  BR temps 144 h                                      : Sharpe +0.6889 (  114 % de S) trades 224 -> RÉSISTE
+
+--- LT faible nombre de trades ---
+  (a) 242 trades ; moyenne +0.00457 médiane -0.00005 ; IC95 moyenne [-0.00246 ; +0.01146] ; P(moy <= 0) 0.0961 (seed 4904, 10000) -> FAILLE TROUVÉE
+  (b) bootstrap circulaire blocs 20 j du Sharpe : IC95 [-0.3828 ; +1.5893] ; P(Sharpe <= 0) 0.1164 (seed 4905, 10000) -> FAILLE TROUVÉE
+  LTc sans les 1 meilleurs trades                     : Sharpe +0.5118 (   84 % de S) trades 241 ; retirés 2021-01-28 00:00:00+00:00 +0.1895 -> RÉSISTE
+  LTc sans les 3 meilleurs trades                     : Sharpe +0.3686 (   61 % de S) trades 239 ; retirés 2021-01-28 00:00:00+00:00 +0.1895, 2021-02-15 00:00:00+00:00 +0.1366, 2021-02-06 00:00:00+00:00 +0.1343 -> RÉSISTE
+  LTc sans les 5 meilleurs trades                     : Sharpe +0.2294 (   38 % de S) trades 237 ; retirés 2021-01-28 00:00:00+00:00 +0.1895, 2021-02-15 00:00:00+00:00 +0.1366, 2021-02-06 00:00:00+00:00 +0.1343, 2021-03-05 00:00:00+00:00 +0.1290, 2021-03-01 00:00:00+00:00 +0.1246 -> FAILLE TROUVÉE
+
+--- PH phase horaire de la décision ---
+  décision 23:00 UTC (décalage  0 h) : Sharpe +0.6068 trades 242 expo 0.519
+  décision 19:00 UTC (décalage  4 h) : Sharpe +0.1544 trades 244 expo 0.525
+  décision 15:00 UTC (décalage  8 h) : Sharpe +0.0458 trades 243 expo 0.520
+  décision 11:00 UTC (décalage 12 h) : Sharpe +0.0828 trades 243 expo 0.512
+  décision 07:00 UTC (décalage 16 h) : Sharpe +0.3546 trades 246 expo 0.519
+  décision 03:00 UTC (décalage 20 h) : Sharpe +0.0053 trades 238 expo 0.518
+  5 phases : min +0.0053 médiane +0.0828 (0,5 S = +0.3034) -> FAILLE TROUVÉE
+
+--- F1 sans le fold 1 ---
+  2021-07-01 -> 2025-09-30 : Sharpe +0.0916 trades 213 rdt -0.1063 | B&H +0.7828 -> FAILLE TROUVÉE
