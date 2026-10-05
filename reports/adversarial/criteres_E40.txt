@@ -1,0 +1,70 @@
+CRITÈRES FAILLE / RÉSISTE — avocat du diable P3-A5, candidat E40 (bougies 4 h, TB fixe ±0,061901, H=30, f4,
+lignes à partir de la définition du funding ~2020-01-30 ; experiments/b7.py)
+Fixés et commités AVANT toute exécution adversariale. Lus avant ce commit : le brief P3-A5, experiments/b7.py,
+experiments/results/E40.txt et E40_veto.txt (chiffres du chercheur), l'archive P3-A4. Aucune de MES sorties n'existe.
+S = Sharpe net OOS concaténé 2021-01-01 -> 2025-09-30 23:00 de E40 tel que JE le reproduis (base, seed 42).
+« Re-tuné » = procédure b5.run complète via experiments/b7.py importé non modifié (8 hp x 36 mappings, folds 1-9),
+via tests/adversarial/run_b7_variant.py. « Figé » = signal 1 h de MA base, modèles et seuils inchangés.
+Données : load_dataset() et load_funding() par défaut ; garde index max <= 2025-09-30 23:00 UTC (prix) et
+fundingTime max <= 2025-09-30 23:00 UTC (funding) dans chaque script.
+
+T0  Reproduction : FAILLE si |S - 1,113918| > 1e-4 ou trades != 58.
+T1  Labels mélangés re-tunés, seeds 21..25 (miennes, nouvelles) ; pool = 10 seeds du chercheur (1..10) + 5 miennes :
+    FAILLE si S <= p95 empirique du pool (numpy percentile linéaire) OU z = (S - moy) / sd(ddof=1) < 1,645.
+T2a Aléatoire grille 1 h (même nb de segments, même expo), 1000 tirages, seed 4040 : FAILLE si percentile <= 95.
+T2b Aléatoire grille 4 h (durées réelles permutées, blocs 4 h OOS alignés, >= 1 bloc plat entre segments), 1000
+    tirages, seed 4041 : FAILLE si percentile <= 95.
+T2c Idem stratifié par fold, 1000 tirages, seed 4042 : FAILLE si percentile <= 95.
+T2d B&H fractionnaire constant à la même exposition : FAILLE si S <= son Sharpe.
+T3  Retards : figé exécuté 1 bougie 4 h plus tard (exec_delay 5 h) ; re-tunés delay2 et featlag1. Pour chaque X :
+    FAILLE « effondrement » si X <= 0 ou X < 0,5 S ; FAILLE « amélioration » si X > 1,10 S.
+T4  Coûts x2, x3 (figé ET re-tuné) : FAILLE si un Sharpe <= 0 ou < 0,5 S.
+T5a Par année 2021..2025 : FAILLE si Sharpe < 0 sur >= 2 années OU Sharpe <= B&H sur >= 4 années sur 5.
+T5b Par régime a priori (mois civil B&H > +5 % hausse, < -5 % baisse, sinon range) :
+    FAILLE si Sharpe range <= 0 OU Sharpe hausse <= 0 OU rendement composé baisse <= -50 %.
+T6a Sans la meilleure feature (argmax importance moyenne de MA base), re-tuné : FAILLE si <= 0 ou < 0,5 S.
+T6b Sans le meilleur mois (jours retirés) : FAILLE si <= 0 ou < 0,5 S.
+T7  DSR (Bailey & López de Prado 2014), recalcul indépendant, N = 47 (lignes de REGISTRE.md), V = variance des SR
+    journaliers des 47 essais (lus dans experiments/results/E01..E47.json) : FAILLE si DSR < 0,95.
+T8  Fuite :
+    (a) statique : accès > 2025-09-30 23:00 ou allow_holdout=True dans src/ et experiments/ (b7 compris) ;
+    (b) dynamique folds 1..9 : heures de prix >= test_start(k) remplacées par du bruit (seed 41+k) ET taux de funding
+        des règlements >= test_start(k) remplacés par du bruit ; FAILLE si choix (hp, mapping), score de validation,
+        seuils, n_train, train_start ou probas du modèle final sur les features propres du test diffèrent ;
+    (c) labels / features 4 h : FAILLE si une troncature après la bougie t+1+H change un label <= t, si une
+        perturbation des heures >= T+4h change une bougie ou feature <= t (20 points, seed 43), ou si une
+        perturbation / suppression des règlements fundingTime > T+4h change une feature de funding ou le masque
+        row_filter <= T (20 points, seed 44) ;
+    (d) purge : FAILLE si une ligne du train interne a open4[t+1+H] >= val_start, une ligne du train final une
+        bougie t+1+H finissant >= test_start, ou si la validation lit un open >= test_start.
+T9  Antériorité : FAILLE si db7f4d5 n'est pas ancêtre de a32fb19 ; si configs E40..E47, agg4h.py, b5.py, b4.py,
+    harness.py ou src/ diffèrent entre db7f4d5 et HEAD ; si b7.py diffère entre db7f4d5 et HEAD autrement que par
+    5620099 ; si 5620099 touche autre chose que registry_line ou si registry_line est appelée ailleurs que dans
+    register() ; si un résultat E40..E47 existe dans l'arbre de db7f4d5 ou d'un ancêtre ; si E40.json déclare un commit
+    != db7f4d5 ou code_dirty != false ; si b7.py de db7f4d5 (extrait par git show, exécuté hors arbre) ne donne pas le
+    même Sharpe / trades / choix par fold que b7.py de HEAD (|écart| > 1e-9).
+
+TESTS AJOUTÉS
+LT  Faible nombre de trades (trades de MA base) :
+    (a) bootstrap par trade du rendement net moyen (10000, seed 4043) : FAILLE si borne basse IC 95 % <= 0 ;
+    (b) bootstrap par trade du Sharpe journalier annualisé (10000, seed 4044) : FAILLE si borne basse IC 95 % <= 0 ;
+    (c) sans le meilleur trade : FAILLE si Sharpe < 0,5 S ; sans les 3 meilleurs : FAILLE si <= 0 ou < 0,5 S.
+NA  Features NaN : FAILLE si part du P&L des heures exposées figées > 20 % ET > 2 x leur part d'exposition, OU si
+    « NaN -> plat » < 0,5 S.
+BR  Barrières ±20 % (tbscale0.8 / tbscale1.2 de b7, v = 0,049521 / 0,074281), re-tunées : FAILLE si l'une < 0,7 S.
+C1  Circularité :
+    (a) règles rule_vol_180 et rule_vol_42 (b5.RuleModel), même procédure : FAILLE si l'une >= 0,75 S ;
+    (b) lgbm sur [vol_42, vol_180] seules, re-tuné : FAILLE si >= 0,75 S ;
+    (c) direction seule (expiration -> NaN), re-tuné : FAILLE si <= 0 ou < 0,5 S ;
+    (d) AUC OOS des probas de MA base : FAILLE si AUC(direction | une barrière touchée) < 0,52.
+ST  Point de départ du train (même config E40, row_filter retiré, lignes >= date de départ) :
+    départs 2019-01-01 (doit redonner E36 1,175146), 2019-07-01, 2019-10-01, 2020-01-30 (doit redonner S), 2020-04-01,
+    2020-07-01. FAILLE si un départ parmi 2019-07-01, 2019-10-01, 2020-04-01, 2020-07-01 donne Sharpe <= 0 ou < 0,7 S.
+SD  Bruit de seed du modèle : E40 et E36 relancés avec seed LightGBM 43..47 (config identique sinon).
+    FAILLE si un des 5 Sharpe E40 <= 0 ou si leur moyenne < 0,7 S.
+    Question E40/E36 (info, non comptée) : écart d = S - S(E36) ; « dans le bruit » si |d| <= 1,96 x
+    sqrt(sd40² + sd36²) (sd = écart-type ddof=1 des 6 seeds 42..47 de chacun) ; comparé aussi à l'écart-type du pool
+    des labels mélangés.
+F1  Fold 1 à plat : FAILLE si le Sharpe de E40 recalculé à partir du fold 2 (2021-07-01 -> fin, signal continu)
+    <= celui du B&H sur la même période. (info : E36 à partir du fold 2, effet du fold 1 sur S.)
+C2  Placebo funding : sans objet (E40 n'utilise aucune feature de funding).
