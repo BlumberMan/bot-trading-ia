@@ -1,0 +1,135 @@
+=== E40 : Sharpe net OOS concaténé +1.113918 ; baseline -0.529674 ; éligible True ; trades 58 ; expo 0.4275 ; commit db7f4d5 ===
+
+=== T1 labels mélangés, procédure complète (10 seeds) ===
+  seed  1 : Sharpe concat +0.6216 trades 128 expo 0.644
+  seed  2 : Sharpe concat +0.8276 trades 92 expo 0.743
+  seed  3 : Sharpe concat -0.0380 trades 120 expo 0.650
+  seed  4 : Sharpe concat +0.5118 trades 101 expo 0.647
+  seed  5 : Sharpe concat -0.0832 trades 119 expo 0.739
+  seed  6 : Sharpe concat +0.8019 trades 105 expo 0.740
+  seed  7 : Sharpe concat +0.9058 trades 104 expo 0.624
+  seed  8 : Sharpe concat +0.5248 trades 131 expo 0.804
+  seed  9 : Sharpe concat +0.6075 trades 114 expo 0.650
+  seed 10 : Sharpe concat +0.6520 trades 113 expo 0.776
+  moyenne +0.5332 écart-type 0.3386 min -0.0832 max +0.9058 p95 +0.8706 ; E40 +1.1139 : z +1.715 ; seeds >= E40 : 0/10 ; S > p95 : True -> RÉSISTE
+
+=== tests/adversarial/analyse_e10.py appliqué au signal de E40 (sortie brute) ===
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 (59160 lignes)
+[repro] E10 concat : Sharpe 1.113918 trades 58 expo 0.427528 DD 0.4677 rdt 3.9827
+[B&H] Sharpe 0.781489
+[cible] segments 58, barres exposées 17792/41616, opens NaN dans la fenêtre 14, position héritée avant 2021 = 0.0
+
+=== T2 aléatoire (seed 20261004, 1000 tirages, 58 segments, expo 0.4275, coûts 0,0015 x1) ===
+trades tirés min/max 58/58 ; expo min/max 0.4274/0.4276
+Sharpe aléatoire : moyenne 0.3993 écart-type 0.3599 p5 -0.1755 p50 0.3870 p95 0.9652 max 1.6920
+E10 1.1139 -> percentile 97.4 ; > p95 : True
+
+=== T2b B&H avec la même exposition ===
+B&H fractionnaire constant 0.4275 : Sharpe 0.7913 rdt 1.2248 DD 0.4382
+plan par fold (barres, segments, barres exposées) : [(4344, 1, 0), (4416, 10, 3040), (4344, 10, 2020), (4416, 2, 764), (4344, 2, 948), (4416, 7, 3420), (4368, 8, 1688), (4416, 9, 2028), (6552, 10, 3884)]
+stratifié par fold (seed 20261005, 1000 tirages) : moyenne 0.4785 p50 0.4790 p95 0.9617 ; E10 percentile 98.4
+
+=== T3/T4 signal E10 figé (modèles et seuils inchangés) ===
+exec_delay=2  : Sharpe 1.1337 trades 58 expo 0.4275 DD 0.4704 rdt 4.1709
+coûts x2      : Sharpe 1.0127 trades 58 expo 0.4275 DD 0.4803 rdt 3.1916
+coûts x3      : Sharpe 0.9113 trades 58 expo 0.4275 DD 0.4976 rdt 2.5252
+
+=== T5a par année (signal continu, position héritée) ===
+2021 : E10 Sharpe +1.8877 rdt +0.9236 trades 10 expo 0.347 | B&H Sharpe +0.9777 rdt +0.5931
+2022 : E10 Sharpe -0.3452 rdt -0.2018 trades 12 expo 0.318 | B&H Sharpe -1.2928 rdt -0.6432
+2023 : E10 Sharpe +1.9832 rdt +0.7029 trades 9 expo 0.499 | B&H Sharpe +2.3425 rdt +1.5485
+2024 : E10 Sharpe +1.9211 rdt +0.9134 trades 17 expo 0.423 | B&H Sharpe +1.7510 rdt +1.2064
+2025 : E10 Sharpe +0.1502 rdt -0.0040 trades 10 expo 0.593 | B&H Sharpe +0.8293 rdt +0.2140
+
+=== T5b par régime (défini a priori : rendement B&H du mois civil, open 1re bougie -> open 1re bougie du mois suivant ; hausse > +5 %, baisse < -5 %, range sinon) ===
+hausse : 27 mois, 823 jours | E10 Sharpe +2.6040 rdt composé +7.6239 | B&H Sharpe +3.6113 rdt composé +79.5458
+baisse : 18 mois, 547 jours | E10 Sharpe -0.3214 rdt composé -0.2378 | B&H Sharpe -2.6954 rdt composé -0.9486
+range  : 12 mois, 364 jours | E10 Sharpe -0.9129 rdt composé -0.2420 | B&H Sharpe +0.1208 rdt composé -0.0519
+
+=== T6b sans le meilleur mois ===
+meilleur mois E10 : 2021-10 rdt +0.4077 ; top 3 : 2021-10 +0.4077, 2024-03 +0.2894, 2023-10 +0.2847
+Sharpe sans les jours du meilleur mois : 0.9432 ; meilleur mois mis à plat : 0.9347 ; sans les 3 meilleurs mois : 0.6663
+
+=== T7 Sharpe déflaté (Bailey & López de Prado 2014), recalcul indépendant ===
+N = 47 lignes de REGISTRE.md ; SR journaliers des essais : [-0.18139, -0.13724, -0.09707, 0.00258, -0.00154, 0.00637, -0.00125, -0.01731, 0.01461, 0.03504, 0.019, 0.0296, 0.03293, 0.03471, 0.02795, 0.0292, 0.01235, 0.01884, 0.02149, 0.02297, 0.01991, 0.00842, 0.02588, 0.04184, 0.003, 0.00591, 0.02196, 0.01675, 0.02616, 0.0193, 0.0529, 0.04073, -0.00277, 0.02093, 0.01938, 0.06151, 0.02974, 0.01434, 0.00488, 0.05831, 0.04601, 0.02768, 0.04451, 0.00649, 0.0227, 0.0114, 0.04682]
+V = 1.931504e-03 ; SR0 journalier = 0.098995 (annualisé 1.8913)
+SR E10 journalier = 0.058305 ; T = 1734 ; skew 0.4712 ; kurtosis 14.8231 ; dénominateur 0.992106
+DSR = 0.043878 ; PSR(0) = 0.992788
+
+T2 aléatoire mêmes trades / même expo : percentile 97.4 -> RÉSISTE ; stratifié par fold : percentile 98.4 -> RÉSISTE
+
+=== T7 Sharpe déflaté (Bailey & López de Prado 2014), SR journaliers de chaque essai du registre ===
+N = 47 lignes de REGISTRE.md (E01..E47) ; V[SR_n] = 1.931504e-03 ; SR0 journalier 0.098995 (annualisé 1.8913)
+SR E40 journalier 0.058305 (annualisé 1.1139) ; T 1734 ; skew 0.4712 ; kurtosis 14.8231 ; SR - SR0 -0.040689 ; stat -1.7074 ; DSR = 0.043878 ; PSR(0) = 0.992788 -> FAILLE
+(version analyse_e10 : DSR = 0.043878, N = 47)
+
+VETO E40 : T1 RÉSISTE ; T2 RÉSISTE ; T7 FAILLE
+
+=== Batterie complète (candidat) ===
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+  T3 signal figé exécuté 1 bougie 4 h plus tard (exec_delay 5 h) : Sharpe +1.0820 (97 % de S) trades 58 -> RÉSISTE
+  signal figé exec_delay=2 (analyse_e10, grille 1 h) : Sharpe +1.1337 -> RÉSISTE
+  signal figé coûts x2     (analyse_e10, grille 1 h) : Sharpe +1.0127 -> RÉSISTE
+  signal figé coûts x3     (analyse_e10, grille 1 h) : Sharpe +0.9113 -> RÉSISTE
+  T6b sans le meilleur mois : +0.9432 (85 % de S) -> RÉSISTE
+
+=== Variantes re-tunées (procédure complète b5.run) ===
+  T3                           delay2            : Sharpe +1.0256 (92 % de S) trades 53 expo 0.432 DD 0.5207 rdt +3.3105 folds>0 7/9 -> RÉSISTE ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; lgbm ; 14 features
+  T3                           featlag1          : Sharpe +0.7504 (67 % de S) trades 43 expo 0.509 DD 0.6381 rdt +2.0616 folds>0 8/9 -> RÉSISTE ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; lgbm ; 14 features
+  T4                           cost2             : Sharpe +1.0127 (91 % de S) trades 58 expo 0.428 DD 0.4803 rdt +3.1916 folds>0 7/9 -> RÉSISTE ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; lgbm ; 14 features
+  T4                           cost3             : Sharpe +0.8715 (78 % de S) trades 52 expo 0.417 DD 0.4976 rdt +2.3069 folds>0 6/9 -> RÉSISTE ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; lgbm ; 14 features
+  T6a                          drop_vol_180      : Sharpe +0.7825 (70 % de S) trades 71 expo 0.563 DD 0.6482 rdt +2.4632 folds>0 7/9 -> RÉSISTE ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; lgbm ; 13 features
+  C1 direction seule           tbdir             : Sharpe +0.1744 (16 % de S) trades 30 expo 0.302 DD 0.6390 rdt +0.0346 folds>0 5/9 -> FAILLE ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901},"expire_nan":true} ; lgbm ; 14 features
+  C1 règle sans apprentissage  rule_vol_42       : Sharpe +0.5033 (45 % de S) trades 28 expo 0.305 DD 0.6885 rdt +0.7859 folds>0 5/9 -> RÉSISTE ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; rule ; 1 features
+  C1 règle sans apprentissage  rule_vol_180      : Sharpe +0.8358 (75 % de S) trades 9 expo 0.527 DD 0.6833 rdt +2.5020 folds>0 7/9 -> FAILLE ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; rule ; 1 features
+  C2 placebo                   dowplac51         : Sharpe +0.7943 (71 % de S) trades 63 expo 0.524 DD 0.5032 rdt +2.2762 folds>0 8/9 ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; lgbm ; 16 features
+  C2 placebo                   dowplac52         : Sharpe +0.6539 (59 % de S) trades 57 expo 0.507 DD 0.5008 rdt +1.4440 folds>0 6/9 ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; lgbm ; 16 features
+  C2 placebo                   dowplac53         : Sharpe +0.8122 (73 % de S) trades 55 expo 0.463 DD 0.5008 rdt +2.3242 folds>0 8/9 ; label {"kind":"tb","H":30,"up":{"type":"fixed_log","v":0.061901},"down":{"type":"fixed_log","v":0.061901}} ; lgbm ; 16 features
+  C2 sans jour de semaine : sans objet, le candidat n'utilise aucune feature calendaire (jeu f4) ; le Sharpe sans jour de semaine est celui du candidat lui-même
+  C2 placebo (jour de semaine aléatoire par jour civil AJOUTÉ / substitué) : moyenne +0.7535 (68 % de S) -> RÉSISTE (critère criteres_E24 ; pour un candidat sans calendrier, mesure surtout l'effet d'une feature de bruit)
+
+=== C1e Décomposition de l'AUC OOS (bougies 4 h du test, probas du modèle) ===
+  E40 : auc_label 0.5695 ; auc_hit 0.5615 ; auc_dir_given_hit 0.5376 ; n 9004 ; hit_rate 0.4228 ; n_hit 3807 ; spearman_p_minus_vol42 -0.3149
+
+=== In-sample vs OOS par fold ===
+fold | config | Sharpe IS | Sharpe val | Sharpe OOS | AUC train | AUC val | AUC test | taux y=1 train | test
+   1 |    E40 |     1.754 |      6.428 |        nan |    0.7786 |  0.6000 |   0.5307 |         0.2663 | 0.4407
+   2 |    E40 |     1.596 |      2.554 |      2.668 |    0.7888 |  0.4515 |   0.6761 |         0.3288 | 0.3212
+   3 |    E40 |     2.222 |      2.496 |     -0.926 |    0.8027 |  0.6138 |   0.6519 |         0.3145 | 0.2219
+   4 |    E40 |     1.429 |     -0.030 |      0.909 |    0.7347 |  0.7027 |   0.6046 |         0.2818 | 0.1739
+   5 |    E40 |     1.771 |      0.548 |      0.365 |    0.7269 |  0.4501 |   0.5703 |         0.2537 | 0.2427
+   6 |    E40 |     2.004 |      3.335 |      3.257 |    0.8636 |  0.6126 |   0.6333 |         0.2516 | 0.1549
+   7 |    E40 |     1.881 |      3.848 |      2.559 |    0.8648 |  0.6571 |   0.5655 |         0.2311 | 0.2921
+   8 |    E40 |     1.658 |      3.046 |      1.293 |    0.7458 |  0.5485 |   0.4754 |         0.2430 | 0.2799
+   9 |    E40 |     1.790 |      2.884 |      0.150 |    0.7564 |  0.5167 |   0.4767 |         0.2476 | 0.1282
+
+=== Importances (gain normalisé) ===
+feature        | moyenne | f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9
+vol_180        | 0.2940  | 0.1774 | 0.0774 | 0.1658 | 0.3272 | 0.5555 | 0.4020 | 0.3459 | 0.3221 | 0.2724
+ret_180        | 0.2230  | 0.1966 | 0.3438 | 0.3290 | 0.3495 | 0.2131 | 0.1237 | 0.1349 | 0.1446 | 0.1713
+vol_42         | 0.2154  | 0.4931 | 0.4450 | 0.2399 | 0.0948 | 0.0758 | 0.0937 | 0.1313 | 0.1311 | 0.2339
+sma_dev_180    | 0.1228  | 0.0228 | 0.0560 | 0.1229 | 0.0538 | 0.0485 | 0.2140 | 0.2064 | 0.2134 | 0.1671
+range_6        | 0.0580  | 0.0000 | 0.0547 | 0.0557 | 0.0577 | 0.0984 | 0.0472 | 0.0470 | 0.0854 | 0.0759
+sma_dev_42     | 0.0334  | 0.0943 | 0.0025 | 0.0088 | 0.0352 | 0.0000 | 0.0431 | 0.0441 | 0.0389 | 0.0335
+ret_42         | 0.0171  | 0.0000 | 0.0000 | 0.0129 | 0.0000 | 0.0007 | 0.0304 | 0.0407 | 0.0513 | 0.0177
+sma_dev_6      | 0.0114  | 0.0054 | 0.0109 | 0.0303 | 0.0305 | 0.0067 | 0.0080 | 0.0070 | 0.0000 | 0.0039
+ret_6          | 0.0092  | 0.0103 | 0.0097 | 0.0165 | 0.0273 | 0.0013 | 0.0061 | 0.0089 | 0.0000 | 0.0028
+rsi_14         | 0.0066  | 0.0000 | 0.0000 | 0.0131 | 0.0057 | 0.0000 | 0.0165 | 0.0158 | 0.0040 | 0.0045
+vol_6          | 0.0060  | 0.0000 | 0.0000 | 0.0024 | 0.0040 | 0.0000 | 0.0094 | 0.0133 | 0.0086 | 0.0163
+range_1        | 0.0024  | 0.0000 | 0.0000 | 0.0021 | 0.0141 | 0.0000 | 0.0019 | 0.0021 | 0.0006 | 0.0006
+logvol_z_42    | 0.0004  | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0024 | 0.0013 | 0.0000 | 0.0000
+ret_1          | 0.0004  | 0.0000 | 0.0000 | 0.0006 | 0.0000 | 0.0000 | 0.0016 | 0.0012 | 0.0000 | 0.0000
+
+=== T2 grille 4 h : 10404 blocs 4 h OOS, 58 segments, blocs exposés 4448 (expo 0.4275), blocs à position non constante 0 ; position 4 h reconstruite rebacktestée : Sharpe +1.1139 (S +1.1139) ===
+  non stratifié (seed 4747, 1000 tirages) : moyenne +0.3659 p50 +0.3617 p95 +0.9374 max +1.4528 ; E40 percentile 98.2 -> RÉSISTE
+  stratifié par fold (seed 4748, 1000 tirages ; segments par fold [0, 10, 10, 2, 2, 7, 8, 9, 10]) : moyenne +0.4502 p50 +0.4508 p95 +0.9617 max +1.3983 ; E40 percentile 98.1 -> RÉSISTE
+
+T2 retenu (FAILLE si un percentile <= 95) : 1h 97.4 ; 1h stratifié 98.4 ; 4h 98.2 ; 4h stratifié 98.1 -> RÉSISTE
+
+=== Batterie P3-B7 (candidat) : barrières x0,8 / x1,2, placebo de funding, essai apparié sans funding ===
+  barrières tbscale0.8 : Sharpe +0.7841 (70 % de S) trades 45 folds>0 6/9 ; labels [{'kind': 'tb', 'H': 30, 'up': {'type': 'fixed_log', 'v': 0.049521}, 'down': {'type': 'fixed_log', 'v': 0.049521}}] -> RÉSISTE
+  barrières tbscale1.2 : Sharpe +0.4877 (44 % de S) trades 42 folds>0 6/9 ; labels [{'kind': 'tb', 'H': 30, 'up': {'type': 'fixed_log', 'v': 0.074281}, 'down': {'type': 'fixed_log', 'v': 0.074281}}] -> FAILLE
+  placebo funding : sans objet (le candidat n'utilise aucune feature de funding)
+  essai apparié E41 (même config, features f4fu) : Sharpe +0.8789 ; E40 - E41 = +0.2350 ; par fold +nan;+0.077;+0.656;-0.501;-1.156;+1.366;+0.899;-0.228;-0.359
+
+VETO FINAL E40 : T1 RÉSISTE ; T2 RÉSISTE ; T7 FAILLE (DSR 0.043878, N 47)

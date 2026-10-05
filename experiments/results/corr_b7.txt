@@ -1,0 +1,63 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+[garde funding] fundingTime max lu = 2025-09-30 16:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (6300 règlements, min 2020-01-01 00:00:00+00:00)
+features (20) : ['ret_1', 'ret_6', 'ret_42', 'ret_180', 'vol_6', 'vol_42', 'vol_180', 'rsi_14', 'sma_dev_6', 'sma_dev_42', 'sma_dev_180', 'logvol_z_42', 'range_1', 'range_6', 'fr_cur', 'fr_mean3', 'fr_mean21', 'fr_z90', 'fr_sum21', 'fr_age_h']
+
+fold 1 : train 2020-01-30 12:00:00+00:00 -> 2020-11-30 00:00:00+00:00 (1138 bougies 4 h sans NaN ; test 2021-01-01 00:00:00+00:00 exclu)
+  pearson  : 1 paire(s) |corr| > 0.9 : fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / ret_42 = +0.4312
+  spearman : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9191 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / sma_dev_180 = +0.4756
+
+fold 2 : train 2020-01-30 12:00:00+00:00 -> 2021-06-25 16:00:00+00:00 (1524 bougies 4 h sans NaN ; test 2021-07-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9077 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / ret_42 = +0.4843
+  spearman : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9274 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / sma_dev_180 = +0.5196
+
+fold 3 : train 2020-01-30 12:00:00+00:00 -> 2021-12-26 16:00:00+00:00 (2264 bougies 4 h sans NaN ; test 2022-01-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9087 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / sma_dev_180 = +0.4751
+  spearman : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9170 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / sma_dev_180 = +0.5345
+
+fold 4 : train 2020-01-30 12:00:00+00:00 -> 2022-06-25 16:00:00+00:00 (3350 bougies 4 h sans NaN ; test 2022-07-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9110 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / sma_dev_180 = +0.3988
+  spearman : 1 paire(s) |corr| > 0.9 : fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / sma_dev_180 = +0.4198
+
+fold 5 : train 2020-01-30 12:00:00+00:00 -> 2022-12-26 16:00:00+00:00 (4454 bougies 4 h sans NaN ; test 2023-01-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9119 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_mean3 / sma_dev_180 = +0.3679
+  spearman : 1 paire(s) |corr| > 0.9 : fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / sma_dev_180 = +0.3562
+
+fold 6 : train 2020-01-30 12:00:00+00:00 -> 2023-06-25 16:00:00+00:00 (5359 bougies 4 h sans NaN ; test 2023-07-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9114 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / sma_dev_42 = +0.3680
+  spearman : 1 paire(s) |corr| > 0.9 : fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_sum21 / ret_180 = +0.3797
+
+fold 7 : train 2020-01-30 12:00:00+00:00 -> 2023-12-26 16:00:00+00:00 (6463 bougies 4 h sans NaN ; test 2024-01-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9118 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_z90 / ret_42 = +0.3622
+  spearman : 1 paire(s) |corr| > 0.9 : fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_sum21 / ret_180 = +0.4055
+
+fold 8 : train 2020-01-30 12:00:00+00:00 -> 2024-06-25 16:00:00+00:00 (7555 bougies 4 h sans NaN ; test 2024-07-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9144 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_sum21 / ret_180 = +0.3872
+  spearman : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9012 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_mean3 / ret_180 = +0.4635
+
+fold 9 : train 2020-01-30 12:00:00+00:00 -> 2024-12-26 16:00:00+00:00 (8659 bougies 4 h sans NaN ; test 2025-01-01 00:00:00+00:00 exclu)
+  pearson  : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9137 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_mean21 / ret_180 = +0.3878
+  spearman : 2 paire(s) |corr| > 0.9 : fr_cur / fr_mean3 = +0.9050 ; fr_mean21 / fr_sum21 = +1.0000
+             max |corr| funding / f4 : fr_mean3 / ret_180 = +0.4773
+
+=== Synthèse : paires |corr| > 0,9 (nombre de folds sur 9) ===
+  pearson  fr_mean21 / fr_sum21 : 9/9 folds, min +1.0000 max +1.0000
+  pearson  fr_cur / fr_mean3 : 8/9 folds, min +0.9077 max +0.9144
+  spearman fr_mean21 / fr_sum21 : 9/9 folds, min +1.0000 max +1.0000
+  spearman fr_cur / fr_mean3 : 5/9 folds, min +0.9012 max +0.9274

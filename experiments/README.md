@@ -148,3 +148,13 @@ un résultat. `src/bot/funding.py` est utilisé sans modification (load_funding(
   essai apparié sans funding. Corrélations : `corr_b7.py`. Paires et tableaux : `b7_report.py --pairs`.
 - Règle de choix inchangée (JOURNAL.md) : candidat = Sharpe net OOS concaténé le plus élevé parmi E40-E47, s'il dépasse
   la baseline (-0,530) ; sinon aucun candidat.
+Résultat (brief P3-B7, 8 essais E40-E47 sur 10 autorisés, registre 47 lignes) : tous au-dessus de la baseline (-0,5297).
+Règle JOURNAL : candidat = E40 (f4 SEUL, TB fixe H=30, lignes où fu est défini ; Sharpe net OOS concaténé +1,1139,
+58 trades, 7/9 folds > 0, fold 1 sans position ; B&H +0,7815). Le meilleur essai est donc une version SANS funding.
+Paires « f4 + fu » - « f4 seul » (concaténé) : E41-E40 -0,2350 ; E43-E42 +0,3216 ; E45-E44 +0,3096 (`results/b7_pairs.txt`).
+Veto (`results/E*_veto.txt`) : E40 T1 z +1,715 (0/10 seeds >= E40), T2 percentiles 1 h 97,4 / 1 h strat. 98,4 / 4 h 98,2 /
+4 h strat. 98,1, T7 DSR (N = 47) 0,0439 < 0,95. Aucun des 8 essais n'a un DSR >= 0,95. Placebo de funding (informatif,
+sur E41 et E47) : E41 moyenne 0,966 (> E41 0,879) ; E47 moyenne 0,566 (E47 0,895). Reproductibilité :
+`results/repro/E40_run2.json` (seul le champ commit diffère). Corrélations : `results/corr_b7.txt`.
+Écart à l'exécution : correction du formatage de la ligne de registre pour un Sharpe de fold NaN (commit 5620099,
+sans effet sur les calculs ; les JSON des essais avaient été produits au commit de pré-enregistrement db7f4d5).
