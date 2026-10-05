@@ -1,0 +1,48 @@
+[garde] index max lu = 2025-09-30 23:00:00+00:00 <= 2025-09-30 23:00:00+00:00 : OK (59160 lignes, min 2019-01-01 00:00:00+00:00)
+=== Batterie E49 (A / vol) : S +0.606844 ; trades OOS 242 ===
+
+--- coûts (même signal) ---
+  coûts x2                                    : Sharpe +0.2024 (33 % de S) rdt +0.0266 -> RÉSISTE
+  coûts x3                                    : Sharpe -0.2023 (-33 % de S) rdt -0.5031 -> FAILLE
+
+--- exécution à t+2 ---
+  t+2 moteur re-simulé (E = open t+2)         : Sharpe +0.2110 (35 % de S) trades 233 -> FAILLE
+  t+2 signal figé (exec_delay=2)              : Sharpe +0.6067 (100 % de S) trades 242 -> RÉSISTE
+
+--- barrières ±20 % (re-simulées) ---
+  barrières de prix x0,8                      : Sharpe -0.0394 (-7 % de S) trades 283 -> FAILLE
+  barrières de prix x1,2                      : Sharpe +0.4721 (78 % de S) trades 216 -> RÉSISTE
+  barrière temporelle 96 h (x0,8)             : Sharpe +0.1201 (20 % de S) trades 269 -> FAILLE
+  barrière temporelle 144 h (x1,2)            : Sharpe +0.6889 (114 % de S) trades 224 -> RÉSISTE
+
+--- années (signal continu, position héritée) ---
+  2021 : règle Sharpe +1.6793 rdt +1.2326 trades 57 expo 0.584 | B&H Sharpe +0.9777 rdt +0.5931
+  2022 : règle Sharpe -2.0233 rdt -0.3293 trades 12 expo 0.126 | B&H Sharpe -1.2928 rdt -0.6432
+  2023 : règle Sharpe +0.9212 rdt +0.2656 trades 64 expo 0.680 | B&H Sharpe +2.3425 rdt +1.5485
+  2024 : règle Sharpe +0.7762 rdt +0.2584 trades 63 expo 0.631 | B&H Sharpe +1.7510 rdt +1.2064
+  2025 : règle Sharpe -0.4485 rdt -0.1115 trades 46 expo 0.589 | B&H Sharpe +0.8293 rdt +0.2140
+  années à Sharpe < 0 : 2 ; années à Sharpe <= B&H : 4/5 -> FAILLE
+
+--- régimes (mois civil B&H > +5 % hausse, < -5 % baisse, sinon range) ---
+  hausse : 27 mois, 823 jours | règle Sharpe +3.0176 rdt composé +13.5593 | B&H Sharpe +3.6113 rdt composé +79.5458
+  baisse : 18 mois, 547 jours | règle Sharpe -2.5564 rdt composé -0.7343 | B&H Sharpe -2.6954 rdt composé -0.9486
+  range  : 12 mois, 364 jours | règle Sharpe -1.7392 rdt composé -0.4522 | B&H Sharpe +0.1208 rdt composé -0.0519
+  -> FAILLE
+
+--- sans le meilleur mois ---
+  sans le meilleur mois (2021-01, +0.5403)    : Sharpe +0.3693 (61 % de S) -> RÉSISTE
+
+--- sans les meilleurs trades OOS ---
+  sans les 1 meilleurs trades                 : Sharpe +0.5118 (84 % de S) trades 241 rdt +0.7814 ; retirés : 2021-01-28 00:00:00+00:00 +0.1895 -> RÉSISTE
+  sans les 3 meilleurs trades                 : Sharpe +0.3686 (61 % de S) trades 239 rdt +0.3818 ; retirés : 2021-01-28 00:00:00+00:00 +0.1895, 2021-02-15 00:00:00+00:00 +0.1366, 2021-02-06 00:00:00+00:00 +0.1343 -> RÉSISTE
+  sans les 5 meilleurs trades                 : Sharpe +0.2294 (38 % de S) trades 237 rdt +0.0883 ; retirés : 2021-01-28 00:00:00+00:00 +0.1895, 2021-02-15 00:00:00+00:00 +0.1366, 2021-02-06 00:00:00+00:00 +0.1343, 2021-03-05 00:00:00+00:00 +0.1290, 2021-03-01 00:00:00+00:00 +0.1246 -> FAILLE
+
+--- IC bootstrap par trade (trades OOS, rendements nets) ---
+  242 trades ; moyenne +0.00457 ; médiane -0.00005 ; IC95 moyenne [-0.00229 ; +0.01147] ; P(moyenne <= 0) 0.0979 ; rendement composé +1.1189 IC95 [-0.5955 ; +10.0620] (seed 9, 10000 tirages) -> FAILLE
+
+--- B&H à exposition égale (analyse_e10, T2b) ---
+  exposition 0.5185 ; B&H fractionnaire constant Sharpe +0.7898 ; aléatoire stratifié par fold percentile 59.0 -> FAILLE
+
+--- trades OOS : 242 (informatif : GONOGO exigera >= 200 au palier 4) ---
+
+FAILLES de la batterie : 9 : coûts x3, t+2 moteur re-simulé (E = open t+2), barrières de prix x0,8, barrière temporelle 96 h (x0,8), years, regimes, sans les 5 meilleurs trades, bootstrap, bh_same_expo

@@ -1,0 +1,137 @@
+{
+ "id": "E49",
+ "S": 0.6068439309154006,
+ "coûts x2": {
+  "sharpe": 0.20235540617076836,
+  "faille": false
+ },
+ "coûts x3": {
+  "sharpe": -0.2023247335311231,
+  "faille": true
+ },
+ "t+2 moteur re-simulé (E = open t+2)": {
+  "sharpe": 0.21096152980982072,
+  "faille": true
+ },
+ "t+2 signal figé (exec_delay=2)": {
+  "sharpe": 0.6067239283222111,
+  "faille": false
+ },
+ "barrières de prix x0,8": {
+  "sharpe": -0.039448529499841,
+  "faille": true
+ },
+ "barrières de prix x1,2": {
+  "sharpe": 0.4720962209407831,
+  "faille": false
+ },
+ "barrière temporelle 96 h (x0,8)": {
+  "sharpe": 0.12010353005208238,
+  "faille": true
+ },
+ "barrière temporelle 144 h (x1,2)": {
+  "sharpe": 0.6888805695670309,
+  "faille": false
+ },
+ "years": {
+  "values": {
+   "2021": [
+    1.6792870120610384,
+    0.9776788571591011
+   ],
+   "2022": [
+    -2.023340810224257,
+    -1.2927993657491033
+   ],
+   "2023": [
+    0.9212227835666791,
+    2.3425476228451343
+   ],
+   "2024": [
+    0.7761847015950092,
+    1.7509548205885965
+   ],
+   "2025": [
+    -0.4485334253457307,
+    0.8293237921467055
+   ]
+  },
+  "neg": 2,
+  "le_bh": 4,
+  "faille": true
+ },
+ "regimes": {
+  "hausse": {
+   "months": 27,
+   "days": 823,
+   "sharpe": 3.0176423946481066,
+   "compound": 13.559349549650438,
+   "bh_sharpe": 3.6113046708215992,
+   "bh_compound": 79.54582096222076
+  },
+  "baisse": {
+   "months": 18,
+   "days": 547,
+   "sharpe": -2.5564354952310224,
+   "compound": -0.734326875402711,
+   "bh_sharpe": -2.695384568424878,
+   "bh_compound": -0.9485671707753071
+  },
+  "range": {
+   "months": 12,
+   "days": 364,
+   "sharpe": -1.7391817372413536,
+   "compound": -0.4521911743404202,
+   "bh_sharpe": 0.12081482903560353,
+   "bh_compound": -0.051936004427516
+  },
+  "faille": true
+ },
+ "sans le meilleur mois (2021-01, +0.5403)": {
+  "sharpe": 0.3693330969222643,
+  "faille": false
+ },
+ "sans les 1 meilleurs trades": {
+  "sharpe": 0.5118481218640356,
+  "faille": false
+ },
+ "sans les 3 meilleurs trades": {
+  "sharpe": 0.36860119076185077,
+  "faille": false
+ },
+ "sans les 5 meilleurs trades": {
+  "sharpe": 0.2293986113296981,
+  "faille": true
+ },
+ "bootstrap": {
+  "n": 242,
+  "mean": 0.004574547011683045,
+  "ci_mean": [
+   -0.0022908745876157733,
+   0.01147037601973022
+  ],
+  "p_mean_le0": 0.0979,
+  "ci_compound": [
+   -0.5954500502441921,
+   10.061983546128527
+  ],
+  "faille": 1.0
+ },
+ "bh_same_expo": {
+  "constant_frac_sharpe": 0.7898044391990426,
+  "strat_percentile": 59.0,
+  "faille": true
+ },
+ "trades_oos": 242,
+ "failles": [
+  "coûts x3",
+  "t+2 moteur re-simulé (E = open t+2)",
+  "barrières de prix x0,8",
+  "barrière temporelle 96 h (x0,8)",
+  "years",
+  "regimes",
+  "sans les 5 meilleurs trades",
+  "bootstrap",
+  "bh_same_expo"
+ ]
+}

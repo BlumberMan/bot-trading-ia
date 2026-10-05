@@ -1,0 +1,15 @@
+=== VETO E51 : S +0.498883 ; trades 80 ; éligible (S > -0.53) True ; commit ba68dde ===
+
+T1-règles (100 séries mélangées par blocs de 720 bougies, seeds 1-100) : moyenne +0.2679 écart-type 0.3226 p95 +0.6787 ; z +0.716 ; séries >= S 25/100 ; contrôle identité +0.498883 -> FAILLE
+
+T2 aléatoire mêmes trades / même exposition (analyse_e10) : grille 1 h percentile 84.9 (p95 aléatoire +0.7549, moyenne +0.0665) ; stratifié par fold percentile 74.0 (p95 +0.9200) -> FAILLE
+
+T7 Sharpe déflaté :
+N = 55 lignes de REGISTRE.md (E01..E55) ; SR journaliers : [-0.18139, -0.13724, -0.09707, 0.00258, -0.00154, 0.00637, -0.00125, -0.01731, 0.01461, 0.03504, 0.019, 0.0296, 0.03293, 0.03471, 0.02795, 0.0292, 0.01235, 0.01884, 0.02149, 0.02297, 0.01991, 0.00842, 0.02588, 0.04184, 0.003, 0.00591, 0.02196, 0.01675, 0.02616, 0.0193, 0.0529, 0.04073, -0.00277, 0.02093, 0.01938, 0.06151, 0.02974, 0.01434, 0.00488, 0.05831, 0.04601, 0.02768, 0.04451, 0.00649, 0.0227, 0.0114, 0.04682, -0.04007, 0.03176, -0.00529, 0.02611, -0.01997, 0.01556, -0.01113, 0.02109]
+V[SR_n] = 1.740711e-03 (écart-type 0.041722) ; Phi^-1(1-1/N) = 2.092838 ; Phi^-1(1-1/(N e)) = 2.473560
+SR0 journalier = 0.096486 (annualisé 1.8434)
+SR E51 journalier 0.026113 (annualisé 0.4989) ; T 1734 ; skew 1.4567 ; kurtosis 32.7375 ; dénominateur 0.983550 ; SR - SR0 -0.070373 ; stat -2.9786
+DSR = 0.001448 ; PSR(0) = 0.865471 -> FAILLE
+(version analyse_e10 : DSR = 0.001448, N = 55)
+
+VETO E51 : T1 FAILLE ; T2 FAILLE ; T7 FAILLE

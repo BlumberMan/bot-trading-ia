@@ -1,0 +1,2 @@
+=== VETO E48 : S -0.765569 ; trades 448 ; éligible (S > -0.53) False ; commit ba68dde ===
+non éligible : tests du veto non calculés
