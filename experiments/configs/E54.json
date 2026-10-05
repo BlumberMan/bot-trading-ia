@@ -1,0 +1,15 @@
+{
+ "id": "E54",
+ "brief": "P3-B9",
+ "kind": "rule",
+ "family": "C",
+ "name": "multi-timeframe filtre SMA50 journalier + cassure 20 bougies 4 h",
+ "signal_text": "1 si close du dernier jour clôturé > SMA50 des closes journaliers ET close_4h > max(high des 20 bougies 4 h précédentes) ; décision à la clôture de la 4e heure de la bougie 4 h",
+ "barrier": "fixed",
+ "barrier_text": "b = log(1,027)",
+ "time_barrier_h": 120,
+ "exec_delay": 1,
+ "cost_per_side": 0.0015,
+ "tuning": "aucun (paramètres a priori du brief P3-B9)",
+ "description": "Paramètres fixés a priori par le brief P3-B9 (conventions publiées), aucun réglage sur nos données. La triple barrière ±2,7 % / 5 jours reprend l'ordre de grandeur de E36 (déclaré dans JOURNAL.md ; DSR à N cumulé)."
+}

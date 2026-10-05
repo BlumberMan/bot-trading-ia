@@ -1,0 +1,15 @@
+{
+ "id": "E49",
+ "brief": "P3-B9",
+ "kind": "rule",
+ "family": "A",
+ "name": "tendance multi-horizon (journalier)",
+ "signal_text": "1 si au moins 2 des 3 rendements close_d/close_{d-L}-1 > 0 avec L=20,60,120 jours ; décision à la clôture de la bougie 1 h de 23:00 UTC",
+ "barrier": "vol",
+ "barrier_text": "b = max(sigma30 journalier (ddof=1) x sqrt(5) ; log(1,009))",
+ "time_barrier_h": 120,
+ "exec_delay": 1,
+ "cost_per_side": 0.0015,
+ "tuning": "aucun (paramètres a priori du brief P3-B9)",
+ "description": "Paramètres fixés a priori par le brief P3-B9 (conventions publiées), aucun réglage sur nos données. La triple barrière ±2,7 % / 5 jours reprend l'ordre de grandeur de E36 (déclaré dans JOURNAL.md ; DSR à N cumulé)."
+}

@@ -1,0 +1,15 @@
+{
+ "id": "E50",
+ "brief": "P3-B9",
+ "kind": "rule",
+ "family": "B20",
+ "name": "Donchian 20 (journalier)",
+ "signal_text": "1 si close_d > max(high_{d-20..d-1}) ; décision à la clôture de la bougie 1 h de 23:00 UTC",
+ "barrier": "fixed",
+ "barrier_text": "b = log(1,027)",
+ "time_barrier_h": 120,
+ "exec_delay": 1,
+ "cost_per_side": 0.0015,
+ "tuning": "aucun (paramètres a priori du brief P3-B9)",
+ "description": "Paramètres fixés a priori par le brief P3-B9 (conventions publiées), aucun réglage sur nos données. La triple barrière ±2,7 % / 5 jours reprend l'ordre de grandeur de E36 (déclaré dans JOURNAL.md ; DSR à N cumulé)."
+}

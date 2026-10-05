@@ -158,3 +158,18 @@ sur E41 et E47) : E41 moyenne 0,966 (> E41 0,879) ; E47 moyenne 0,566 (E47 0,895
 `results/repro/E40_run2.json` (seul le champ commit diffère). Corrélations : `results/corr_b7.txt`.
 Écart à l'exécution : correction du formatage de la ligne de registre pour un Sharpe de fold NaN (commit 5620099,
 sans effet sur les calculs ; les JSON des essais avaient été produits au commit de pré-enregistrement db7f4d5).
+
+## Brief P3-B9 : cycle « règles », 8 règles pré-enregistrées sans tuning, E48-E55
+Pré-enregistrement : configurations `experiments/configs/E48.json` … `E55.json` et code (`rules.py` moteur + familles +
+évaluation + registre, `rules_report.py` tests du veto + batterie + choix du candidat, `pool_rules.py` lanceur borné)
+commités ensemble AVANT toute exécution sur les données réelles ; seuls les auto-tests sur synthétique ont tourné avant
+(`rules.py --selftest`, `rules_report.py --selftest`). Aucune modification de conception ensuite (une correction de bug
+serait déclarée avec la preuve qu'elle ne change pas la définition).
+- Définitions (moteur, barrières, familles, valeurs manquantes) : docstring de `rules.py`. Tests du veto, seuils des
+  drapeaux, règle de choix du candidat : docstring de `rules_report.py`.
+- Aucun tuning, aucun paramètre choisi sur nos données ; pas de seed (règles déterministes). Seeds des tests :
+  T1-règles 1..100, T2 20261004 / 20261005 (analyse_e10), bootstrap 9.
+- E48 A fixe, E49 A vol, E50 B20 fixe, E51 B20 vol, E52 B55 fixe, E53 B55 vol, E54 C fixe, E55 C vol.
+- Registre : essais lancés sans écrire au registre ; lignes ajoutées ensuite une par une (`rules.py --register EXX`,
+  refus si code modifié depuis le résultat, si le registre n'a pas exactement EXX-1 lignes, ou hors E48-E55), 19 « | »
+  par ligne. N du DSR = lignes du registre (cumulé, décision d'Iyad) = 55 à la fin du brief.
