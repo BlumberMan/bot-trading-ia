@@ -460,7 +460,11 @@ def run_trial(cfg: dict, log) -> tuple[dict, pd.DataFrame, pd.DataFrame]:
 
 def registry_line(out: dict, date: str) -> str:
     cfg = out["config"]
-    fs = ";".join(f"{fo['model']['sharpe']:.3f}" for fo in out["folds"])
+    def f3(x):  # Sharpe NaN (fold sans variance) stocké "nan" dans le JSON
+        x = float(x) if not isinstance(x, str) else float("nan")
+        return f"{x:.3f}" if math.isfinite(x) else "nan"
+
+    fs = ";".join(f3(fo["model"]["sharpe"]) for fo in out["folds"])
     ft = ";".join(str(fo["model"]["trades"]) for fo in out["folds"])
     m = out["concatenated"]["model"]
     eligible = isinstance(m["sharpe"], float) and m["sharpe"] > out["concatenated"]["baseline"]["sharpe"]
