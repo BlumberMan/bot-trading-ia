@@ -131,3 +131,28 @@ Cœur unique `funding_features_core(rates)` (lit les `FUNDING_LOOKBACK = 90` der
 en lot par `funding_features(funding, index_1h)` (règlement par règlement) et en direct par
 `funding_features_live(recent, t)` (règlements récents ; ceux avec `fundingTime > t + 1 h` sont
 ignorés). Égalité live = lot vérifiée bit à bit (`tests/test_funding.py`, `scripts/check_funding.py`).
+
+## Agrégation 4 h et journalière
+
+Module : `src/bot/resample.py` (définition reprise de `experiments/agg4h.py`, validée en P3-V5).
+
+- Entrée : bougies 1 h sur une grille horaire complète et régulière, index `open_time` UTC.
+  Une heure est **manquante** si `missing` est vrai ou si une valeur OHLCV est NaN.
+- `resample_ohlcv(df_1h, rule)`, `rule` ∈ {`"4h"`, `"1d"`} ; k = 4 ou 24 heures.
+- **Fenêtre et alignement** : la bougie d'horodatage `T` (open_time de sa 1re heure) couvre les
+  heures `T, T+1h, …, T+(k-1)h`. `T` est aligné sur la grille UTC : 00/04/08/12/16/20 h en 4 h,
+  00:00 en journalier (jour UTC 00:00 → 23:59). Une entrée en autre fuseau est convertie en UTC.
+- **Valeurs** : open = open(T) ; high = max des k high ; low = min des k low ;
+  close = close(T+(k-1)h) ; volume = somme des k volumes de gauche à droite (ordre fixe).
+- **Bougies manquantes** : une seule heure manquante rend la bougie manquante (`missing=True`,
+  OHLCV = NaN), en 4 h comme en journalier.
+- **Pas de bougie partielle** : une bougie n'est émise que si ses k heures sont dans l'entrée
+  (début ou fin de fenêtre au milieu d'une bougie → bougie non émise).
+- **Décalage** : la bougie `T` est clôturée à `T + k h` (`close_time(T, rule)`) et n'est
+  utilisable qu'à partir de cet instant ; elle ne lit que des heures `< T + k h`.
+- **Live** : `resample_ohlcv_live(hours, rule, n_bars=None)` prend les dernières heures
+  clôturées et renvoie les bougies complètes (les `n_bars` dernières si demandé). Même cœur
+  `_aggregate` que le lot.
+- Vérifications : `tests/test_resample.py` (cas à la main, manquantes, partielles, anti-fuite,
+  alignement, live = lot sur 500 instants) ; `scripts/check_resample.py` (période dev : égalité
+  bit à bit avec `experiments/agg4h.py`, live = lot sur 2000 instants en 4 h et en 1 j).
